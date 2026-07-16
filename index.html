@@ -303,25 +303,10 @@ svg{display:block}
 .gr-grassi{background:var(--oro-2)}
 .gr-altro{background:var(--brd-2)}
 
-/* --- Il banco di lavoro: la ricetta come scala di passaggi --- */
+/* --- L'editor dell'algoritmo: mattoncini --- */
 .banco{max-width:780px;margin:0 auto}
-.passi{list-style:none;display:flex;flex-direction:column;gap:10px}
-.passo{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:12px 16px;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start}
-.passo .p-n{width:30px;height:30px;border-radius:50%;border:2px solid var(--brd-2);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-style:italic;font-weight:600;color:var(--muted);flex:0 0 auto}
-.passo.fatto{background:var(--carta-2)}
-.passo.fatto .p-n{background:var(--ulivo);border-color:var(--ulivo);color:#fff}
-.passo.fatto .p-n svg{width:14px;height:14px}
-.passo.fatto .p-testo{color:var(--muted)}
-.passo.corrente{border-color:var(--ottone);border-left:4px solid var(--ottone);box-shadow:var(--shadow)}
-.passo.corrente .p-n{border-color:var(--ottone);color:var(--ottone)}
-.passo.dopo{opacity:.6;border-style:dashed;background:transparent}
-.p-testo{font-size:15px;line-height:1.5;padding-top:3px}
-.p-qui{display:inline-block;background:var(--ottone);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:2px 8px;margin-right:8px}
-.p-fatto-riga{margin-top:5px;font-size:12.5px;color:var(--muted)}
-.p-fatto-riga strong{color:var(--ulivo-scuro);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
-.p-banco{grid-column:1 / -1;border-top:1px dashed var(--brd);margin-top:8px;padding-top:12px}
 
-/* le tre mosse, sempre le stesse: 1 il gesto, 2 gli ingredienti, 3 conferma */
+/* le tre mosse, sempre le stesse: 1 comando, 2 parametri, 3 esegui */
 .adesso{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
 .mossa{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:var(--light);font-size:12.5px}
 .mossa .mo-n{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--brd-2);color:#fff;font-family:var(--mono);font-size:11.5px;flex:0 0 auto}
@@ -331,15 +316,77 @@ svg{display:block}
 .mossa.ok{color:var(--ulivo)}
 .mossa.ok .mo-n{background:var(--ulivo)}
 .mo-sep{width:16px;height:1px;background:var(--brd-2);flex:0 0 auto}
-.adesso-guida{font-family:var(--head);font-style:italic;color:var(--muted);font-size:14px;margin-bottom:12px}
-.banco .azioni{justify-content:flex-start}
-.banco .padella{width:min(210px,58vw);margin:6px auto 12px}
-.p-conferma{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.adesso-guida{font-family:var(--head);font-style:italic;color:var(--muted);font-size:14px;margin-bottom:14px}
 
-/* l'uscita del piatto */
-.tavola{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px;border:1px dashed var(--brd-2);border-radius:var(--r);background:var(--carta-2)}
+/* la scorta dei comandi */
+.palette-lab{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--light);margin-bottom:7px}
+.palette{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+
+/* il programma: una pila di mattoncini fra INIZIO e FINE */
+.programma{list-style:none;display:flex;flex-direction:column;padding:2px 0}
+.blocco{
+  position:relative;border-radius:10px;padding:10px 14px;color:var(--carta);
+  background:var(--ulivo);box-shadow:var(--shadow);margin-bottom:9px;
+}
+.blocco::after{ /* il dente d'incastro, come nei mattoncini veri */
+  content:'';position:absolute;left:26px;bottom:-6px;width:30px;height:7px;
+  background:inherit;border-radius:0 0 6px 6px;
+}
+.blocco.fine::after{display:none}
+.blocco.hat{background:var(--ottone);border-radius:18px 18px 10px 10px;display:flex;align-items:center;gap:9px}
+.blocco.fine{background:var(--ottone);border-radius:10px 10px 18px 18px;display:flex;align-items:center;gap:9px}
+.blocco .b-ico{width:19px;height:19px;flex:0 0 auto}
+.blocco .b-nome{font-weight:700;font-size:13px;letter-spacing:.09em;text-transform:uppercase}
+.blocco .b-lib{font-family:var(--head);font-style:italic;font-size:14px;opacity:.92}
+.blocco.istr{cursor:pointer}
+.blocco.istr.sel{box-shadow:0 0 0 3px var(--oro-2), var(--shadow)}
+.blocco.istr.run{box-shadow:0 0 0 3px var(--oro), var(--shadow);transform:scale(1.015)}
+.blocco.istr.on-drop{box-shadow:0 0 0 3px var(--oro-2), var(--shadow)}
+.b-testa{display:flex;align-items:center;gap:9px}
+.b-i{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:0 0 auto}
+.b-min{font-size:11px;opacity:.75}
+.b-cmd{margin-left:auto;display:flex;gap:2px}
+.b-cmd button{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--carta);position:relative;flex:0 0 auto}
+.b-cmd button::before{content:'';position:absolute;inset:-7px}   /* tocco 44pt */
+.b-cmd button:hover{background:rgba(255,255,255,.18)}
+.b-cmd button[disabled]{opacity:.3;pointer-events:none}
+.b-cmd svg{width:14px;height:14px}
+.b-params{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;padding-left:31px}
+.param{
+  background:var(--carta);color:var(--inchiostro);font-size:12.5px;font-weight:700;
+  padding:4px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:5px;
+  animation:pop .28s ease-out;box-shadow:0 2px 6px rgba(0,0,0,.22);
+}
+.param-x{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted);position:relative;flex:0 0 auto}
+.param-x::before{content:'';position:absolute;inset:-11px}   /* tocco 44pt */
+.param-x:hover{background:var(--ambra-L);color:var(--ambra)}
+.param-x svg{width:10px;height:10px}
+.b-slot{
+  font-family:var(--head);font-style:italic;font-size:13px;color:rgba(255,255,255,.85);
+  border:1.5px dashed rgba(255,255,255,.55);border-radius:99px;padding:4px 12px;
+}
+.b-slot--vuoto{opacity:.55;border-style:dotted}
+.prog-vuoto{
+  border:2px dashed var(--brd-2);border-radius:10px;padding:18px;margin-bottom:9px;
+  text-align:center;font-family:var(--head);font-style:italic;color:var(--light);font-size:14.5px;
+}
+
+/* esecuzione */
+.log{
+  background:var(--inchiostro);color:var(--carta);border-radius:10px;
+  padding:12px 16px;font-size:12px;line-height:1.8;margin-top:6px;
+}
+.esegui-bar{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px;border:1px dashed var(--brd-2);border-radius:var(--r);background:var(--carta-2)}
 .tavola-nota{font-size:12.5px;color:var(--muted);text-align:center}
 .banco-vuoto{text-align:center;padding:48px 24px;font-family:var(--head);font-style:italic;color:var(--light);font-size:16px;line-height:1.6}
+
+/* la specifica nella scheda del piatto */
+.spec{display:flex;flex-direction:column;gap:6px}
+.spec-r{display:grid;grid-template-columns:16px 84px 1fr;gap:7px;align-items:baseline;font-size:12.5px;line-height:1.4}
+.spec-r .spec-n{font-family:var(--mono);font-weight:700;color:var(--ottone);font-size:11px}
+.spec-r .spec-az{font-weight:700;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--ulivo-scuro);background:var(--ulivo-L);border-radius:4px;padding:1px 5px;text-align:center}
+.spec-r .spec-t{color:var(--muted)}
+.spec-r:has(.spec-t em){grid-template-columns:16px 1fr}
 .azioni{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
 .az-btn{
   display:flex;align-items:center;gap:7px;min-height:44px;padding:9px 14px;
@@ -353,33 +400,6 @@ svg{display:block}
 .az-btn .az-min{font-family:var(--mono);font-size:11px;opacity:.72;font-weight:500}
 .az-btn[disabled]{opacity:.34;pointer-events:none}
 
-.padella{
-  width:min(330px,72vw);aspect-ratio:1;border-radius:50%;flex-shrink:0;
-  background:radial-gradient(circle at 40% 34%, #4A4436, #2A2720);
-  box-shadow:inset 0 -10px 30px rgba(0,0,0,.55), 0 10px 28px rgba(34,38,27,.20);
-  display:flex;align-items:center;justify-content:center;margin:6px 0 16px;
-  position:relative;transition:background .3s,box-shadow .2s;
-}
-.padella::before{content:'';position:absolute;inset:12px;border-radius:50%;border:2px solid rgba(255,255,255,.07);pointer-events:none}
-.padella.on-drop{box-shadow:inset 0 0 0 3px var(--oro-2), inset 0 -10px 30px rgba(0,0,0,.55), 0 10px 28px rgba(34,38,27,.20)}
-.padella.bollire{background:radial-gradient(circle at 40% 34%, #3E6070, #22343E)}
-.padella.soffriggere{background:radial-gradient(circle at 40% 34%, #6E5227, #3A2C15)}
-.padella.cuocere{background:radial-gradient(circle at 40% 34%, #6B4A2A, #382517)}
-.padella.mescolare{background:radial-gradient(circle at 40% 34%, #5C5A38, #322F1D)}
-.padella.impiattare{background:radial-gradient(circle at 40% 34%, #FBF8F0, #D8D2C0);box-shadow:inset 0 0 0 8px #EFEBDD, inset 0 0 0 10px #C9C2AC, 0 10px 28px rgba(34,38,27,.16)}
-.padella-vuota{font-family:var(--head);font-style:italic;font-size:15px;text-align:center;padding:0 42px;color:rgba(255,255,255,.55);line-height:1.45}
-.padella.impiattare .padella-vuota{color:var(--muted)}
-.in-padella{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;max-width:74%}
-.pill-ing{
-  background:var(--card);color:var(--inchiostro);font-size:12.5px;font-weight:700;
-  padding:5px 9px;border-radius:99px;display:flex;align-items:center;gap:5px;
-  box-shadow:0 2px 7px rgba(0,0,0,.28);animation:pop .28s ease-out;
-}
-.pill-ing .q{font-family:var(--mono);font-weight:500;color:var(--muted);font-size:11px}
-.pill-x{width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--muted);flex:0 0 auto;position:relative}
-.pill-x::before{content:'';position:absolute;inset:-10px}   /* area di tocco 44pt */
-.pill-x:hover{background:var(--ambra-L);color:var(--ambra)}
-.pill-x svg{width:11px;height:11px}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
 
 
@@ -407,11 +427,7 @@ svg{display:block}
 .ing .i-glyph{width:22px;height:22px;color:var(--ulivo)}
 .ing .i-nome{font-size:10.5px;font-weight:700;line-height:1.15;color:var(--inchiostro)}
 .ing .i-q{font-family:var(--mono);font-size:10px;color:var(--muted)}
-.ing.serve{border-color:var(--ulivo);box-shadow:inset 0 0 0 1px var(--ulivo)}   /* "serve a questo piatto": non è merito, quindi non è oro */
-.ing.esaurito{opacity:.34;pointer-events:none}
-.ing.esaurito .i-q{color:var(--ambra)}
-.ing.insuff{opacity:.5}
-.ing.insuff .i-q{color:var(--ambra);font-weight:700}
+.ing.usato{opacity:.45;pointer-events:none;border-style:dashed}
 
 /* --- Ricettario (scaffolding, destra) --- */
 .ricettario{margin-top:18px;padding-top:14px;border-top:1px solid var(--brd)}
@@ -967,7 +983,7 @@ svg{display:block}
    e muoiono alla chiusura della scheda: vanno copiati durante l'ora.
    ========================================================================== */
 
-const DB = {"RECIPES":[{"id":"carbonara","nome":"Spaghetti alla Carbonara","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":20,"porzioni":2,"storia":"Piatto romano del dopoguerra. Il nome viene forse dai carbonai dell'Appennino, o dai soldati americani che portarono uova e bacon a Roma nel 1944.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"spaghetti","q":180,"u":"g"},{"id":"guanciale","q":100,"u":"g"},{"id":"tuorli","q":2,"u":"unità"},{"id":"pecorino","q":50,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"}],"step":[{"az":"bollire","ing":"spaghetti","testo":"Cuoci gli spaghetti in acqua salata"},{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale in padella senza olio"},{"az":"mescolare","ing":"tuorli","testo":"Sbatti i tuorli con pecorino e pepe"},{"az":"impiattare","ing":"pecorino","testo":"Manteca fuori dal fuoco, aggiungi pepe"}],"gusti":{"dolce":1,"salato":5,"amaro":1,"acido":1,"umami":5},"calorie":620,"curiosita":"La vera carbonara NON ha panna. Mai. Il cremoso viene solo dai tuorli e dal pecorino.","mai":[{"id":"panna","perche":"La carbonara non ha mai avuto la panna. La crema si fa fuori dal fuoco, montando i tuorli col pecorino: è quella l'abilità. La panna è una scorciatoia che copre tutto."},{"id":"cipolla","perche":"Nella carbonara non entra cipolla: il gusto viene dal grasso del guanciale che si scioglie, dal pecorino e dal pepe. Nient'altro."}]},{"id":"amatriciana","nome":"Bucatini all'Amatriciana","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":30,"porzioni":2,"storia":"Nasce ad Amatrice, paese montano sull'Appennino. Deriva dalla \"gricia\", arricchita con pomodoro dopo il 1700.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"bucatini","q":180,"u":"g"},{"id":"guanciale","q":80,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"pecorino","q":40,"u":"g"},{"id":"peperoncino","q":1,"u":"g"}],"step":[{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale, sfuma con vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro e peperoncino"},{"az":"bollire","ing":"bucatini","testo":"Cuoci i bucatini al dente"},{"az":"impiattare","ing":"pecorino","testo":"Manteca e spolvera di pecorino"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":3,"umami":4},"calorie":580,"curiosita":"Ad Amatrice si festeggia ogni anno la Sagra degli Spaghetti all'Amatriciana.","mai":[{"id":"cipolla","perche":"Ad Amatrice la ricetta non prevede cipolla. Il dolce che cerchi lo danno già il guanciale rosolato e il pomodoro."},{"id":"aglio","perche":"Niente aglio nell'amatriciana: coprirebbe il guanciale, che qui è il protagonista."}]},{"id":"pesto","nome":"Trofie al Pesto alla Genovese","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":25,"porzioni":2,"storia":"Il pesto nasce a Genova nell'800. Il nome viene da \"pestare\" nel mortaio di marmo con pestello di legno.","dop":["Basilico Genovese DOP","Olio Riviera Ligure DOP"],"ingredienti":[{"id":"trofie","q":180,"u":"g"},{"id":"basilico","q":50,"u":"g"},{"id":"pinoli","q":30,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"parmigiano","q":40,"u":"g"},{"id":"olio_evo","q":60,"u":"ml"}],"step":[{"az":"mescolare","ing":"basilico","testo":"Pesta basilico, aglio e pinoli nel mortaio"},{"az":"mescolare","ing":"parmigiano","testo":"Aggiungi parmigiano e olio a filo"},{"az":"bollire","ing":"trofie","testo":"Cuoci le trofie in acqua salata"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci a crudo con il pesto"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":680,"curiosita":"Il pesto autentico si fa SOLO nel mortaio. Il frullatore riscalda il basilico e lo fa ossidare.","mai":[{"id":"panna","perche":"Il pesto è già cremoso di suo: l'olio, i pinoli e il formaggio bastano. La panna lo appesantisce e ne spegne il profumo."}]},{"id":"ragu","nome":"Tagliatelle al Ragù alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":180,"porzioni":4,"storia":"La ricetta ufficiale è depositata dal 1982 alla Camera di Commercio di Bologna. La tagliatella deve essere larga 8 mm cotta.","dop":["Parmigiano Reggiano DOP","Aceto Balsamico di Modena IGP"],"ingredienti":[{"id":"tagliatelle","q":320,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"soffritto","q":150,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"vino_rosso","q":100,"u":"ml"},{"id":"parmigiano","q":60,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto di sedano, carota, cipolla"},{"az":"soffriggere","ing":"carne_macinata","testo":"Rosola la carne e sfuma col vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro, cuoci 2 ore a fuoco lento"},{"az":"bollire","ing":"tagliatelle","testo":"Cuoci le tagliatelle al dente"},{"az":"impiattare","ing":"parmigiano","testo":"Condisci e completa col parmigiano"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":720,"curiosita":"Gli spaghetti alla bolognese NON esistono in Italia: sono un'invenzione americana.","mai":[{"id":"aglio","perche":"Il ragù alla bolognese depositato dall'Accademia Italiana della Cucina non contiene aglio: il soffritto è sedano, carota e cipolla."}]},{"id":"lasagne","nome":"Lasagne alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":240,"porzioni":6,"storia":"Le lasagne verdi al forno sono il piatto della domenica bolognese. La sfoglia contiene spinaci per colorarla.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"sfoglia","q":400,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"besciamella","q":500,"u":"ml"},{"id":"parmigiano","q":100,"u":"g"}],"step":[{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù di carne"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il ragù per almeno 2 ore"},{"az":"mescolare","ing":"besciamella","testo":"Prepara la besciamella"},{"az":"impiattare","ing":"sfoglia","testo":"Stratifica sfoglia, ragù, besciamella"},{"az":"cuocere","ing":"parmigiano","testo":"Inforna a 180°C per 30 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":680,"curiosita":"Le lasagne erano già citate da Cicerone nel I secolo a.C. come \"laganum\"."},{"id":"risotto_milanese","nome":"Risotto alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":3,"tempo":25,"porzioni":2,"storia":"Nasce nel 1574 alle nozze della figlia di un mastro vetraio. Lo zafferano, usato per le vetrate del Duomo, fu aggiunto al riso per scherzo.","dop":["Grana Padano DOP","Zafferano dell'Aquila DOP"],"ingredienti":[{"id":"riso_carnaroli","q":180,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"burro","q":50,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":800,"u":"ml"},{"id":"parmigiano","q":50,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Tosta il riso con cipolla e burro"},{"az":"mescolare","ing":"riso_carnaroli","testo":"Sfuma col vino, aggiungi brodo"},{"az":"cuocere","ing":"zafferano","testo":"Aggiungi zafferano a metà cottura"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca con burro e parmigiano"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":540,"curiosita":"Lo zafferano è la spezia più cara del mondo: servono 150.000 fiori per 1 kg.","mai":[{"id":"panna","perche":"La cremosità del risotto la fa la mantecatura: burro e parmigiano fuori dal fuoco, mescolando. Se serve la panna, vuol dire che la mantecatura non è riuscita."}]},{"id":"cotoletta","nome":"Cotoletta alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":20,"porzioni":1,"storia":"La \"costoletta\" milanese è citata già nel 1134 nei registri dell'Abbazia di Sant'Ambrogio. Rivale storica della Wiener Schnitzel austriaca.","dop":[],"ingredienti":[{"id":"costoletta_vitello","q":200,"u":"g"},{"id":"uova","q":1,"u":"unità"},{"id":"pangrattato","q":80,"u":"g"},{"id":"burro","q":40,"u":"g"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"uova","testo":"Sbatti l'uovo"},{"az":"mescolare","ing":"pangrattato","testo":"Impana la costoletta nel pangrattato"},{"az":"soffriggere","ing":"burro","testo":"Friggi nel burro chiarificato"},{"az":"impiattare","ing":"limone","testo":"Servi con spicchio di limone"}],"gusti":{"dolce":1,"salato":3,"amaro":1,"acido":2,"umami":4},"calorie":650,"curiosita":"La cotoletta \"orecchia di elefante\" è sottile e grande; quella \"alta\" è con l'osso."},{"id":"pizza","nome":"Pizza Margherita","regione":"Campania","regionId":"campania","difficolta":3,"tempo":1440,"porzioni":1,"storia":"Nel 1889 il pizzaiolo Raffaele Esposito la creò per la regina Margherita di Savoia: pomodoro, mozzarella e basilico per i colori della bandiera italiana.","dop":["Mozzarella di Bufala Campana DOP","Pomodoro San Marzano DOP"],"ingredienti":[{"id":"farina","q":250,"u":"g"},{"id":"lievito","q":2,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"mozzarella","q":100,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":10,"u":"ml"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, acqua, lievito, sale"},{"az":"cuocere","ing":"lievito","testo":"Lascia lievitare 24 ore"},{"az":"impiattare","ing":"pomodoro","testo":"Stendi la pizza, aggiungi pomodoro e mozzarella"},{"az":"cuocere","ing":"basilico","testo":"Cuoci a 450°C per 90 secondi, aggiungi basilico"}],"gusti":{"dolce":3,"salato":3,"amaro":1,"acido":3,"umami":4},"calorie":750,"curiosita":"La \"Pizza Napoletana\" è Patrimonio UNESCO dal 2017 come arte del pizzaiuolo.","mai":[{"id":"panna","perche":"Sulla margherita vanno pomodoro, mozzarella, basilico e olio. Bastano loro: sono i tre colori della bandiera, ed è tutta lì."}]},{"id":"parmigiana","nome":"Parmigiana di Melanzane","regione":"Campania","regionId":"campania","difficolta":3,"tempo":90,"porzioni":4,"storia":"Tre regioni se la contendono: Campania, Sicilia ed Emilia. \"Parmigiana\" viene forse dal siciliano \"parmiciana\" (persiana) per la sovrapposizione delle fette.","dop":["Mozzarella di Bufala Campana DOP"],"ingredienti":[{"id":"melanzane","q":600,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"mozzarella","q":200,"u":"g"},{"id":"parmigiano","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"melanzane","testo":"Friggi le melanzane a fette"},{"az":"cuocere","ing":"pomodoro","testo":"Prepara la salsa di pomodoro"},{"az":"impiattare","ing":"mozzarella","testo":"Stratifica melanzane, sugo, mozzarella"},{"az":"cuocere","ing":"parmigiano","testo":"Inforna a 180°C per 40 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":2,"acido":3,"umami":4},"calorie":480,"curiosita":"In Emilia si fa con le zucchine; in Sicilia con le melanzane fritte intere."},{"id":"arancini","nome":"Arancini di Riso","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":4,"storia":"Di origine araba (X secolo), prendono il nome dalla forma e dal colore arancione. A Catania sono \"arancini\" (maschile, conici); a Palermo \"arancine\" (femminile, tonde).","dop":[],"ingredienti":[{"id":"riso_carnaroli","q":300,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"carne_macinata","q":150,"u":"g"},{"id":"piselli","q":80,"u":"g"},{"id":"pangrattato","q":100,"u":"g"},{"id":"uova","q":2,"u":"unità"}],"step":[{"az":"bollire","ing":"riso_carnaroli","testo":"Cuoci il riso con zafferano"},{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù con piselli"},{"az":"impiattare","ing":"piselli","testo":"Forma le palline col ripieno"},{"az":"mescolare","ing":"uova","testo":"Passa nell'uovo e nel pangrattato"},{"az":"soffriggere","ing":"pangrattato","testo":"Friggi in olio bollente"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":1,"umami":4},"calorie":380,"curiosita":"Il 13 dicembre, Santa Lucia, a Palermo si mangiano SOLO arancine e non si mangia pane o pasta."},{"id":"pasta_norma","nome":"Pasta alla Norma","regione":"Sicilia","regionId":"sicilia","difficolta":2,"tempo":40,"porzioni":2,"storia":"Catanese, dedicata all'opera \"Norma\" di Vincenzo Bellini (1831). Si dice che Nino Martoglio esclamasse \"È una Norma!\" assaggiandola.","dop":[],"ingredienti":[{"id":"maccheroni","q":180,"u":"g"},{"id":"melanzane","q":300,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"ricotta_salata","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"melanzane","testo":"Friggi le melanzane a dadini"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il sugo di pomodoro e basilico"},{"az":"bollire","ing":"maccheroni","testo":"Cuoci la pasta al dente"},{"az":"impiattare","ing":"ricotta_salata","testo":"Condisci e grattugia ricotta salata"}],"gusti":{"dolce":3,"salato":3,"amaro":2,"acido":3,"umami":3},"calorie":540,"curiosita":"La ricotta salata siciliana si stagiona per almeno 3 mesi.","mai":[{"id":"parmigiano","perche":"Sulla Norma va la ricotta salata, non il parmigiano: è una ricetta siciliana e il formaggio è quello dell'isola."}]},{"id":"orecchiette","nome":"Orecchiette alle Cime di Rapa","regione":"Puglia","regionId":"puglia","difficolta":2,"tempo":30,"porzioni":2,"storia":"Piatto simbolo della Puglia. Le orecchiette si fanno ancora a mano nei vicoli di Bari Vecchia dalle \"signore delle orecchiette\".","dop":[],"ingredienti":[{"id":"orecchiette","q":180,"u":"g"},{"id":"cime_rapa","q":400,"u":"g"},{"id":"aglio","q":2,"u":"spicchi"},{"id":"acciughe","q":4,"u":"unità"},{"id":"peperoncino","q":1,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"bollire","ing":"cime_rapa","testo":"Sbollenta le cime di rapa"},{"az":"soffriggere","ing":"aglio","testo":"Rosola aglio, acciughe e peperoncino"},{"az":"bollire","ing":"orecchiette","testo":"Cuoci le orecchiette nella stessa acqua"},{"az":"impiattare","ing":"olio_evo","testo":"Salta tutto in padella"}],"gusti":{"dolce":1,"salato":4,"amaro":4,"acido":1,"umami":3},"calorie":420,"curiosita":"Le \"signore delle orecchiette\" di via Arco Basso a Bari sono state riconosciute patrimonio culturale immateriale."},{"id":"ribollita","nome":"Ribollita Toscana","regione":"Toscana","regionId":"toscana","difficolta":2,"tempo":120,"porzioni":4,"storia":"Zuppa contadina toscana, \"ribollita\" perché si preparava il venerdì e si faceva ri-bollire nei giorni successivi, diventando sempre più buona.","dop":["Olio Toscano IGP","Fagiolo Zolfino"],"ingredienti":[{"id":"pane_raffermo","q":200,"u":"g"},{"id":"cavolo_nero","q":300,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":100,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto"},{"az":"cuocere","ing":"cavolo_nero","testo":"Aggiungi verdure e fagioli"},{"az":"bollire","ing":"fagioli","testo":"Cuoci 1 ora, unisci il pomodoro"},{"az":"impiattare","ing":"pane_raffermo","testo":"Stratifica con pane raffermo, \"ribolli\""}],"gusti":{"dolce":2,"salato":3,"amaro":3,"acido":2,"umami":3},"calorie":320,"curiosita":"Il cavolo nero resiste al gelo: è più dolce dopo la prima gelata invernale."},{"id":"bistecca","nome":"Bistecca alla Fiorentina","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":15,"porzioni":2,"storia":"Si cuoceva per la festa di San Lorenzo (10 agosto) a Firenze. Il nome \"bistecca\" viene dall'inglese \"beef steak\".","dop":["Vitellone Bianco dell'Appennino Centrale IGP"],"ingredienti":[{"id":"bistecca_chianina","q":800,"u":"g"},{"id":"sale_grosso","q":10,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":5,"u":"g"}],"step":[{"az":"mescolare","ing":"bistecca_chianina","testo":"Porta la carne a temperatura ambiente"},{"az":"soffriggere","ing":"sale_grosso","testo":"Cuoci 3 minuti per lato sulla brace"},{"az":"cuocere","ing":"rosmarino","testo":"Cuoci 5 minuti in piedi sull'osso"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci con sale, pepe, olio a crudo"}],"gusti":{"dolce":1,"salato":3,"amaro":2,"acido":1,"umami":5},"calorie":820,"curiosita":"La vera Fiorentina è alta almeno 3 dita, tagliata nella lombata di Chianina, cotta al sangue."},{"id":"vitello_tonnato","nome":"Vitello Tonnato","regione":"Piemonte","regionId":"piemonte","difficolta":2,"tempo":90,"porzioni":4,"storia":"Piatto piemontese dell'800. La salsa tonnata uniisce due mondi: la terra (vitello) e il mare (tonno). Servito freddo come antipasto estivo.","dop":[],"ingredienti":[{"id":"girello_vitello","q":500,"u":"g"},{"id":"tonno","q":200,"u":"g"},{"id":"acciughe","q":4,"u":"unità"},{"id":"capperi","q":30,"u":"g"},{"id":"uova","q":2,"u":"unità"},{"id":"olio_evo","q":100,"u":"ml"}],"step":[{"az":"bollire","ing":"girello_vitello","testo":"Lessa il vitello nel brodo aromatico"},{"az":"mescolare","ing":"tonno","testo":"Frulla tonno, acciughe e capperi"},{"az":"mescolare","ing":"uova","testo":"Aggiungi tuorli sodi e olio per la salsa"},{"az":"impiattare","ing":"capperi","testo":"Affetta sottile e nappa con la salsa"}],"gusti":{"dolce":1,"salato":4,"amaro":1,"acido":3,"umami":5},"calorie":420,"curiosita":"Il vitello tonnato è citato da Pellegrino Artusi nel suo celebre libro del 1891."},{"id":"tiramisu","nome":"Tiramisù","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":240,"porzioni":6,"storia":"Nasce a Treviso negli anni '60 al ristorante \"Le Beccherie\". Il nome veneto \"tiramesù\" significa \"tirami su\", per l'effetto energetico di caffè e uova.","dop":[],"ingredienti":[{"id":"savoiardi","q":300,"u":"g"},{"id":"mascarpone","q":500,"u":"g"},{"id":"uova","q":4,"u":"unità"},{"id":"zucchero","q":100,"u":"g"},{"id":"caffe","q":300,"u":"ml"},{"id":"cacao","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"uova","testo":"Monta tuorli con zucchero"},{"az":"mescolare","ing":"mascarpone","testo":"Unisci mascarpone e albumi montati"},{"az":"impiattare","ing":"savoiardi","testo":"Bagna i savoiardi nel caffè"},{"az":"impiattare","ing":"caffe","testo":"Stratifica savoiardi e crema"},{"az":"impiattare","ing":"cacao","testo":"Spolvera di cacao, riposa in frigo 4 ore"}],"gusti":{"dolce":5,"salato":1,"amaro":3,"acido":1,"umami":2},"calorie":450,"curiosita":"Il tiramisù ha una festa nazionale (Tiramisù Day, 21 marzo) e un campionato mondiale a Treviso.","mai":[{"id":"panna","perche":"Nel tiramisù la crema è di mascarpone e uova. La panna montata la sostituisce spesso perché è più facile, ma cambia il dolce."}]},{"id":"cannoli","nome":"Cannoli Siciliani","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":6,"storia":"Dolce di origine araba, nato nell'harem degli emiri di Caltanissetta. Le cialde fritte simboleggiano l'abbondanza; si preparavano per il Carnevale.","dop":[],"ingredienti":[{"id":"farina","q":200,"u":"g"},{"id":"ricotta","q":500,"u":"g"},{"id":"zucchero","q":120,"u":"g"},{"id":"cioccolato","q":50,"u":"g"},{"id":"pistacchi","q":40,"u":"g"},{"id":"scorza_arancia","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, vino, zucchero"},{"az":"soffriggere","ing":"farina","testo":"Friggi le cialde arrotolate"},{"az":"mescolare","ing":"ricotta","testo":"Setaccia ricotta con zucchero"},{"az":"mescolare","ing":"cioccolato","testo":"Aggiungi cioccolato e scorza"},{"az":"impiattare","ing":"pistacchi","testo":"Farcisci e decora con pistacchi"}],"gusti":{"dolce":5,"salato":1,"amaro":1,"acido":1,"umami":1},"calorie":380,"curiosita":"La ricotta va riempita AL MOMENTO per non ammosciare la cialda. Un cannolo vero scrocchia."},{"id":"pasta_fagioli","nome":"Pasta e Fagioli","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":45,"porzioni":2,"storia":"Piatto della cucina povera, diffuso in tutta la penisola con un nome diverso in ogni regione: in Veneto è \"pasta e fasioi\". Nasce dove la carne era rara e i legumi erano la proteina di tutti i giorni.","dop":["Fagiolo di Lamon della Vallata Bellunese IGP"],"ingredienti":[{"id":"ditalini","q":140,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":80,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":2,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Fai appassire il soffritto con il rosmarino"},{"az":"cuocere","ing":"fagioli","testo":"Aggiungi fagioli e pomodoro, cuoci piano"},{"az":"bollire","ing":"ditalini","testo":"Cala la pasta direttamente nei fagioli"},{"az":"impiattare","ing":"olio_evo","testo":"Riposa qualche minuto e finisci a crudo con l'olio"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":2,"umami":3},"curiosita":"Legumi e cereali insieme si completano: presi da soli sono proteine incomplete, nello stesso piatto diventano complete. Per questo pasta e fagioli è un piatto unico, non un primo.","calorie":465,"mai":[{"id":"panna","perche":"La crema di pasta e fagioli viene dai fagioli stessi, schiacciati: è un piatto di cucina povera e non ha bisogno di aggiunte."}]},{"id":"minestrone","nome":"Minestrone di Verdure","regione":"Liguria","regionId":"liguria","difficolta":1,"tempo":50,"porzioni":2,"storia":"Il minestrone cambia con la stagione e con quello che l'orto dà: non esiste una ricetta unica. In Liguria si chiude con un cucchiaio di pesto, che si aggiunge sempre a fuoco spento.","dop":["Basilico Genovese DOP"],"ingredienti":[{"id":"patate","q":150,"u":"g"},{"id":"carote","q":80,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"fagiolini","q":80,"u":"g"},{"id":"sedano","q":50,"u":"g"},{"id":"fagioli","q":100,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"basilico","q":5,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"sedano","testo":"Fai insaporire sedano e carote nell'olio"},{"az":"bollire","ing":"patate","testo":"Copri d'acqua e cuoci patate e fagiolini"},{"az":"cuocere","ing":"fagioli","testo":"Unisci zucchine e fagioli, cuoci finché è cremoso"},{"az":"impiattare","ing":"basilico","testo":"Profuma col basilico a fuoco spento"}],"gusti":{"dolce":3,"salato":2,"amaro":1,"acido":1,"umami":2},"curiosita":"Il basilico va aggiunto a fuoco spento: il calore forte gli fa perdere gli oli profumati e lo fa diventare scuro e amaro.","calorie":220},{"id":"risotto_zucca","nome":"Risotto alla Zucca","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":35,"porzioni":2,"storia":"La zucca arriva in Europa dalle Americhe e attecchisce nella pianura fra Lombardia e Mantovano, dove entra nei risotti e nei tortelli. È un ortaggio d'autunno che si conserva tutto l'inverno.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"riso_carnaroli","q":160,"u":"g"},{"id":"zucca","q":300,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":700,"u":"ml"},{"id":"parmigiano","q":30,"u":"g"},{"id":"burro","q":15,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Fai appassire la cipolla, senza farla colorire"},{"az":"cuocere","ing":"zucca","testo":"Aggiungi la zucca a cubetti e falla sfaldare"},{"az":"mescolare","ing":"riso_carnaroli","testo":"Tosta il riso e cuoci aggiungendo il brodo poco per volta"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca fuori dal fuoco con burro e parmigiano"}],"gusti":{"dolce":4,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"La zucca è arancione per il betacarotene, che il corpo trasforma in vitamina A. È uno dei pochi nutrienti che si assorbe meglio se nel piatto c'è anche un grasso: qui ci pensa il burro della mantecatura.","calorie":475},{"id":"merluzzo_forno","nome":"Merluzzo al Forno con Patate","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":40,"porzioni":2,"storia":"Il pesce al forno con le patate è di casa su tutte le coste italiane: una teglia sola, il pesce sopra le patate, e il forno fa il resto. In Liguria si aggiungono olive e pinoli.","dop":[],"ingredienti":[{"id":"merluzzo","q":250,"u":"g"},{"id":"patate","q":250,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"prezzemolo","q":5,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"prezzemolo","testo":"Prepara un trito di prezzemolo e aglio con l'olio"},{"az":"cuocere","ing":"patate","testo":"Stendi le patate a fette sul fondo della teglia"},{"az":"cuocere","ing":"merluzzo","testo":"Adagia il merluzzo sopra le patate e inforna"},{"az":"impiattare","ing":"limone","testo":"Servi con una spremuta di limone"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":3,"umami":3},"curiosita":"Le Linee Guida per una sana alimentazione consigliano il pesce due o tre volte a settimana. Al forno mantiene i suoi grassi buoni, gli omega-3, che una frittura ad alta temperatura invece rovina.","calorie":270},{"id":"farro_orto","nome":"Farro con le Verdure dell'Orto","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":35,"porzioni":2,"storia":"Il farro è il cereale più antico coltivato in Italia: lo mangiavano gli Etruschi e i legionari romani. In Garfagnana non ha mai smesso di essere coltivato, nemmeno quando il grano lo aveva sostituito ovunque.","dop":["Farro della Garfagnana IGP"],"ingredienti":[{"id":"farro","q":160,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"pomodoro","q":120,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":15,"u":"ml"}],"step":[{"az":"bollire","ing":"farro","testo":"Lessa il farro in acqua salata e scolalo"},{"az":"soffriggere","ing":"zucchine","testo":"Salta le zucchine a dadini, che restino sode"},{"az":"cuocere","ing":"pomodoro","testo":"Unisci il pomodoro e fallo appena appassire"},{"az":"impiattare","ing":"basilico","testo":"Condisci il farro e profuma col basilico"}],"gusti":{"dolce":2,"salato":2,"amaro":1,"acido":3,"umami":2},"curiosita":"Il farro è un cereale integrale: conserva la crusca, quindi ha più fibra della pasta bianca. La fibra non nutre, ma tiene in ordine l'intestino e fa sentire sazi più a lungo.","calorie":350},{"id":"frittata_forno","nome":"Frittata al Forno con le Zucchine","regione":"Campania","regionId":"campania","difficolta":1,"tempo":25,"porzioni":2,"storia":"La frittata è il piatto del riciclo per eccellenza: nasce per non buttare via le verdure avanzate. Ogni regione ha la sua, e in Campania si fa anche con la pasta del giorno prima.","dop":[],"ingredienti":[{"id":"uova","q":4,"u":"unità"},{"id":"zucchine","q":200,"u":"g"},{"id":"parmigiano","q":30,"u":"g"},{"id":"olio_evo","q":10,"u":"ml"},{"id":"basilico","q":3,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"zucchine","testo":"Rosola le zucchine a fettine e falle raffreddare"},{"az":"mescolare","ing":"uova","testo":"Sbatti le uova con il parmigiano e unisci le zucchine"},{"az":"cuocere","ing":"parmigiano","testo":"Versa in teglia e cuoci in forno finché è appena dorata"},{"az":"impiattare","ing":"basilico","testo":"Taglia a quadrotti e profuma col basilico"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"Cotta al forno invece che fritta, la frittata non assorbe l'olio della padella: stessi ingredienti, molti grassi in meno. Il modo di cuocere cambia il piatto quanto la ricetta.","calorie":270}],"INGREDIENTS":{"spaghetti":{"nome":"Spaghetti","cat":"pasta","kcal100":355},"bucatini":{"nome":"Bucatini","cat":"pasta","kcal100":355},"trofie":{"nome":"Trofie","cat":"pasta","kcal100":355},"tagliatelle":{"nome":"Tagliatelle all'uovo","cat":"pasta","kcal100":368},"sfoglia":{"nome":"Sfoglia all'uovo","cat":"pasta","kcal100":368},"maccheroni":{"nome":"Maccheroni","cat":"pasta","kcal100":355},"orecchiette":{"nome":"Orecchiette","cat":"pasta","kcal100":355},"riso_carnaroli":{"nome":"Riso Carnaroli","cat":"cereali","kcal100":340},"farina":{"nome":"Farina 00","cat":"cereali","kcal100":340},"pane_raffermo":{"nome":"Pane raffermo","cat":"cereali","kcal100":270},"pangrattato":{"nome":"Pangrattato","cat":"cereali","kcal100":380},"savoiardi":{"nome":"Savoiardi","cat":"cereali","kcal100":400},"guanciale":{"nome":"Guanciale","cat":"carne","kcal100":655},"carne_macinata":{"nome":"Carne macinata","cat":"carne","kcal100":240},"costoletta_vitello":{"nome":"Costoletta di vitello","cat":"carne","kcal100":220},"bistecca_chianina":{"nome":"Bistecca di Chianina","cat":"carne","kcal100":250},"girello_vitello":{"nome":"Girello di vitello","cat":"carne","kcal100":130},"tonno":{"nome":"Tonno sott'olio","cat":"pesce","kcal100":195},"acciughe":{"nome":"Acciughe","cat":"pesce","kcal100":130},"uova":{"nome":"Uova intere","cat":"latticini","kcal100":130},"tuorli":{"nome":"Tuorli d'uovo","cat":"latticini","kcal100":320},"pecorino":{"nome":"Pecorino Romano","cat":"latticini","kcal100":390},"parmigiano":{"nome":"Parmigiano Reggiano","cat":"latticini","kcal100":395},"mozzarella":{"nome":"Mozzarella di Bufala","cat":"latticini","kcal100":280},"ricotta":{"nome":"Ricotta","cat":"latticini","kcal100":170},"ricotta_salata":{"nome":"Ricotta salata","cat":"latticini","kcal100":240},"mascarpone":{"nome":"Mascarpone","cat":"latticini","kcal100":450},"burro":{"nome":"Burro","cat":"latticini","kcal100":760},"besciamella":{"nome":"Besciamella","cat":"latticini","kcal100":150},"pomodoro":{"nome":"Pomodoro","cat":"verdure","kcal100":20},"basilico":{"nome":"Basilico","cat":"verdure","kcal100":25},"aglio":{"nome":"Aglio","cat":"verdure","kcal100":40},"cipolla":{"nome":"Cipolla","cat":"verdure","kcal100":40},"soffritto":{"nome":"Sedano, carota, cipolla","cat":"verdure","kcal100":35},"melanzane":{"nome":"Melanzane","cat":"verdure","kcal100":25},"cime_rapa":{"nome":"Cime di rapa","cat":"verdure","kcal100":30},"cavolo_nero":{"nome":"Cavolo nero","cat":"verdure","kcal100":40},"fagioli":{"nome":"Fagioli cannellini","cat":"verdure","kcal100":110},"piselli":{"nome":"Piselli","cat":"verdure","kcal100":80},"capperi":{"nome":"Capperi","cat":"verdure","kcal100":25},"olio_evo":{"nome":"Olio extra vergine","cat":"condimenti","kcal100":900},"pepe_nero":{"nome":"Pepe nero","cat":"spezie","kcal100":250},"peperoncino":{"nome":"Peperoncino","cat":"spezie","kcal100":280},"zafferano":{"nome":"Zafferano","cat":"spezie","kcal100":310},"sale_grosso":{"nome":"Sale grosso","cat":"spezie","kcal100":0},"rosmarino":{"nome":"Rosmarino","cat":"spezie","kcal100":130},"scorza_arancia":{"nome":"Scorza d'arancia","cat":"spezie","kcal100":95},"pinoli":{"nome":"Pinoli","cat":"frutta_secca","kcal100":670},"pistacchi":{"nome":"Pistacchi","cat":"frutta_secca","kcal100":560},"limone":{"nome":"Limone","cat":"verdure","kcal100":30},"brodo":{"nome":"Brodo di carne","cat":"liquidi","kcal100":15},"vino_rosso":{"nome":"Vino rosso","cat":"liquidi","kcal100":85},"caffe":{"nome":"Caffè espresso","cat":"liquidi","kcal100":5},"lievito":{"nome":"Lievito di birra","cat":"altri","kcal100":100},"zucchero":{"nome":"Zucchero","cat":"altri","kcal100":390},"cioccolato":{"nome":"Cioccolato fondente","cat":"altri","kcal100":540},"cacao":{"nome":"Cacao amaro","cat":"altri","kcal100":350},"ditalini":{"nome":"Ditalini","cat":"pasta","kcal100":355},"farro":{"nome":"Farro perlato","cat":"cereali","kcal100":335},"merluzzo":{"nome":"Merluzzo","cat":"pesce","kcal100":82},"zucca":{"nome":"Zucca","cat":"verdure","kcal100":18},"patate":{"nome":"Patate","cat":"verdure","kcal100":80},"carote":{"nome":"Carote","cat":"verdure","kcal100":35},"zucchine":{"nome":"Zucchine","cat":"verdure","kcal100":15},"sedano":{"nome":"Sedano","cat":"verdure","kcal100":20},"fagiolini":{"nome":"Fagiolini","cat":"verdure","kcal100":31},"prezzemolo":{"nome":"Prezzemolo","cat":"spezie","kcal100":35},"panna":{"nome":"Panna da cucina","cat":"latticini","kcal100":340}},"AZIONI":{"bollire":{"nome":"Bollire","icona":"bollire"},"soffriggere":{"nome":"Soffriggere","icona":"soffriggere"},"cuocere":{"nome":"Cuocere","icona":"cuocere"},"mescolare":{"nome":"Mescolare","icona":"mescolare"},"impiattare":{"nome":"Impiattare","icona":"impiattare"}},"REGIONI":{"piemonte":{"nome":"Piemonte","x":110,"y":165,"capoluogo":"Torino"},"lombardia":{"nome":"Lombardia","x":180,"y":155,"capoluogo":"Milano"},"veneto":{"nome":"Veneto","x":245,"y":160,"capoluogo":"Venezia"},"liguria":{"nome":"Liguria","x":135,"y":215,"capoluogo":"Genova"},"emilia":{"nome":"Emilia-Romagna","x":210,"y":215,"capoluogo":"Bologna"},"toscana":{"nome":"Toscana","x":210,"y":275,"capoluogo":"Firenze"},"lazio":{"nome":"Lazio","x":250,"y":345,"capoluogo":"Roma"},"campania":{"nome":"Campania","x":305,"y":395,"capoluogo":"Napoli"},"puglia":{"nome":"Puglia","x":375,"y":395,"capoluogo":"Bari"},"sicilia":{"nome":"Sicilia","x":290,"y":525,"capoluogo":"Palermo"}}};
+const DB = {"RECIPES":[{"id":"carbonara","nome":"Spaghetti alla Carbonara","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":20,"porzioni":2,"storia":"Piatto romano del dopoguerra. Il nome viene forse dai carbonai dell'Appennino, o dai soldati americani che portarono uova e bacon a Roma nel 1944.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"spaghetti","q":180,"u":"g"},{"id":"guanciale","q":100,"u":"g"},{"id":"tuorli","q":2,"u":"unità"},{"id":"pecorino","q":50,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"}],"step":[{"az":"bollire","ing":"spaghetti","testo":"Cuoci gli spaghetti in acqua salata"},{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale in padella senza olio"},{"az":"mescolare","ing":"tuorli","testo":"Sbatti i tuorli con pecorino e pepe"},{"az":"impiattare","ing":"pecorino","testo":"Manteca fuori dal fuoco, aggiungi pepe"}],"gusti":{"dolce":1,"salato":5,"amaro":1,"acido":1,"umami":5},"calorie":620,"curiosita":"La vera carbonara NON ha panna. Mai. Il cremoso viene solo dai tuorli e dal pecorino.","mai":[{"id":"panna","perche":"La carbonara non ha mai avuto la panna. La crema si fa fuori dal fuoco, montando i tuorli col pecorino: è quella l'abilità. La panna è una scorciatoia che copre tutto."},{"id":"cipolla","perche":"Nella carbonara non entra cipolla: il gusto viene dal grasso del guanciale che si scioglie, dal pecorino e dal pepe. Nient'altro."}]},{"id":"amatriciana","nome":"Bucatini all'Amatriciana","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":30,"porzioni":2,"storia":"Nasce ad Amatrice, paese montano sull'Appennino. Deriva dalla \"gricia\", arricchita con pomodoro dopo il 1700.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"bucatini","q":180,"u":"g"},{"id":"guanciale","q":80,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"pecorino","q":40,"u":"g"},{"id":"peperoncino","q":1,"u":"g"}],"step":[{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale, sfuma con vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro e peperoncino"},{"az":"bollire","ing":"bucatini","testo":"Cuoci i bucatini al dente"},{"az":"impiattare","ing":"pecorino","testo":"Manteca e spolvera di pecorino"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":3,"umami":4},"calorie":580,"curiosita":"Ad Amatrice si festeggia ogni anno la Sagra degli Spaghetti all'Amatriciana.","mai":[{"id":"cipolla","perche":"Ad Amatrice la ricetta non prevede cipolla. Il dolce che cerchi lo danno già il guanciale rosolato e il pomodoro."},{"id":"aglio","perche":"Niente aglio nell'amatriciana: coprirebbe il guanciale, che qui è il protagonista."}]},{"id":"pesto","nome":"Trofie al Pesto alla Genovese","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":25,"porzioni":2,"storia":"Il pesto nasce a Genova nell'800. Il nome viene da \"pestare\" nel mortaio di marmo con pestello di legno.","dop":["Basilico Genovese DOP","Olio Riviera Ligure DOP"],"ingredienti":[{"id":"trofie","q":180,"u":"g"},{"id":"basilico","q":50,"u":"g"},{"id":"pinoli","q":30,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"parmigiano","q":40,"u":"g"},{"id":"olio_evo","q":60,"u":"ml"}],"step":[{"az":"mescolare","ing":"basilico","testo":"Pesta basilico, aglio e pinoli nel mortaio"},{"az":"mescolare","ing":"parmigiano","testo":"Aggiungi parmigiano e olio a filo"},{"az":"bollire","ing":"trofie","testo":"Cuoci le trofie in acqua salata"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci a crudo con il pesto"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":680,"curiosita":"Il pesto autentico si fa SOLO nel mortaio. Il frullatore riscalda il basilico e lo fa ossidare.","mai":[{"id":"panna","perche":"Il pesto è già cremoso di suo: l'olio, i pinoli e il formaggio bastano. La panna lo appesantisce e ne spegne il profumo."}]},{"id":"ragu","nome":"Tagliatelle al Ragù alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":180,"porzioni":4,"storia":"La ricetta ufficiale è depositata dal 1982 alla Camera di Commercio di Bologna. La tagliatella deve essere larga 8 mm cotta.","dop":["Parmigiano Reggiano DOP","Aceto Balsamico di Modena IGP"],"ingredienti":[{"id":"tagliatelle","q":320,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"soffritto","q":150,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"vino_rosso","q":100,"u":"ml"},{"id":"parmigiano","q":60,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto di sedano, carota, cipolla"},{"az":"soffriggere","ing":"carne_macinata","testo":"Rosola la carne e sfuma col vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro, cuoci 2 ore a fuoco lento"},{"az":"bollire","ing":"tagliatelle","testo":"Cuoci le tagliatelle al dente"},{"az":"impiattare","ing":"parmigiano","testo":"Condisci e completa col parmigiano"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":720,"curiosita":"Gli spaghetti alla bolognese NON esistono in Italia: sono un'invenzione americana.","mai":[{"id":"aglio","perche":"Il ragù alla bolognese depositato dall'Accademia Italiana della Cucina non contiene aglio: il soffritto è sedano, carota e cipolla."}]},{"id":"lasagne","nome":"Lasagne alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":240,"porzioni":6,"storia":"Le lasagne verdi al forno sono il piatto della domenica bolognese. La sfoglia contiene spinaci per colorarla.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"sfoglia","q":400,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"besciamella","q":500,"u":"ml"},{"id":"parmigiano","q":100,"u":"g"}],"step":[{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù di carne"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il ragù per almeno 2 ore"},{"az":"mescolare","ing":"besciamella","testo":"Prepara la besciamella"},{"az":"comporre","ing":"sfoglia","testo":"Stratifica sfoglia, ragù, besciamella"},{"az":"infornare","ing":"parmigiano","testo":"Inforna a 180°C per 30 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":680,"curiosita":"Le lasagne erano già citate da Cicerone nel I secolo a.C. come \"laganum\"."},{"id":"risotto_milanese","nome":"Risotto alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":3,"tempo":25,"porzioni":2,"storia":"Nasce nel 1574 alle nozze della figlia di un mastro vetraio. Lo zafferano, usato per le vetrate del Duomo, fu aggiunto al riso per scherzo.","dop":["Grana Padano DOP","Zafferano dell'Aquila DOP"],"ingredienti":[{"id":"riso_carnaroli","q":180,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"burro","q":50,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":800,"u":"ml"},{"id":"parmigiano","q":50,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Tosta il riso con cipolla e burro"},{"az":"mescolare","ing":"riso_carnaroli","testo":"Sfuma col vino, aggiungi brodo"},{"az":"cuocere","ing":"zafferano","testo":"Aggiungi zafferano a metà cottura"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca con burro e parmigiano"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":540,"curiosita":"Lo zafferano è la spezia più cara del mondo: servono 150.000 fiori per 1 kg.","mai":[{"id":"panna","perche":"La cremosità del risotto la fa la mantecatura: burro e parmigiano fuori dal fuoco, mescolando. Se serve la panna, vuol dire che la mantecatura non è riuscita."}]},{"id":"cotoletta","nome":"Cotoletta alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":20,"porzioni":1,"storia":"La \"costoletta\" milanese è citata già nel 1134 nei registri dell'Abbazia di Sant'Ambrogio. Rivale storica della Wiener Schnitzel austriaca.","dop":[],"ingredienti":[{"id":"costoletta_vitello","q":200,"u":"g"},{"id":"uova","q":1,"u":"unità"},{"id":"pangrattato","q":80,"u":"g"},{"id":"burro","q":40,"u":"g"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"uova","testo":"Sbatti l'uovo"},{"az":"comporre","ing":"pangrattato","testo":"Impana la costoletta nel pangrattato"},{"az":"friggere","ing":"burro","testo":"Friggi nel burro chiarificato"},{"az":"impiattare","ing":"limone","testo":"Servi con spicchio di limone"}],"gusti":{"dolce":1,"salato":3,"amaro":1,"acido":2,"umami":4},"calorie":650,"curiosita":"La cotoletta \"orecchia di elefante\" è sottile e grande; quella \"alta\" è con l'osso."},{"id":"pizza","nome":"Pizza Margherita","regione":"Campania","regionId":"campania","difficolta":3,"tempo":1440,"porzioni":1,"storia":"Nel 1889 il pizzaiolo Raffaele Esposito la creò per la regina Margherita di Savoia: pomodoro, mozzarella e basilico per i colori della bandiera italiana.","dop":["Mozzarella di Bufala Campana DOP","Pomodoro San Marzano DOP"],"ingredienti":[{"id":"farina","q":250,"u":"g"},{"id":"lievito","q":2,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"mozzarella","q":100,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":10,"u":"ml"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, acqua, lievito, sale"},{"az":"riposare","ing":"lievito","testo":"Lascia lievitare 24 ore"},{"az":"comporre","ing":"pomodoro","testo":"Stendi la pizza, aggiungi pomodoro e mozzarella"},{"az":"infornare","ing":"basilico","testo":"Cuoci a 450°C per 90 secondi, aggiungi basilico"}],"gusti":{"dolce":3,"salato":3,"amaro":1,"acido":3,"umami":4},"calorie":750,"curiosita":"La \"Pizza Napoletana\" è Patrimonio UNESCO dal 2017 come arte del pizzaiuolo.","mai":[{"id":"panna","perche":"Sulla margherita vanno pomodoro, mozzarella, basilico e olio. Bastano loro: sono i tre colori della bandiera, ed è tutta lì."}]},{"id":"parmigiana","nome":"Parmigiana di Melanzane","regione":"Campania","regionId":"campania","difficolta":3,"tempo":90,"porzioni":4,"storia":"Tre regioni se la contendono: Campania, Sicilia ed Emilia. \"Parmigiana\" viene forse dal siciliano \"parmiciana\" (persiana) per la sovrapposizione delle fette.","dop":["Mozzarella di Bufala Campana DOP"],"ingredienti":[{"id":"melanzane","q":600,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"mozzarella","q":200,"u":"g"},{"id":"parmigiano","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"friggere","ing":"melanzane","testo":"Friggi le melanzane a fette"},{"az":"cuocere","ing":"pomodoro","testo":"Prepara la salsa di pomodoro"},{"az":"comporre","ing":"mozzarella","testo":"Stratifica melanzane, sugo, mozzarella"},{"az":"infornare","ing":"parmigiano","testo":"Inforna a 180°C per 40 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":2,"acido":3,"umami":4},"calorie":480,"curiosita":"In Emilia si fa con le zucchine; in Sicilia con le melanzane fritte intere."},{"id":"arancini","nome":"Arancini di Riso","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":4,"storia":"Di origine araba (X secolo), prendono il nome dalla forma e dal colore arancione. A Catania sono \"arancini\" (maschile, conici); a Palermo \"arancine\" (femminile, tonde).","dop":[],"ingredienti":[{"id":"riso_carnaroli","q":300,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"carne_macinata","q":150,"u":"g"},{"id":"piselli","q":80,"u":"g"},{"id":"pangrattato","q":100,"u":"g"},{"id":"uova","q":2,"u":"unità"}],"step":[{"az":"bollire","ing":"riso_carnaroli","testo":"Cuoci il riso con zafferano"},{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù con piselli"},{"az":"comporre","ing":"piselli","testo":"Forma le palline col ripieno"},{"az":"comporre","ing":"uova","testo":"Passa nell'uovo e nel pangrattato"},{"az":"friggere","ing":"pangrattato","testo":"Friggi in olio bollente"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":1,"umami":4},"calorie":380,"curiosita":"Il 13 dicembre, Santa Lucia, a Palermo si mangiano SOLO arancine e non si mangia pane o pasta."},{"id":"pasta_norma","nome":"Pasta alla Norma","regione":"Sicilia","regionId":"sicilia","difficolta":2,"tempo":40,"porzioni":2,"storia":"Catanese, dedicata all'opera \"Norma\" di Vincenzo Bellini (1831). Si dice che Nino Martoglio esclamasse \"È una Norma!\" assaggiandola.","dop":[],"ingredienti":[{"id":"maccheroni","q":180,"u":"g"},{"id":"melanzane","q":300,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"ricotta_salata","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"friggere","ing":"melanzane","testo":"Friggi le melanzane a dadini"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il sugo di pomodoro e basilico"},{"az":"bollire","ing":"maccheroni","testo":"Cuoci la pasta al dente"},{"az":"impiattare","ing":"ricotta_salata","testo":"Condisci e grattugia ricotta salata"}],"gusti":{"dolce":3,"salato":3,"amaro":2,"acido":3,"umami":3},"calorie":540,"curiosita":"La ricotta salata siciliana si stagiona per almeno 3 mesi.","mai":[{"id":"parmigiano","perche":"Sulla Norma va la ricotta salata, non il parmigiano: è una ricetta siciliana e il formaggio è quello dell'isola."}]},{"id":"orecchiette","nome":"Orecchiette alle Cime di Rapa","regione":"Puglia","regionId":"puglia","difficolta":2,"tempo":30,"porzioni":2,"storia":"Piatto simbolo della Puglia. Le orecchiette si fanno ancora a mano nei vicoli di Bari Vecchia dalle \"signore delle orecchiette\".","dop":[],"ingredienti":[{"id":"orecchiette","q":180,"u":"g"},{"id":"cime_rapa","q":400,"u":"g"},{"id":"aglio","q":2,"u":"spicchi"},{"id":"acciughe","q":4,"u":"unità"},{"id":"peperoncino","q":1,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"bollire","ing":"cime_rapa","testo":"Sbollenta le cime di rapa"},{"az":"soffriggere","ing":"aglio","testo":"Rosola aglio, acciughe e peperoncino"},{"az":"bollire","ing":"orecchiette","testo":"Cuoci le orecchiette nella stessa acqua"},{"az":"soffriggere","ing":"olio_evo","testo":"Salta tutto in padella"}],"gusti":{"dolce":1,"salato":4,"amaro":4,"acido":1,"umami":3},"calorie":420,"curiosita":"Le \"signore delle orecchiette\" di via Arco Basso a Bari sono state riconosciute patrimonio culturale immateriale."},{"id":"ribollita","nome":"Ribollita Toscana","regione":"Toscana","regionId":"toscana","difficolta":2,"tempo":120,"porzioni":4,"storia":"Zuppa contadina toscana, \"ribollita\" perché si preparava il venerdì e si faceva ri-bollire nei giorni successivi, diventando sempre più buona.","dop":["Olio Toscano IGP","Fagiolo Zolfino"],"ingredienti":[{"id":"pane_raffermo","q":200,"u":"g"},{"id":"cavolo_nero","q":300,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":100,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto"},{"az":"cuocere","ing":"cavolo_nero","testo":"Aggiungi verdure e fagioli"},{"az":"bollire","ing":"fagioli","testo":"Cuoci 1 ora, unisci il pomodoro"},{"az":"comporre","ing":"pane_raffermo","testo":"Stratifica con pane raffermo, \"ribolli\""}],"gusti":{"dolce":2,"salato":3,"amaro":3,"acido":2,"umami":3},"calorie":320,"curiosita":"Il cavolo nero resiste al gelo: è più dolce dopo la prima gelata invernale."},{"id":"bistecca","nome":"Bistecca alla Fiorentina","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":15,"porzioni":2,"storia":"Si cuoceva per la festa di San Lorenzo (10 agosto) a Firenze. Il nome \"bistecca\" viene dall'inglese \"beef steak\".","dop":["Vitellone Bianco dell'Appennino Centrale IGP"],"ingredienti":[{"id":"bistecca_chianina","q":800,"u":"g"},{"id":"sale_grosso","q":10,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":5,"u":"g"}],"step":[{"az":"riposare","ing":"bistecca_chianina","testo":"Porta la carne a temperatura ambiente"},{"az":"cuocere","ing":"sale_grosso","testo":"Cuoci 3 minuti per lato sulla brace"},{"az":"cuocere","ing":"rosmarino","testo":"Cuoci 5 minuti in piedi sull'osso"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci con sale, pepe, olio a crudo"}],"gusti":{"dolce":1,"salato":3,"amaro":2,"acido":1,"umami":5},"calorie":820,"curiosita":"La vera Fiorentina è alta almeno 3 dita, tagliata nella lombata di Chianina, cotta al sangue."},{"id":"vitello_tonnato","nome":"Vitello Tonnato","regione":"Piemonte","regionId":"piemonte","difficolta":2,"tempo":90,"porzioni":4,"storia":"Piatto piemontese dell'800. La salsa tonnata uniisce due mondi: la terra (vitello) e il mare (tonno). Servito freddo come antipasto estivo.","dop":[],"ingredienti":[{"id":"girello_vitello","q":500,"u":"g"},{"id":"tonno","q":200,"u":"g"},{"id":"acciughe","q":4,"u":"unità"},{"id":"capperi","q":30,"u":"g"},{"id":"uova","q":2,"u":"unità"},{"id":"olio_evo","q":100,"u":"ml"}],"step":[{"az":"bollire","ing":"girello_vitello","testo":"Lessa il vitello nel brodo aromatico"},{"az":"mescolare","ing":"tonno","testo":"Frulla tonno, acciughe e capperi"},{"az":"mescolare","ing":"uova","testo":"Aggiungi tuorli sodi e olio per la salsa"},{"az":"impiattare","ing":"capperi","testo":"Affetta sottile e nappa con la salsa"}],"gusti":{"dolce":1,"salato":4,"amaro":1,"acido":3,"umami":5},"calorie":420,"curiosita":"Il vitello tonnato è citato da Pellegrino Artusi nel suo celebre libro del 1891."},{"id":"tiramisu","nome":"Tiramisù","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":240,"porzioni":6,"storia":"Nasce a Treviso negli anni '60 al ristorante \"Le Beccherie\". Il nome veneto \"tiramesù\" significa \"tirami su\", per l'effetto energetico di caffè e uova.","dop":[],"ingredienti":[{"id":"savoiardi","q":300,"u":"g"},{"id":"mascarpone","q":500,"u":"g"},{"id":"uova","q":4,"u":"unità"},{"id":"zucchero","q":100,"u":"g"},{"id":"caffe","q":300,"u":"ml"},{"id":"cacao","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"uova","testo":"Monta tuorli con zucchero"},{"az":"mescolare","ing":"mascarpone","testo":"Unisci mascarpone e albumi montati"},{"az":"comporre","ing":"savoiardi","testo":"Bagna i savoiardi nel caffè"},{"az":"comporre","ing":"caffe","testo":"Stratifica savoiardi e crema"},{"az":"riposare","ing":"cacao","testo":"Spolvera di cacao, riposa in frigo 4 ore"}],"gusti":{"dolce":5,"salato":1,"amaro":3,"acido":1,"umami":2},"calorie":450,"curiosita":"Il tiramisù ha una festa nazionale (Tiramisù Day, 21 marzo) e un campionato mondiale a Treviso.","mai":[{"id":"panna","perche":"Nel tiramisù la crema è di mascarpone e uova. La panna montata la sostituisce spesso perché è più facile, ma cambia il dolce."}]},{"id":"cannoli","nome":"Cannoli Siciliani","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":6,"storia":"Dolce di origine araba, nato nell'harem degli emiri di Caltanissetta. Le cialde fritte simboleggiano l'abbondanza; si preparavano per il Carnevale.","dop":[],"ingredienti":[{"id":"farina","q":200,"u":"g"},{"id":"ricotta","q":500,"u":"g"},{"id":"zucchero","q":120,"u":"g"},{"id":"cioccolato","q":50,"u":"g"},{"id":"pistacchi","q":40,"u":"g"},{"id":"scorza_arancia","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, vino, zucchero"},{"az":"friggere","ing":"farina","testo":"Friggi le cialde arrotolate"},{"az":"mescolare","ing":"ricotta","testo":"Setaccia ricotta con zucchero"},{"az":"mescolare","ing":"cioccolato","testo":"Aggiungi cioccolato e scorza"},{"az":"impiattare","ing":"pistacchi","testo":"Farcisci e decora con pistacchi"}],"gusti":{"dolce":5,"salato":1,"amaro":1,"acido":1,"umami":1},"calorie":380,"curiosita":"La ricotta va riempita AL MOMENTO per non ammosciare la cialda. Un cannolo vero scrocchia."},{"id":"pasta_fagioli","nome":"Pasta e Fagioli","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":45,"porzioni":2,"storia":"Piatto della cucina povera, diffuso in tutta la penisola con un nome diverso in ogni regione: in Veneto è \"pasta e fasioi\". Nasce dove la carne era rara e i legumi erano la proteina di tutti i giorni.","dop":["Fagiolo di Lamon della Vallata Bellunese IGP"],"ingredienti":[{"id":"ditalini","q":140,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":80,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":2,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Fai appassire il soffritto con il rosmarino"},{"az":"cuocere","ing":"fagioli","testo":"Aggiungi fagioli e pomodoro, cuoci piano"},{"az":"bollire","ing":"ditalini","testo":"Cala la pasta direttamente nei fagioli"},{"az":"impiattare","ing":"olio_evo","testo":"Riposa qualche minuto e finisci a crudo con l'olio"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":2,"umami":3},"curiosita":"Legumi e cereali insieme si completano: presi da soli sono proteine incomplete, nello stesso piatto diventano complete. Per questo pasta e fagioli è un piatto unico, non un primo.","calorie":465,"mai":[{"id":"panna","perche":"La crema di pasta e fagioli viene dai fagioli stessi, schiacciati: è un piatto di cucina povera e non ha bisogno di aggiunte."}]},{"id":"minestrone","nome":"Minestrone di Verdure","regione":"Liguria","regionId":"liguria","difficolta":1,"tempo":50,"porzioni":2,"storia":"Il minestrone cambia con la stagione e con quello che l'orto dà: non esiste una ricetta unica. In Liguria si chiude con un cucchiaio di pesto, che si aggiunge sempre a fuoco spento.","dop":["Basilico Genovese DOP"],"ingredienti":[{"id":"patate","q":150,"u":"g"},{"id":"carote","q":80,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"fagiolini","q":80,"u":"g"},{"id":"sedano","q":50,"u":"g"},{"id":"fagioli","q":100,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"basilico","q":5,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"sedano","testo":"Fai insaporire sedano e carote nell'olio"},{"az":"bollire","ing":"patate","testo":"Copri d'acqua e cuoci patate e fagiolini"},{"az":"cuocere","ing":"fagioli","testo":"Unisci zucchine e fagioli, cuoci finché è cremoso"},{"az":"impiattare","ing":"basilico","testo":"Profuma col basilico a fuoco spento"}],"gusti":{"dolce":3,"salato":2,"amaro":1,"acido":1,"umami":2},"curiosita":"Il basilico va aggiunto a fuoco spento: il calore forte gli fa perdere gli oli profumati e lo fa diventare scuro e amaro.","calorie":220},{"id":"risotto_zucca","nome":"Risotto alla Zucca","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":35,"porzioni":2,"storia":"La zucca arriva in Europa dalle Americhe e attecchisce nella pianura fra Lombardia e Mantovano, dove entra nei risotti e nei tortelli. È un ortaggio d'autunno che si conserva tutto l'inverno.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"riso_carnaroli","q":160,"u":"g"},{"id":"zucca","q":300,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":700,"u":"ml"},{"id":"parmigiano","q":30,"u":"g"},{"id":"burro","q":15,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Fai appassire la cipolla, senza farla colorire"},{"az":"cuocere","ing":"zucca","testo":"Aggiungi la zucca a cubetti e falla sfaldare"},{"az":"cuocere","ing":"riso_carnaroli","testo":"Tosta il riso e cuoci aggiungendo il brodo poco per volta"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca fuori dal fuoco con burro e parmigiano"}],"gusti":{"dolce":4,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"La zucca è arancione per il betacarotene, che il corpo trasforma in vitamina A. È uno dei pochi nutrienti che si assorbe meglio se nel piatto c'è anche un grasso: qui ci pensa il burro della mantecatura.","calorie":475},{"id":"merluzzo_forno","nome":"Merluzzo al Forno con Patate","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":40,"porzioni":2,"storia":"Il pesce al forno con le patate è di casa su tutte le coste italiane: una teglia sola, il pesce sopra le patate, e il forno fa il resto. In Liguria si aggiungono olive e pinoli.","dop":[],"ingredienti":[{"id":"merluzzo","q":250,"u":"g"},{"id":"patate","q":250,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"prezzemolo","q":5,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"prezzemolo","testo":"Prepara un trito di prezzemolo e aglio con l'olio"},{"az":"comporre","ing":"patate","testo":"Stendi le patate a fette sul fondo della teglia"},{"az":"infornare","ing":"merluzzo","testo":"Adagia il merluzzo sopra le patate e inforna"},{"az":"impiattare","ing":"limone","testo":"Servi con una spremuta di limone"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":3,"umami":3},"curiosita":"Le Linee Guida per una sana alimentazione consigliano il pesce due o tre volte a settimana. Al forno mantiene i suoi grassi buoni, gli omega-3, che una frittura ad alta temperatura invece rovina.","calorie":270},{"id":"farro_orto","nome":"Farro con le Verdure dell'Orto","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":35,"porzioni":2,"storia":"Il farro è il cereale più antico coltivato in Italia: lo mangiavano gli Etruschi e i legionari romani. In Garfagnana non ha mai smesso di essere coltivato, nemmeno quando il grano lo aveva sostituito ovunque.","dop":["Farro della Garfagnana IGP"],"ingredienti":[{"id":"farro","q":160,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"pomodoro","q":120,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":15,"u":"ml"}],"step":[{"az":"bollire","ing":"farro","testo":"Lessa il farro in acqua salata e scolalo"},{"az":"soffriggere","ing":"zucchine","testo":"Salta le zucchine a dadini, che restino sode"},{"az":"cuocere","ing":"pomodoro","testo":"Unisci il pomodoro e fallo appena appassire"},{"az":"impiattare","ing":"basilico","testo":"Condisci il farro e profuma col basilico"}],"gusti":{"dolce":2,"salato":2,"amaro":1,"acido":3,"umami":2},"curiosita":"Il farro è un cereale integrale: conserva la crusca, quindi ha più fibra della pasta bianca. La fibra non nutre, ma tiene in ordine l'intestino e fa sentire sazi più a lungo.","calorie":350},{"id":"frittata_forno","nome":"Frittata al Forno con le Zucchine","regione":"Campania","regionId":"campania","difficolta":1,"tempo":25,"porzioni":2,"storia":"La frittata è il piatto del riciclo per eccellenza: nasce per non buttare via le verdure avanzate. Ogni regione ha la sua, e in Campania si fa anche con la pasta del giorno prima.","dop":[],"ingredienti":[{"id":"uova","q":4,"u":"unità"},{"id":"zucchine","q":200,"u":"g"},{"id":"parmigiano","q":30,"u":"g"},{"id":"olio_evo","q":10,"u":"ml"},{"id":"basilico","q":3,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"zucchine","testo":"Rosola le zucchine a fettine e falle raffreddare"},{"az":"mescolare","ing":"uova","testo":"Sbatti le uova con il parmigiano e unisci le zucchine"},{"az":"infornare","ing":"parmigiano","testo":"Versa in teglia e cuoci in forno finché è appena dorata"},{"az":"impiattare","ing":"basilico","testo":"Taglia a quadrotti e profuma col basilico"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"Cotta al forno invece che fritta, la frittata non assorbe l'olio della padella: stessi ingredienti, molti grassi in meno. Il modo di cuocere cambia il piatto quanto la ricetta.","calorie":270}],"INGREDIENTS":{"spaghetti":{"nome":"Spaghetti","cat":"pasta","kcal100":355},"bucatini":{"nome":"Bucatini","cat":"pasta","kcal100":355},"trofie":{"nome":"Trofie","cat":"pasta","kcal100":355},"tagliatelle":{"nome":"Tagliatelle all'uovo","cat":"pasta","kcal100":368},"sfoglia":{"nome":"Sfoglia all'uovo","cat":"pasta","kcal100":368},"maccheroni":{"nome":"Maccheroni","cat":"pasta","kcal100":355},"orecchiette":{"nome":"Orecchiette","cat":"pasta","kcal100":355},"riso_carnaroli":{"nome":"Riso Carnaroli","cat":"cereali","kcal100":340},"farina":{"nome":"Farina 00","cat":"cereali","kcal100":340},"pane_raffermo":{"nome":"Pane raffermo","cat":"cereali","kcal100":270},"pangrattato":{"nome":"Pangrattato","cat":"cereali","kcal100":380},"savoiardi":{"nome":"Savoiardi","cat":"cereali","kcal100":400},"guanciale":{"nome":"Guanciale","cat":"carne","kcal100":655},"carne_macinata":{"nome":"Carne macinata","cat":"carne","kcal100":240},"costoletta_vitello":{"nome":"Costoletta di vitello","cat":"carne","kcal100":220},"bistecca_chianina":{"nome":"Bistecca di Chianina","cat":"carne","kcal100":250},"girello_vitello":{"nome":"Girello di vitello","cat":"carne","kcal100":130},"tonno":{"nome":"Tonno sott'olio","cat":"pesce","kcal100":195},"acciughe":{"nome":"Acciughe","cat":"pesce","kcal100":130},"uova":{"nome":"Uova intere","cat":"latticini","kcal100":130},"tuorli":{"nome":"Tuorli d'uovo","cat":"latticini","kcal100":320},"pecorino":{"nome":"Pecorino Romano","cat":"latticini","kcal100":390},"parmigiano":{"nome":"Parmigiano Reggiano","cat":"latticini","kcal100":395},"mozzarella":{"nome":"Mozzarella di Bufala","cat":"latticini","kcal100":280},"ricotta":{"nome":"Ricotta","cat":"latticini","kcal100":170},"ricotta_salata":{"nome":"Ricotta salata","cat":"latticini","kcal100":240},"mascarpone":{"nome":"Mascarpone","cat":"latticini","kcal100":450},"burro":{"nome":"Burro","cat":"latticini","kcal100":760},"besciamella":{"nome":"Besciamella","cat":"latticini","kcal100":150},"pomodoro":{"nome":"Pomodoro","cat":"verdure","kcal100":20},"basilico":{"nome":"Basilico","cat":"verdure","kcal100":25},"aglio":{"nome":"Aglio","cat":"verdure","kcal100":40},"cipolla":{"nome":"Cipolla","cat":"verdure","kcal100":40},"soffritto":{"nome":"Sedano, carota, cipolla","cat":"verdure","kcal100":35},"melanzane":{"nome":"Melanzane","cat":"verdure","kcal100":25},"cime_rapa":{"nome":"Cime di rapa","cat":"verdure","kcal100":30},"cavolo_nero":{"nome":"Cavolo nero","cat":"verdure","kcal100":40},"fagioli":{"nome":"Fagioli cannellini","cat":"verdure","kcal100":110},"piselli":{"nome":"Piselli","cat":"verdure","kcal100":80},"capperi":{"nome":"Capperi","cat":"verdure","kcal100":25},"olio_evo":{"nome":"Olio extra vergine","cat":"condimenti","kcal100":900},"pepe_nero":{"nome":"Pepe nero","cat":"spezie","kcal100":250},"peperoncino":{"nome":"Peperoncino","cat":"spezie","kcal100":280},"zafferano":{"nome":"Zafferano","cat":"spezie","kcal100":310},"sale_grosso":{"nome":"Sale grosso","cat":"spezie","kcal100":0},"rosmarino":{"nome":"Rosmarino","cat":"spezie","kcal100":130},"scorza_arancia":{"nome":"Scorza d'arancia","cat":"spezie","kcal100":95},"pinoli":{"nome":"Pinoli","cat":"frutta_secca","kcal100":670},"pistacchi":{"nome":"Pistacchi","cat":"frutta_secca","kcal100":560},"limone":{"nome":"Limone","cat":"verdure","kcal100":30},"brodo":{"nome":"Brodo di carne","cat":"liquidi","kcal100":15},"vino_rosso":{"nome":"Vino rosso","cat":"liquidi","kcal100":85},"caffe":{"nome":"Caffè espresso","cat":"liquidi","kcal100":5},"lievito":{"nome":"Lievito di birra","cat":"altri","kcal100":100},"zucchero":{"nome":"Zucchero","cat":"altri","kcal100":390},"cioccolato":{"nome":"Cioccolato fondente","cat":"altri","kcal100":540},"cacao":{"nome":"Cacao amaro","cat":"altri","kcal100":350},"ditalini":{"nome":"Ditalini","cat":"pasta","kcal100":355},"farro":{"nome":"Farro perlato","cat":"cereali","kcal100":335},"merluzzo":{"nome":"Merluzzo","cat":"pesce","kcal100":82},"zucca":{"nome":"Zucca","cat":"verdure","kcal100":18},"patate":{"nome":"Patate","cat":"verdure","kcal100":80},"carote":{"nome":"Carote","cat":"verdure","kcal100":35},"zucchine":{"nome":"Zucchine","cat":"verdure","kcal100":15},"sedano":{"nome":"Sedano","cat":"verdure","kcal100":20},"fagiolini":{"nome":"Fagiolini","cat":"verdure","kcal100":31},"prezzemolo":{"nome":"Prezzemolo","cat":"spezie","kcal100":35},"panna":{"nome":"Panna da cucina","cat":"latticini","kcal100":340}},"AZIONI":{"bollire":{"nome":"Bollire"},"soffriggere":{"nome":"Soffriggere"},"friggere":{"nome":"Friggere"},"cuocere":{"nome":"Cuocere"},"infornare":{"nome":"Infornare"},"mescolare":{"nome":"Mescolare"},"comporre":{"nome":"Comporre"},"riposare":{"nome":"Riposare"},"impiattare":{"nome":"Impiattare"}},"REGIONI":{"piemonte":{"nome":"Piemonte","x":110,"y":165,"capoluogo":"Torino"},"lombardia":{"nome":"Lombardia","x":180,"y":155,"capoluogo":"Milano"},"veneto":{"nome":"Veneto","x":245,"y":160,"capoluogo":"Venezia"},"liguria":{"nome":"Liguria","x":135,"y":215,"capoluogo":"Genova"},"emilia":{"nome":"Emilia-Romagna","x":210,"y":215,"capoluogo":"Bologna"},"toscana":{"nome":"Toscana","x":210,"y":275,"capoluogo":"Firenze"},"lazio":{"nome":"Lazio","x":250,"y":345,"capoluogo":"Roma"},"campania":{"nome":"Campania","x":305,"y":395,"capoluogo":"Napoli"},"puglia":{"nome":"Puglia","x":375,"y":395,"capoluogo":"Bari"},"sicilia":{"nome":"Sicilia","x":290,"y":525,"capoluogo":"Palermo"}}};
 
 /* ---------- 1. PRNG deterministico (RIGIOCABILITA §5.1) ------------------ */
 function cyrb53(s, seed = 0){
@@ -1008,7 +1024,9 @@ function shuffle(arr, r){
 }
 
 /* ---------- 2. Costanti di gioco ---------------------------------------- */
-const COSTO = { bollire:8, soffriggere:5, cuocere:10, mescolare:3, impiattare:2 };
+/* Minuti di LAVORO ATTIVO per comando (il forno e il frigo lavorano da soli:
+   infornare costa 3 minuti di gesti, riposare zero). Numeri informativi. */
+const COSTO = { bollire:8, soffriggere:5, friggere:7, cuocere:10, infornare:3, mescolare:3, comporre:4, riposare:0, impiattare:2 };
 
 /* ---------- Stato + ciclo update ------------------------------------- */
 let S = null;
@@ -1022,61 +1040,97 @@ function update(fn){
 }
 
 /* ---------- 8. Azioni del giocatore ------------------------------------- */
-function scegliAzione(az){
-  update(() => { S.mondo.azione = (S.mondo.azione === az) ? null : az; });
+/* --- L'editor dell'algoritmo ------------------------------------------- */
+const ingUsati = () => new Set(S.mondo.programma.flatMap(b => b.ings));
+/* Gli ingredienti che stanno in dispensa per questo piatto: quelli veri della
+   ricetta più le tentazioni della tradizione, SENZA distinguerli in alcun modo. */
+function vociDispensa(r){
+  const voci = r.ingredienti.map(i => ({ id: i.id, q: fmt(i.q) + ' ' + i.u }));
+  (r.mai || []).forEach(m => {
+    if(!voci.some(v => v.id === m.id)) voci.push({ id: m.id, q: 'q.b.' });
+  });
+  return voci;
 }
 
-function aggiungiIngrediente(id){
-  const r = piatto();
-  if(!r) return;
-  const voce = r.ingredienti.find(i => i.id === id);
-  const serve = voce ? voce.q : 0;
-  const ho = S.risorse.dispensa[id] || 0;
-
-  if(S.mondo.padella.includes(id)) return;
-  if(S.mondo.crono.some(st => st.ings.includes(id))){
-    toast(DB.INGREDIENTS[id].nome + ' è già entrato in questo piatto.', 'amb'); return;
-  }
-  if(!voce){
-    S.mondo.padella.push(id);
-    render();
-    // Se è una tentazione della tradizione NON avviso: la panna è lì, a portata
-    // di mano, e metterla dev'essere possibile. La ragione arriva all'assaggio,
-    // legata al proprio gesto — avvisare adesso spegnerebbe la scoperta.
-    const trad = (r.mai || []).some(m => m.id === id);
-    if(!trad) toast(DB.INGREDIENTS[id].nome + ' non è in questa ricetta. Puoi toglierlo finché non confermi.', 'amb');
-    return;
-  }
-  if(ho < serve){
-    toast('Ne servono ' + serve + ' ' + voce.u + ', in dispensa ce ne sono ' + fmt(ho) + '. Non basta.', 'amb');
-    return;
-  }
-  update(() => { S.mondo.padella.push(id); });
-}
-
-function togliIngrediente(id){ update(() => { S.mondo.padella = S.mondo.padella.filter(i => i !== id); }); }
-
-/* Confermare il passaggio è il punto di NON RITORNO: la dispensa si consuma. */
-function confermaStep(){
-  const r = piatto();
-  if(!r || !S.mondo.azione || S.mondo.padella.length === 0) return;
+function aggiungiComando(az){
+  if(!S || S.mondo.run) return;
   update(() => {
-    S.mondo.padella.forEach(id => {
-      const voce = r.ingredienti.find(i => i.id === id);
-      const q = voce ? voce.q : (S.risorse.dispensa[id] || 0);
-      S.risorse.dispensa[id] = Math.max(0, Math.round(((S.risorse.dispensa[id] || 0) - q) * 10) / 10);
-    });
-    S.mondo.crono.push({ az: S.mondo.azione, ings: S.mondo.padella.slice() });
-    S.mondo.orologio += COSTO[S.mondo.azione];   // minuti di cucina vera: informativi, nessun conto alla rovescia
-    S.mondo.padella = [];
-    S.mondo.azione = null;
+    S.mondo.programma.push({ az, ings: [] });
+    S.mondo.sel = S.mondo.programma.length - 1;
+  });
+}
+function selezionaBlocco(i){
+  if(S.mondo.run) return;
+  update(() => { S.mondo.sel = (S.mondo.sel === i) ? null : i; });
+}
+function eliminaBlocco(i){
+  if(S.mondo.run) return;
+  update(() => {
+    S.mondo.programma.splice(i, 1);
+    if(S.mondo.sel != null){
+      if(S.mondo.sel === i) S.mondo.sel = null;
+      else if(S.mondo.sel > i) S.mondo.sel--;
+    }
+  });
+}
+function muoviBlocco(i, dir){
+  if(S.mondo.run) return;
+  const j = i + dir;
+  if(j < 0 || j >= S.mondo.programma.length) return;
+  update(() => {
+    const p = S.mondo.programma;
+    [p[i], p[j]] = [p[j], p[i]];
+    if(S.mondo.sel === i) S.mondo.sel = j;
+    else if(S.mondo.sel === j) S.mondo.sel = i;
   });
 }
 
-function portaInTavola(){
+function aggiungiIngrediente(id, bloccoIdx){
+  if(!S || S.mondo.run) return;
   const r = piatto();
-  if(!r || S.mondo.crono.length === 0) return;
-  mostraVerdetto(valuta(S.mondo.crono, r), r);
+  if(bloccoIdx != null) S.mondo.sel = bloccoIdx;
+  if(S.mondo.sel == null){
+    toast('Prima aggiungi un comando: gli ingredienti vanno dentro un\'istruzione.', 'amb');
+    return;
+  }
+  if(ingUsati().has(id)){
+    toast(DB.INGREDIENTS[id].nome + ' è già nell\'algoritmo.', 'amb');
+    return;
+  }
+  // Le tentazioni entrano in silenzio: la ragione arriva all'assaggio,
+  // legata al proprio gesto. Avvisare adesso spegnerebbe la scoperta.
+  update(() => { S.mondo.programma[S.mondo.sel].ings.push(id); });
+}
+function togliIngrediente(bloccoIdx, id){
+  if(S.mondo.run) return;
+  update(() => {
+    const b = S.mondo.programma[bloccoIdx];
+    if(b) b.ings = b.ings.filter(x => x !== id);
+  });
+}
+
+/* --- L'esecuzione: il momento della verità ------------------------------ */
+function eseguiAlgoritmo(){
+  if(!S || !S.mondo.programma.length || S.mondo.run) return;
+  S.mondo.sel = null;
+  const r = piatto();
+  const fine = () => {
+    S.mondo.run = null;
+    render();   // la pagina sotto la modale torna modificabile: il debug riparte da qui
+    mostraVerdetto(valuta(S.mondo.programma, r), r);
+  };
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ render(); return fine(); }
+  S.mondo.run = { passo: -1 };
+  const avanza = () => {
+    if(!S || !S.mondo.run) return;                 // cambio pagina a metà corsa
+    S.mondo.run.passo++;
+    render();
+    if(S.mondo.run.passo >= S.mondo.programma.length - 1) return setTimeout(fine, 650);
+    const el = document.querySelector('.blocco.run');
+    if(el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    setTimeout(avanza, 700);
+  };
+  avanza();
 }
 
 /* ---------- 9. Valutazione (linguaggio mai colpevolizzante) ------------- */
@@ -1136,7 +1190,7 @@ function valuta(steps, r){
     1: ['Si mangia — ma la ricetta è un\'altra cosa. Riparti dalla sequenza.', 'L\'idea si è persa per strada: rileggi i passaggi e riprova.', 'Le intenzioni ci sono; la tradizione non ancora.'],
     0: ['Questo è un altro piatto: rileggi la ricetta con calma e riprova.', 'Qualcosa si è inceppato presto: le note qui sotto dicono dove.', 'Ricomincia dal primo passaggio: la ricetta non scappa.']
   };
-  const r2 = mulberry32(cyrb53(S.mondo.ricetta + '-v' + S.mondo.crono.length));
+  const r2 = mulberry32(cyrb53(S.mondo.ricetta + '-v' + S.mondo.programma.length));
   return { stelle, note, battuta: pick(battute[stelle], r2), sprechi: extra.length };
 }
 
@@ -1151,7 +1205,11 @@ const fmt = n => (Math.round(n * 10) / 10).toString().replace('.', ',');
 const ICO = {
   bollire:'<path d="M4 13h16l-1.1 6.4a1.5 1.5 0 0 1-1.5 1.2H6.6a1.5 1.5 0 0 1-1.5-1.2Z"/><path d="M9 9.4c0-1.4 1.4-1.6 1.4-3S9 3.6 9 3.6"/><path d="M14.4 9.4c0-1.4 1.4-1.6 1.4-3s-1.4-2.8-1.4-2.8"/>',
   soffriggere:'<path d="M3 14h12.5a2 2 0 0 1 0 4H3.6A.6.6 0 0 1 3 17.4Z"/><path d="M15.5 15.2 21 12.4"/><path d="M6.6 10.6c0-1.2 1.2-1.4 1.2-2.6M10.4 10.6c0-1.2 1.2-1.4 1.2-2.6"/>',
-  cuocere:'<rect x="3.4" y="7.6" width="17.2" height="13" rx="2"/><path d="M3.4 11.6h17.2"/><path d="M7 9.6h.01M10.4 9.6h.01"/><path d="M8 15.4h8"/>',
+  cuocere:'<path d="M5 9.4h14v7.6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3Z"/><path d="M3.6 9.4h16.8"/><path d="M12 6.6V4.8"/><path d="M8.4 6.4c0-1 .9-1.1.9-2M14.7 6.4c0-1 .9-1.1.9-2"/>',
+  infornare:'<rect x="3.4" y="7.6" width="17.2" height="13" rx="2"/><path d="M3.4 11.6h17.2"/><path d="M7 9.6h.01M10.4 9.6h.01"/><path d="M8 15.4h8"/>',
+  friggere:'<path d="M4.4 12.4h15.2v4.2a3 3 0 0 1-3 3H7.4a3 3 0 0 1-3-3Z"/><path d="M19.6 13.6l1.8-.9"/><circle cx="9" cy="8.6" r="1.1"/><circle cx="13.4" cy="6.4" r="1.1"/><circle cx="15.6" cy="9.6" r="1.1"/>',
+  comporre:'<rect x="5" y="4.4" width="14" height="3.4" rx="1.6"/><rect x="5" y="10.3" width="14" height="3.4" rx="1.6"/><rect x="5" y="16.2" width="14" height="3.4" rx="1.6"/>',
+  riposare:'<path d="M7 3.6h10M7 20.4h10"/><path d="M8.2 3.6v3l3.8 5.4 3.8-5.4v-3M8.2 20.4v-3L12 12l3.8 5.4v3"/>',
   mescolare:'<path d="M5.4 8.4h13.2l-1 9.4a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8Z"/><path d="m15.6 4.4-4 6.4"/>',
   impiattare:'<circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.6"/>',
   stella:'<path d="M12 3 9.6 8.8 3.4 9.4l4.7 4.1-1.4 6.1L12 16.4l5.3 3.2-1.4-6.1 4.7-4.1-6.2-.6Z"/>',
@@ -1205,13 +1263,13 @@ function render(){
   const r = piatto();
   if(r){
     $('#prep-titolo').textContent = r.nome;
-    $('#prep-sotto').textContent = r.regione + ' · ' + r.porzioni + ' porzioni · difficoltà ' + r.difficolta + ' su 3';
+    $('#prep-sotto').textContent = r.regione + ' · un algoritmo di ' + r.step.length + ' istruzioni · difficoltà ' + r.difficolta + ' su 3';
   } else {
     $('#prep-titolo').innerHTML = 'La <em>preparazione</em>';
     $('#prep-sotto').textContent = 'Prima scegli un piatto dal ricettario';
   }
   renderScheda();
-  renderCucina();
+  renderAlgoritmo();
   renderDispensa();
 }
 
@@ -1263,20 +1321,36 @@ function renderScheda(){
   const box = $('#prep-scheda');
   const r = piatto();
   if(!r){ box.innerHTML = '<p class="disp-note">Il piatto che sceglierai comparirà qui, con la sua storia.</p>'; return; }
-  const fatti = Math.min(S.mondo.crono.length, r.step.length);
   const g = gruppiPiatto(r);
+  const lavoro = S.mondo.programma.reduce((s, b) => s + COSTO[b.az], 0);
   const riga = (l, v) => '<div class="sch-riga"><span class="sr-l">' + l + '</span><span class="sr-v">' + v + '</span></div>';
+  const spec = S.ricettarioAperto
+    ? r.step.map((st, i) =>
+        '<div class="spec-r"><span class="spec-n">' + (i + 1) + '</span>' +
+        '<span class="spec-az">' + DB.AZIONI[st.az].nome + '</span>' +
+        '<span class="spec-t">' + esc(st.testo) + '</span></div>').join('')
+    : r.step.map((st, i) =>
+        '<div class="spec-r"><span class="spec-n">' + (i + 1) + '</span>' +
+        '<span class="spec-t"><em>istruzione coperta: vai a memoria</em></span></div>').join('');
   box.innerHTML =
     '<div class="sch">' +
       riga('Regione', esc(r.regione)) +
       riga('Porzioni', r.porzioni) +
       riga('Difficoltà', r.difficolta + ' su 3') +
       riga('Energia', r.calorie + ' kcal/porz.') +
-      riga('In cucina finora', S.mondo.orologio + ' min') +
-      '<div class="sch-avanz"><div class="sa-lab"><span>Passaggi</span><span>' + fatti + ' di ' + r.step.length + '</span></div>' +
-      '<div class="sa-bar"><span style="width:' + (fatti / r.step.length * 100) + '%"></span></div></div>' +
+      riga('Istruzioni previste', r.step.length) +
+      riga('Lavoro attivo scritto', lavoro + ' min') +
     '</div>' +
-    '<div class="fact"><div class="f-lab">Da dove viene</div><div class="f-txt">' + esc(r.storia) + '</div></div>' +
+    '<div class="fact"><div class="f-lab">L\'algoritmo della tradizione</div>' +
+      '<p style="font-size:12px;color:var(--muted);margin:4px 0 8px;line-height:1.45">La specifica del problema: che cosa deve fare il tuo programma, istruzione per istruzione.</p>' +
+      '<div class="spec">' + spec + '</div>' +
+    '</div>' +
+    '<div class="ric-toggle" style="margin-top:10px">' +
+      '<span class="eyebrow eyebrow--muted">Specifica visibile</span>' +
+      '<button class="switch' + (S.ricettarioAperto ? ' on' : '') + '" id="sw-ric" role="switch" aria-checked="' + S.ricettarioAperto + '" aria-label="Mostra la specifica dell\'algoritmo"></button>' +
+    '</div>' +
+    '<p class="disp-note" style="margin-top:4px">' + (S.ricettarioAperto ? 'Specifica aperta: leggi e programma.' : 'A memoria: sai già cosa deve succedere.') + '</p>' +
+    '<div class="fact" style="margin-top:8px"><div class="f-lab">Da dove viene</div><div class="f-txt">' + esc(r.storia) + '</div></div>' +
     (r.dop && r.dop.length ? '<div class="fact" style="margin-top:8px"><div class="f-lab">Denominazioni</div><div class="f-txt">' +
       r.dop.map(d => '<span class="dop">' + esc(d) + '</span>').join('') + '</div></div>' : '') +
     '<div class="fact" style="margin-top:8px"><div class="f-lab">Che cosa c\'è nel piatto</div>' +
@@ -1284,143 +1358,128 @@ function renderScheda(){
         '<div class="gr"><span class="gr-lab">' + x.lab + '</span>' +
         '<span class="gr-bar"><span class="gr-' + x.k + '" style="width:' + x.perc + '%"></span></span>' +
         '<span class="gr-val mono">' + x.perc + '%</span></div>').join('') + '</div>' +
-      '<p style="font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:8px">Percentuali sul peso di ciò che resta nel piatto: brodo, vino e spezie non contano. Il piatto equilibrato delle Linee Guida — metà verdura, un quarto cereali, un quarto proteine — vale sul <em>pasto intero</em>.</p>' +
+      '<p style="font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:8px">Percentuali sul peso di ciò che resta nel piatto: brodo, vino e spezie non contano. Il piatto equilibrato delle Linee Guida vale sul <em>pasto intero</em>.</p>' +
     '</div>' +
-    '<div class="ric-toggle" style="margin-top:14px">' +
-      '<span class="eyebrow eyebrow--muted">Testi dei passaggi</span>' +
-      '<button class="switch' + (S.ricettarioAperto ? ' on' : '') + '" id="sw-ric" role="switch" aria-checked="' + S.ricettarioAperto + '" aria-label="Mostra i testi dei passaggi"></button>' +
-    '</div>' +
-    '<p class="disp-note" style="margin-top:4px">' + (S.ricettarioAperto ? 'Ricetta aperta: leggi e fai.' : 'A memoria: i testi sono coperti.') + '</p>' +
-    '<button class="btn btn--ghost btn--sm" id="btn-torna-volo" style="width:100%;margin-top:8px">Cambia piatto</button>';
+    '<button class="btn btn--ghost btn--sm" id="btn-torna-volo" style="width:100%;margin-top:10px">Cambia piatto</button>';
 }
 
-/* Il banco di lavoro: la ricetta È la pagina. I passaggi sono una scala
-   verticale; quello corrente si apre e contiene le tre mosse, sempre le
-   stesse: 1 scegli il gesto, 2 metti gli ingredienti, 3 conferma. */
-function renderCucina(){
+/* L'editor dell'algoritmo: la ricetta si PROGRAMMA a mattoncini.
+   Palette dei comandi in alto; il programma è una pila di blocchi fra
+   INIZIO e FINE; gli ingredienti sono i parametri, incastonati nel blocco.
+   Poi si ESEGUE, passo per passo: l'errore non si previene, si scopre. */
+function renderAlgoritmo(){
   const box = $('#zona-cucina');
   const r = piatto();
   if(!r){
-    box.innerHTML = '<div class="zona-h"><span>Il banco di lavoro</span></div>' +
-      '<p class="banco-vuoto">Nessun piatto sul banco.<br>Scegli una ricetta dal ricettario in volo.</p>';
+    box.innerHTML = '<div class="zona-h"><span>Il tuo algoritmo</span></div>' +
+      '<p class="banco-vuoto">Nessun problema da risolvere.<br>Scegli una ricetta dal ricettario in volo.</p>';
     return;
   }
-  const fatti = S.mondo.crono.length;
-  const tot = r.step.length;
-  const az = S.mondo.azione;
-  const pad = S.mondo.padella;
-  const aperto = S.ricettarioAperto;
-  const fase = !az ? 1 : (pad.length === 0 ? 2 : 3);
+  const prog = S.mondo.programma, sel = S.mondo.sel, run = S.mondo.run;
+  const fase = run ? 0 : (prog.length === 0 ? 1 : (sel != null && prog[sel].ings.length === 0 ? 2 : 3));
 
-  const mosse = ['Scegli il gesto', 'Metti gli ingredienti', 'Conferma'].map((m, i) => {
-    const st = fase === i + 1 ? ' on' : (fase > i + 1 ? ' ok' : '');
-    return '<span class="mossa' + st + '"><span class="mo-n">' + (fase > i + 1 ? svg(ICO.check) : (i + 1)) + '</span><span>' + m + '</span></span>';
+  const mosse = ['Comando', 'Parametri', 'Esegui'].map((m, i) => {
+    const st = fase === i + 1 ? ' on' : (fase > i + 1 || fase === 0 ? ' ok' : '');
+    return '<span class="mossa' + st + '"><span class="mo-n">' + ((fase > i + 1 || fase === 0) ? svg(ICO.check) : (i + 1)) + '</span><span>' + m + '</span></span>';
   }).join('<span class="mo-sep"></span>');
-  const guida = fase === 1 ? 'Leggi il passaggio e scegli qui sotto il gesto giusto.'
-    : fase === 2 ? 'Ora gli ingredienti: toccali o trascinali qui dalla dispensa.'
-    : 'C\'è tutto quello che serve? Allora conferma: il passaggio diventa definitivo.';
+  const guida = run ? 'L\'algoritmo sta girando: guarda i blocchi accendersi in ordine.'
+    : fase === 1 ? 'Tocca un comando qui sotto: è la prima istruzione del tuo algoritmo.'
+    : fase === 2 ? 'Il comando ha bisogno dei suoi dati: tocca gli ingredienti nella dispensa.'
+    : 'Aggiungi la prossima istruzione — o esegui l\'algoritmo e guarda che cosa succede.';
 
-  const azHtml = '<div class="azioni">' + Object.entries(DB.AZIONI).map(([k, a]) =>
-    '<button class="az-btn' + (az === k ? ' on' : '') + '" data-az="' + k + '">' +
+  const palette = '<div class="palette">' + Object.entries(DB.AZIONI).map(([k, a]) =>
+    '<button class="az-btn" data-cmd="' + k + '"' + (run ? ' disabled' : '') + '>' +
       svg(ICO[k]) + '<span>' + a.nome + '</span><span class="az-min">' + COSTO[k] + "'</span></button>").join('') + '</div>';
 
-  const padHtml = '<div class="padella ' + (az || '') + '" id="padella">' + (pad.length === 0
-    ? '<p class="padella-vuota">' + (az ? 'Il tegame è vuoto: prendi gli ingredienti dalla dispensa' : 'Prima scegli il gesto qui sopra') + '</p>'
-    : '<div class="in-padella">' + pad.map(id => {
-        const voce = r.ingredienti.find(i => i.id === id);
-        return '<span class="pill-ing"><span>' + esc(DB.INGREDIENTS[id].nome) + '</span>' +
-          (voce ? '<span class="q">' + fmt(voce.q) + ' ' + esc(voce.u) + '</span>' : '') +
-          '<button class="pill-x" data-togli="' + id + '" aria-label="Togli ' + esc(DB.INGREDIENTS[id].nome) + '">' + svg(ICO.x) + '</button></span>';
-      }).join('') + '</div>') + '</div>';
+  const blocchi = prog.map((b, i) => {
+    const cls = 'blocco istr' + (sel === i && !run ? ' sel' : '') + (run && run.passo === i ? ' run' : '');
+    const params = b.ings.map(id =>
+      '<span class="param"><span>' + esc(DB.INGREDIENTS[id].nome) + '</span>' +
+      (run ? '' : '<button class="param-x" data-togli="' + id + '" data-blocco="' + i + '" aria-label="Togli ' + esc(DB.INGREDIENTS[id].nome) + '">' + svg(ICO.x) + '</button>') +
+      '</span>').join('');
+    const slot = (!run && sel === i)
+      ? '<span class="b-slot">' + (b.ings.length ? 'altri ingredienti?' : 'tocca gli ingredienti nella dispensa') + '</span>'
+      : (b.ings.length ? '' : '<span class="b-slot b-slot--vuoto">senza ingredienti</span>');
+    return '<li class="' + cls + '" data-blocco="' + i + '" tabindex="0" role="button" ' +
+      'aria-label="Istruzione ' + (i + 1) + ': ' + DB.AZIONI[b.az].nome + '">' +
+      '<div class="b-testa">' +
+        '<span class="b-i mono">' + (i + 1) + '</span>' +
+        svg(ICO[b.az], 'b-ico') + '<span class="b-nome">' + DB.AZIONI[b.az].nome + '</span>' +
+        '<span class="b-min mono">' + COSTO[b.az] + "'</span>" +
+        (run ? '' :
+        '<span class="b-cmd">' +
+          '<button data-su="' + i + '" aria-label="Sposta su"' + (i === 0 ? ' disabled' : '') + '>' + svg('<path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/>') + '</button>' +
+          '<button data-giu="' + i + '" aria-label="Sposta giù"' + (i === prog.length - 1 ? ' disabled' : '') + '>' + svg('<path d="M12 5v14M5.5 12.5 12 19l6.5-6.5"/>') + '</button>' +
+          '<button data-del="' + i + '" aria-label="Elimina istruzione">' + svg(ICO.x) + '</button>' +
+        '</span>') +
+      '</div>' +
+      '<div class="b-params">' + params + slot + '</div>' +
+    '</li>';
+  }).join('');
 
-  const banco =
-    '<div class="p-banco">' +
-      '<div class="adesso">' + mosse + '</div>' +
-      '<p class="adesso-guida">' + guida + '</p>' +
-      azHtml + padHtml +
-      '<div class="p-conferma"><button class="btn" id="btn-conferma"' + (!az || pad.length === 0 ? ' disabled' : '') + '>' +
-        svg(ICO.check) + 'Conferma il passaggio' + (az ? ' (' + COSTO[az] + "' di cucina)" : '') + '</button></div>' +
-    '</div>';
-
-  const righe = [];
-  for(let i = 0; i < tot; i++){
-    const st = r.step[i];
-    const testo = aperto ? esc(st.testo) : 'Passaggio ' + (i + 1) + ' — <em>a memoria</em>';
-    if(i < fatti){
-      const c = S.mondo.crono[i];
-      righe.push('<li class="passo fatto"><span class="p-n">' + svg(ICO.check) + '</span><div>' +
-        '<div class="p-testo">' + testo + '</div>' +
-        '<div class="p-fatto-riga"><strong>' + DB.AZIONI[c.az].nome + '</strong> — ' +
-          c.ings.map(id => esc(DB.INGREDIENTS[id].nome)).join(' · ') + '</div>' +
-      '</div></li>');
-    } else if(i === fatti){
-      righe.push('<li class="passo corrente" aria-current="step"><span class="p-n">' + (i + 1) + '</span><div>' +
-        '<div class="p-testo"><span class="p-qui">Sei qui</span>' + testo + '</div>' +
-      '</div>' + banco + '</li>');
-    } else {
-      righe.push('<li class="passo dopo"><span class="p-n">' + (i + 1) + '</span><div>' +
-        '<div class="p-testo">' + testo + '</div>' +
-      '</div></li>');
-    }
-  }
-  if(fatti >= tot){
-    righe.push('<li class="passo corrente"><span class="p-n">+</span><div>' +
-      '<div class="p-testo"><span class="p-qui">Sei qui</span>I passaggi della ricetta sono finiti. ' +
-      'Se hai dimenticato qualcosa puoi ancora rimediare; altrimenti il piatto è pronto.</div>' +
-    '</div>' + banco + '</li>');
-  }
+  const logHtml = run
+    ? '<div class="log mono">' + prog.slice(0, Math.max(0, run.passo + 1)).map((b, i) =>
+        '<div>passo ' + (i + 1) + ': ' + DB.AZIONI[b.az].nome.toUpperCase() + ' — ' +
+        (b.ings.length ? b.ings.map(id => DB.INGREDIENTS[id].nome).join(', ') : 'niente') + '</div>').join('') + '</div>'
+    : '';
 
   box.innerHTML =
-    '<div class="zona-h"><span>Il banco di lavoro</span><span class="z-count">' + Math.min(fatti, tot) + '/' + tot + ' passaggi</span></div>' +
+    '<div class="zona-h"><span>Il tuo algoritmo</span><span class="z-count">' + prog.length + (prog.length === 1 ? ' istruzione' : ' istruzioni') + '</span></div>' +
     '<div class="banco">' +
-      '<ul class="passi">' + righe.join('') + '</ul>' +
-      '<div class="tavola">' +
-        '<button class="btn btn--go" id="btn-tavola"' + (fatti === 0 ? ' disabled' : '') + '>' + svg(ICO.piatto) + 'Porta in tavola</button>' +
-        '<p class="tavola-nota">' + (fatti >= tot
-          ? 'Hai fatto tutti i passaggi: si va a tavola.'
-          : (fatti === 0 ? 'Si esce dalla cucina dopo aver confermato almeno un passaggio.'
-                         : 'Puoi uscire anche adesso: il piatto sarà giudicato per come è.')) + '</p>' +
+      '<div class="adesso">' + mosse + '</div>' +
+      '<p class="adesso-guida">' + guida + '</p>' +
+      '<p class="palette-lab">I comandi — tocca per aggiungere</p>' + palette +
+      '<ul class="programma">' +
+        '<li class="blocco hat">' + svg(ICO.stella, 'b-ico') + '<span class="b-nome">INIZIO</span><span class="b-lib">' + esc(r.nome) + '</span></li>' +
+        blocchi +
+        (prog.length === 0 ? '<li class="prog-vuoto">L\'algoritmo è vuoto. La prima istruzione la scegli tu.</li>' : '') +
+        '<li class="blocco fine">' + svg(ICO.piatto, 'b-ico') + '<span class="b-nome">FINE</span><span class="b-lib">si porta in tavola</span></li>' +
+      '</ul>' +
+      logHtml +
+      '<div class="esegui-bar">' +
+        '<button class="btn btn--go" id="btn-esegui"' + (prog.length === 0 || run ? ' disabled' : '') + '>' +
+          svg('<path d="M7 4.6 19 12 7 19.4Z"/>') + (run ? 'In esecuzione…' : 'Esegui l\'algoritmo') + '</button>' +
+        '<p class="tavola-nota">' + (prog.length === 0
+          ? 'Si esegue quando c\'è almeno un\'istruzione.'
+          : 'L\'errore non è un problema: si esegue, si guarda, si corregge.') + '</p>' +
       '</div>' +
     '</div>';
 
-  const padEl = $('#padella');
-  padEl.addEventListener('dragover', e => { e.preventDefault(); padEl.classList.add('on-drop'); });
-  padEl.addEventListener('dragleave', () => padEl.classList.remove('on-drop'));
-  padEl.addEventListener('drop', e => {
-    e.preventDefault(); padEl.classList.remove('on-drop');
-    const id = e.dataTransfer.getData('text/plain');
-    if(id) aggiungiIngrediente(id);
+  // trascinare un ingrediente su un blocco lo mette in QUEL blocco
+  box.querySelectorAll('.blocco.istr').forEach(el => {
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('on-drop'); });
+    el.addEventListener('dragleave', () => el.classList.remove('on-drop'));
+    el.addEventListener('drop', e => {
+      e.preventDefault(); el.classList.remove('on-drop');
+      const id = e.dataTransfer.getData('text/plain');
+      if(id) aggiungiIngrediente(id, parseInt(el.dataset.blocco, 10));
+    });
   });
 }
 
 function renderDispensa(){
-  if(!S){ $('#disp-count').textContent = ''; $('#dispensa').innerHTML = ''; return; }
   const r = piatto();
-  const serveIds = r.ingredienti.map(i => i.id);
+  if(!r){ $('#disp-count').textContent = ''; $('#dispensa').innerHTML = ''; return; }
+  const usati = ingUsati();
+  const voci = vociDispensa(r);
   const byCat = {};
-  Object.keys(S.risorse.dispensaIniziale).forEach(id => {
-    const ing = DB.INGREDIENTS[id];
+  voci.forEach(v => {
+    const ing = DB.INGREDIENTS[v.id];
     if(!ing) return;
-    (byCat[ing.cat] = byCat[ing.cat] || []).push(id);
+    (byCat[ing.cat] = byCat[ing.cat] || []).push(v);
   });
-  $('#disp-count').textContent = Object.keys(S.risorse.dispensaIniziale).length + ' voci';
+  $('#disp-count').textContent = voci.length + ' voci';
   $('#dispensa').innerHTML = Object.keys(byCat).sort().map(cat =>
     '<div class="disp-cat"><h5>' + (CAT_LAB[cat] || cat) + '</h5><div class="disp-grid">' +
-    byCat[cat].map(id => {
-      const q = S.risorse.dispensa[id] || 0;
-      const ing = DB.INGREDIENTS[id];
-      const voce = r.ingredienti.find(i => i.id === id);
-      const serve = voce ? voce.q : 0;
-      const unita = S.risorse.unita[id] || 'g';
-      const esaurito = q <= 0;
-      const insuff = !esaurito && voce && q < serve;
-      const cls = ['ing', serveIds.includes(id) ? 'serve' : '', esaurito ? 'esaurito' : '', insuff ? 'insuff' : ''].filter(Boolean).join(' ');
-      const drag = !esaurito ? ' draggable="true"' : '';
-      const tit = esc(ing.nome) + (voce ? ' — questa ricetta ne chiede ' + fmt(serve) + ' ' + esc(unita) : '');
-      return '<div class="' + cls + '"' + drag + ' data-ing="' + id + '" tabindex="0" role="button" title="' + tit + '">' +
+    byCat[cat].map(v => {
+      const ing = DB.INGREDIENTS[v.id];
+      const usato = usati.has(v.id);
+      // nessuna classe distingue le tentazioni: un bordo diverso le smaschererebbe
+      return '<div class="ing' + (usato ? ' usato' : '') + '"' + (usato ? '' : ' draggable="true"') +
+        ' data-ing="' + v.id + '" tabindex="0" role="button" title="' + esc(ing.nome) + ' — ' + esc(v.q) + '">' +
         svg(CAT[ing.cat] || CAT.altri, 'i-glyph') +
         '<span class="i-nome">' + esc(ing.nome) + '</span>' +
-        '<span class="i-q">' + (esaurito ? 'finito' : fmt(q) + ' ' + esc(unita)) + '</span>' +
+        '<span class="i-q">' + (usato ? 'nel programma' : esc(v.q)) + '</span>' +
       '</div>';
     }).join('') + '</div></div>').join('');
 }
@@ -1474,12 +1533,12 @@ function mostraVerdetto(v, r){
       '</div>' +
     '</div>' +
     '<div class="m-actions">' +
-      '<button class="btn btn--ghost" id="v-ancora">Riprova questo piatto</button>' +
+      '<button class="btn btn--ghost" id="v-ancora">Correggi l\'algoritmo</button>' +
       '<button class="btn btn--go" id="v-ok">' + svg(ICO.penna) + 'Scrivi il tuo assaggio</button>' +
     '</div>',
     { wide: true }
   );
-  $('#v-ancora').onclick = () => { chiudiModale(); apriRicetta(r.id); };
+  $('#v-ancora').onclick = () => chiudiModale();   // il programma resta: si corregge, non si ricomincia
   $('#v-ok').onclick = () => {
     chiudiModale();
     const prec = PREPARATE.get(r.id);
@@ -1537,7 +1596,7 @@ function renderChiusura(){
         '<ul>' +
           '<li><strong>La ricetta di famiglia.</strong> Fatti dettare da un adulto di casa una ricetta che <em>lui</em> ha imparato da qualcuno. Scrivila in step numerati, come qui, e alla fine aggiungi una riga: «me l\'ha insegnata…». È così che funziona il patrimonio immateriale.</li>' +
           '<li><strong>Che cosa NON ci va.</strong> Chiedi alla stessa persona: «c\'è qualcosa che in questo piatto non si mette mai?». Scrivi la risposta e la ragione. Se non c\'è nessuna ragione, scrivi anche quello: a volte la tradizione è solo un\'abitudine, e distinguere le due cose è il tuo lavoro.</li>' +
-          '<li><strong>La ricetta come algoritmo.</strong> Prendi la ricetta che hai preparato qui e prova a scambiare due step. Spiega in una riga che cosa si inceppa. Non tutti gli scambi rompono il piatto: trovane uno innocuo e uno fatale.</li>' +
+          '<li><strong>La ricetta come algoritmo.</strong> Prendi la ricetta che hai programmato qui e prova a scambiare due istruzioni. Spiega in una riga che cosa si inceppa. Non tutti gli scambi rompono il piatto: trovane uno innocuo e uno fatale.</li>' +
           '<li><strong>Il piatto che hai davanti.</strong> Al prossimo pranzo guarda il tuo piatto prima di iniziare e disegnalo diviso in tre parti: quanta verdura, quanti cereali, quante proteine. Non devi cambiare quello che mangi: devi solo accorgerti di che cosa c\'è.</li>' +
         '</ul>' +
       '</div>' +
@@ -1634,6 +1693,9 @@ function apriDocenti(){
       '<p>Non è una gara e non è un quiz: il ricettario resta aperto per tutto il tempo, quindi niente dipende dalla memoria. ' +
       'L\'oggetto dell\'apprendimento è la <strong>ricetta come sapere che si tramanda</strong>: la sequenza dei passaggi, il gesto giusto ' +
       'per ogni ingrediente, le quantità vere — e soprattutto che cosa in un piatto <em>non</em> entra, e perché.</p>' +
+      '<p>La preparazione è, dichiaratamente, una <strong>lezione di algoritmi</strong>: eseguire una ricetta È un algoritmo — ' +
+      'istruzioni ordinate, ognuna coi suoi dati. Il piatto si <strong>programma a mattoncini</strong> e poi si esegue; ' +
+      'l\'errore non si previene, si scopre eseguendo, e si corregge. Scrivi, esegui, correggi: è il ciclo del pensiero computazionale.</p>' +
       '<h4>Il piatto, non solo la ricetta</h4>' +
       '<p>Accanto ai grandi classici il ricettario contiene i piatti di tutti i giorni — legumi con cereali, verdure di stagione, pesce al forno, ' +
       'cotture non fritte — e non li segnala in alcun modo: stanno semplicemente lì, alla pari. Quando si apre una ricetta, la scheda mostra ' +
@@ -1653,7 +1715,7 @@ function apriDocenti(){
       '<h4>Che cosa si impara, in concreto</h4>' +
       '<ul>' +
         '<li>Geografia e cultura gastronomica italiana: ' + N_RICETTE + ' ricette, ' + N_REGIONI + ' regioni, denominazioni DOP/IGP, storia dei piatti.</li>' +
-        '<li>Pensiero procedurale: una ricetta è una sequenza con dipendenze. Alcuni scambi di step sono innocui, altri rompono il piatto.</li>' +
+        '<li>Pensiero computazionale: una ricetta è un algoritmo — istruzioni, parametri, sequenza. Alcuni scambi di istruzioni sono innocui, altri rompono il piatto.</li>' +
         '<li>Che cosa in un piatto non va messo, e perché: la tradizione come memoria collettiva, non come divieto.</li>' +
         '<li>Scrittura vera alla tastiera: ogni piatto preparato si racconta, con scaffolding e senza «mi piace» da solo.</li>' +
       '</ul>' +
@@ -1662,13 +1724,16 @@ function apriDocenti(){
         '<span class="tag">Metacognizione</span><span class="tag">Cittadinanza</span></div>' +
     '</div>' +
     '<div class="tabpane" data-pane="s">' +
-      '<h4>La preparazione, passaggio per passaggio</h4>' +
-      '<p>La pagina della preparazione mostra la ricetta come una <strong>scala di passaggi</strong>: quelli fatti si chiudono con la spunta ' +
-      'e il resoconto di ciò che si è fatto davvero, quello corrente è aperto ed evidenziato. Dentro al passaggio aperto ci sono le tre mosse, ' +
-      'sempre le stesse — <strong>1 scegli il gesto, 2 metti gli ingredienti, 3 conferma</strong> — con una guida che dice a che punto si è. ' +
-      'Confermare consuma la dispensa: le quantità sono quelle vere, e il passaggio confermato non si annulla.</p>' +
-      '<p>Lo studente resta libero di sbagliare: gesto sbagliato, ingrediente saltato, ingrediente di troppo. Nessun avviso lo ferma. ' +
-      'La valutazione arriva solo quando porta in tavola, e confronta ciò che ha fatto con la ricetta: sequenza, gesti, ingredienti.</p>' +
+      '<h4>L\'algoritmo a mattoncini</h4>' +
+      '<p>Il centro della pagina è un <strong>editor a blocchi</strong>: una palette di nove comandi di cucina (bollire, soffriggere, ' +
+      'friggere, cuocere, infornare, mescolare, comporre, riposare, impiattare) e il programma come pila di mattoncini fra INIZIO e FINE. ' +
+      'Ogni istruzione è un comando con dentro i suoi <strong>parametri</strong>: gli ingredienti, con le quantità vere. ' +
+      'Le tre mosse sono sempre le stesse — <strong>1 comando, 2 parametri, 3 esegui</strong> — e una guida dice a che punto si è.</p>' +
+      '<p>Il programma si <strong>modifica liberamente</strong> prima dell\'esecuzione: si riordina, si elimina, si aggiunge — come in ogni ' +
+      'editor di codice. Poi si esegue: i blocchi si accendono uno alla volta, un log racconta i passi, e il verdetto confronta ' +
+      'il programma con la ricetta. Se qualcosa non torna, <strong>si torna al codice e si corregge</strong>: il debug è la lezione. ' +
+      'A sinistra c\'è la <strong>specifica</strong> — l\'algoritmo della tradizione, col comando dichiarato e l\'istruzione come commento — ' +
+      'che con l\'interruttore si copre per lavorare a memoria.</p>' +
       '<h4>Le tentazioni</h4>' +
       '<p>In dispensa, accanto agli ingredienti veri, ci sono anche quelli che la tradizione esclude — la panna per la carbonara, ' +
       'la cipolla per l\'amatriciana — <strong>senza nessun segnale</strong>. Metterli è possibile e nessuno interviene: la ragione ' +
@@ -1714,7 +1779,7 @@ function apriDocenti(){
         '<li><strong>Poi il volo:</strong> ognuno sceglie un piatto — meglio ancora se legato alla storia della propria famiglia — e lo prepara con calma. Due o tre piatti in un\'ora ci stanno.</li>' +
         '<li><strong>Non anticipate le tentazioni.</strong> Se dite in anticipo che in dispensa c\'è la panna, la scoperta è spenta: lasciate che qualcuno la metta.</li>' +
         '<li><strong>L\'assaggio scritto non si salta:</strong> è il prodotto dell\'attività. «Mi piace» non basta, e il foglio lo dice da solo.</li>' +
-        '<li><strong>Coprite i testi dei passaggi</strong> (interruttore nella scheda del piatto) solo alla seconda preparazione dello stesso piatto: allora diventa anche memoria della sequenza.</li>' +
+        '<li><strong>Coprite la specifica</strong> (interruttore nella scheda del piatto) solo alla seconda preparazione dello stesso piatto: allora l\'algoritmo si scrive a memoria.</li>' +
         '<li><strong>«Le parole della cucina» chiude:</strong> il glossario si accende con la voce e alla fine si conta.</li>' +
       '</ul>' +
       '<h4>Valutazione</h4>' +
@@ -2239,19 +2304,8 @@ function renderElenco(){
    Nessuna scarsità, nessun orologio: qui si impara, non si gareggia.
    ========================================================================== */
 function generaPreparazione(ricettaId){
-  const r = ric(ricettaId);
-  const dispensa = {}, unita = {};
-  r.ingredienti.forEach(i => { dispensa[i.id] = i.q; unita[i.id] = i.u; });
-  // Le tentazioni stanno in dispensa accanto agli ingredienti veri, senza
-  // nessun segnale: la panna è lì, a portata di mano, come nella vita.
-  // Riconoscerla è la competenza; il divieto scritto sopra non insegnerebbe niente.
-  (r.mai || []).forEach(m => {
-    if(dispensa[m.id] != null) return;
-    dispensa[m.id] = 100; unita[m.id] = DB.INGREDIENTS[m.id].cat === 'liquidi' ? 'ml' : 'g';
-  });
   return {
-    risorse: { dispensa, dispensaIniziale: Object.assign({}, dispensa), unita },
-    mondo: { ricetta: ricettaId, azione: null, padella: [], crono: [], orologio: 0 },
+    mondo: { ricetta: ricettaId, programma: [], sel: null, run: null },
     ricettarioAperto: true
   };
 }
@@ -2440,19 +2494,24 @@ document.addEventListener('click', e => {
   const r = e.target.closest('[data-ricetta]');
   if(r) return apriRicetta(r.dataset.ricetta);
   if(e.target.closest('#btn-torna-volo')) return vaiAlVolo();
-  const t = e.target.closest('[data-az],[data-togli],[data-ing],#btn-conferma,#btn-tavola,#sw-ric');
+  const t = e.target.closest('[data-su],[data-giu],[data-del],[data-cmd],[data-togli],[data-blocco],[data-ing],#btn-esegui,#sw-ric');
   if(!t) return;
-  if(t.dataset.az) return scegliAzione(t.dataset.az);
-  if(t.dataset.togli) return togliIngrediente(t.dataset.togli);
-  if(t.id === 'btn-conferma') return confermaStep();
-  if(t.id === 'btn-tavola') return portaInTavola();
+  if(t.dataset.su != null && t.hasAttribute('data-su')) return muoviBlocco(parseInt(t.dataset.su, 10), -1);
+  if(t.dataset.giu != null && t.hasAttribute('data-giu')) return muoviBlocco(parseInt(t.dataset.giu, 10), 1);
+  if(t.dataset.del != null && t.hasAttribute('data-del')) return eliminaBlocco(parseInt(t.dataset.del, 10));
+  if(t.dataset.cmd) return aggiungiComando(t.dataset.cmd);
+  if(t.dataset.togli) return togliIngrediente(parseInt(t.dataset.blocco, 10), t.dataset.togli);
+  if(t.id === 'btn-esegui') return eseguiAlgoritmo();
   if(t.id === 'sw-ric') return update(() => { S.ricettarioAperto = !S.ricettarioAperto; });
   if(t.dataset.ing) return aggiungiIngrediente(t.dataset.ing);
+  if(t.classList.contains('istr')) return selezionaBlocco(parseInt(t.dataset.blocco, 10));
 });
 
 /* tocco + tastiera: tutto raggiungibile anche con Invio/Spazio */
 document.addEventListener('keydown', e => {
   if(e.key !== 'Enter' && e.key !== ' ') return;
+  const b = e.target.closest('.blocco.istr');
+  if(b){ e.preventDefault(); return selezionaBlocco(parseInt(b.dataset.blocco, 10)); }
   const t = e.target.closest('[data-ing]');
   if(!t) return;
   e.preventDefault();
