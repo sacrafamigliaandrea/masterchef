@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Chef — Il Servizio</title>
+<title>Master Chef — La Cucina Italiana</title>
 <link rel="icon" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* =========================================================================
-   MASTER CHEF — IL SERVIZIO
+   MASTER CHEF — LA CUCINA ITALIANA
    Single-file, vanilla. Nessun framework, nessun build.
    Palette dedicata "Ulivo & Ottone": deroga DICHIARATA alla palette d'ambito
    (design-system §1.1). Non è Wimbledon #1B6D3F né blu istituzionale #123E90.
@@ -91,24 +91,6 @@ svg{display:block}
 .eyebrow{font-family:var(--body);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:11px;color:var(--ottone)}
 .eyebrow--muted{color:var(--muted)}
 
-/* ---------- Barra di stato del servizio ---------- */
-.statusbar{
-  max-width:var(--maxw);margin:0 auto;padding:10px 24px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  border-bottom:1px solid var(--brd);
-}
-.status-group{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.stat{display:flex;align-items:center;gap:8px}
-.stat .stat-ico{width:20px;height:20px;color:var(--muted);flex:0 0 auto}
-.stat-lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.stat-val{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--inchiostro)}
-.stat-val.warn{color:var(--ambra)}
-.stat-val.good{color:var(--ok)}
-/* barra tempo */
-.clockbar{width:118px;height:8px;background:var(--carta-2);border-radius:99px;overflow:hidden;border:1px solid var(--brd)}
-.clockbar span{display:block;height:100%;background:var(--ulivo-2);transition:width .3s linear}
-.clockbar span.warn{background:var(--ambra)}
-.seed-chip{font-family:var(--mono);font-size:11px;color:var(--light);background:var(--carta-2);border:1px solid var(--brd);padding:3px 9px;border-radius:99px;letter-spacing:.02em}
 
 /* ---------- Bottoni ---------- */
 .btn{
@@ -279,20 +261,18 @@ svg{display:block}
 .patto-card h3{font-size:17px;margin-bottom:5px}
 .patto-card p{font-size:14.5px;color:var(--muted);line-height:1.5;margin:0}
 .start-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:30px;padding-top:24px;border-top:1px solid var(--brd)}
-.mode-note{font-size:13.5px;color:var(--muted)}
-.mode-note code{font-family:var(--mono);font-size:12.5px;background:var(--carta-2);padding:2px 6px;border-radius:5px;border:1px solid var(--brd)}
 
 /* =========================================================================
    SCHERMATA 2 — IL SERVIZIO (tre zone: §3.1)
-   SINISTRA sala/valutazione · CENTRO cucina/azione · DESTRA dispensa+ricettario
+   SINISTRA il piatto · CENTRO il banco dei passaggi · DESTRA la dispensa
    ========================================================================= */
-.servizio{
+.prep{
   max-width:var(--maxw);margin:0 auto;
-  display:grid;grid-template-columns:25% 1fr 30%;
+  display:grid;grid-template-columns:300px minmax(0,1fr) 330px;
   align-items:start;
 }
 .zona{padding:20px;min-width:0}
-.zona--sala{border-right:1px solid var(--brd)}
+.zona--piatto{border-right:1px solid var(--brd)}
 .zona--dispensa{border-left:1px solid var(--brd)}
 .zona-h{
   font-family:var(--body);font-weight:700;letter-spacing:.15em;text-transform:uppercase;
@@ -301,35 +281,15 @@ svg{display:block}
 }
 .zona-h .z-count{font-family:var(--mono);color:var(--muted);letter-spacing:0}
 
-/* --- Tavoli / ordini --- */
-.tavolo{
-  background:var(--card);border:1px solid var(--brd);border-radius:var(--r);
-  padding:14px;margin-bottom:11px;box-shadow:var(--shadow);
-  transition:border-color .15s,box-shadow .15s;
-}
-.tavolo.attivo{border-color:var(--ulivo);border-left:4px solid var(--ulivo);box-shadow:0 3px 16px rgba(90,107,51,.18)}
-.tavolo.chiuso{opacity:.5}
-.tav-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
-.tav-n{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:700;text-transform:uppercase}
-.tav-nome{font-family:var(--head);font-size:17px;font-weight:600;line-height:1.25;margin-bottom:2px}
-.tav-reg{font-family:var(--head);font-style:italic;font-size:13px;color:var(--muted);margin-bottom:9px}
-.tav-quote{
-  font-family:var(--head);font-style:italic;font-size:13.5px;color:var(--inchiostro);
-  border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);padding:8px 0;margin-bottom:10px;line-height:1.45;
-}
-/* pazienza: verde -> ambra. MAI rosso. */
-.pazienza{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.pazienza-bar{flex:1;height:7px;background:var(--carta-2);border:1px solid var(--brd);border-radius:99px;overflow:hidden}
-.pazienza-bar span{display:block;height:100%;background:var(--ok);transition:width .3s linear,background .3s}
-.pazienza-bar span.warn{background:var(--ambra)}
-.pazienza-val{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:700;min-width:44px;text-align:right}
-.tav-actions{display:flex;gap:7px;flex-wrap:wrap}
-.tav-esito{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700}
-.tav-esito .e-ico{width:18px;height:18px;flex:0 0 auto}
-.tav-esito.ok{color:var(--ok)}
-.tav-esito.amb{color:var(--ambra)}
-.tav-esito.neu{color:var(--muted)}
-.sala-vuota{font-family:var(--head);font-style:italic;color:var(--light);font-size:14px;padding:14px 0;text-align:center}
+/* --- La scheda del piatto (sx) --- */
+.sch{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);margin-bottom:11px}
+.sch-riga{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;border-bottom:1px dotted var(--brd)}
+.sr-l{color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.sr-v{font-family:var(--mono);font-size:13px;text-align:right}
+.sch-avanz{margin-top:10px}
+.sa-lab{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.sa-bar{height:8px;background:var(--carta-2);border:1px solid var(--brd);border-radius:99px;overflow:hidden}
+.sa-bar span{display:block;height:100%;background:var(--oro);transition:width .3s}   /* avanzamento: oro */
 /* gruppi alimentari del piatto */
 .gruppi{display:flex;flex-direction:column;gap:6px}
 .gr{display:grid;grid-template-columns:88px 1fr 38px;gap:8px;align-items:center}
@@ -342,19 +302,44 @@ svg{display:block}
 .gr-proteine{background:var(--ulivo-scuro)}
 .gr-grassi{background:var(--oro-2)}
 .gr-altro{background:var(--brd-2)}
-/* in modalità libera non c'è gara: niente punteggio di sala */
-body.modo-libera .reputa{display:none}
-.reputa{background:var(--carta-2);border:1px solid var(--brd);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
-.reputa-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.reputa-lab{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.reputa-val{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--ulivo-scuro)}
-.reputa-note{font-size:12.5px;color:var(--muted);line-height:1.4}
 
-/* --- Cucina (centro) --- */
-.cucina{display:flex;flex-direction:column;align-items:center}
-.cucina-h{text-align:center;margin-bottom:14px}
-.cucina-h h3{font-size:26px;margin:2px 0 3px}
-.cucina-h p{font-family:var(--head);font-style:italic;color:var(--muted);font-size:14.5px}
+/* --- Il banco di lavoro: la ricetta come scala di passaggi --- */
+.banco{max-width:780px;margin:0 auto}
+.passi{list-style:none;display:flex;flex-direction:column;gap:10px}
+.passo{background:var(--card);border:1px solid var(--brd);border-radius:var(--r);padding:12px 16px;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start}
+.passo .p-n{width:30px;height:30px;border-radius:50%;border:2px solid var(--brd-2);display:flex;align-items:center;justify-content:center;font-family:var(--head);font-style:italic;font-weight:600;color:var(--muted);flex:0 0 auto}
+.passo.fatto{background:var(--carta-2)}
+.passo.fatto .p-n{background:var(--ulivo);border-color:var(--ulivo);color:#fff}
+.passo.fatto .p-n svg{width:14px;height:14px}
+.passo.fatto .p-testo{color:var(--muted)}
+.passo.corrente{border-color:var(--ottone);border-left:4px solid var(--ottone);box-shadow:var(--shadow)}
+.passo.corrente .p-n{border-color:var(--ottone);color:var(--ottone)}
+.passo.dopo{opacity:.6;border-style:dashed;background:transparent}
+.p-testo{font-size:15px;line-height:1.5;padding-top:3px}
+.p-qui{display:inline-block;background:var(--ottone);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:2px 8px;margin-right:8px}
+.p-fatto-riga{margin-top:5px;font-size:12.5px;color:var(--muted)}
+.p-fatto-riga strong{color:var(--ulivo-scuro);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.p-banco{grid-column:1 / -1;border-top:1px dashed var(--brd);margin-top:8px;padding-top:12px}
+
+/* le tre mosse, sempre le stesse: 1 il gesto, 2 gli ingredienti, 3 conferma */
+.adesso{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.mossa{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:var(--light);font-size:12.5px}
+.mossa .mo-n{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--brd-2);color:#fff;font-family:var(--mono);font-size:11.5px;flex:0 0 auto}
+.mossa .mo-n svg{width:12px;height:12px}
+.mossa.on{color:var(--ulivo-scuro)}
+.mossa.on .mo-n{background:var(--ottone)}
+.mossa.ok{color:var(--ulivo)}
+.mossa.ok .mo-n{background:var(--ulivo)}
+.mo-sep{width:16px;height:1px;background:var(--brd-2);flex:0 0 auto}
+.adesso-guida{font-family:var(--head);font-style:italic;color:var(--muted);font-size:14px;margin-bottom:12px}
+.banco .azioni{justify-content:flex-start}
+.banco .padella{width:min(210px,58vw);margin:6px auto 12px}
+.p-conferma{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* l'uscita del piatto */
+.tavola{margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px;border:1px dashed var(--brd-2);border-radius:var(--r);background:var(--carta-2)}
+.tavola-nota{font-size:12.5px;color:var(--muted);text-align:center}
+.banco-vuoto{text-align:center;padding:48px 24px;font-family:var(--head);font-style:italic;color:var(--light);font-size:16px;line-height:1.6}
 .azioni{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
 .az-btn{
   display:flex;align-items:center;gap:7px;min-height:44px;padding:9px 14px;
@@ -396,25 +381,7 @@ body.modo-libera .reputa{display:none}
 .pill-x:hover{background:var(--ambra-L);color:var(--ambra)}
 .pill-x svg{width:11px;height:11px}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
-.cucina-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
 
-/* --- Cronologia --- */
-.crono{width:100%;max-width:600px}
-.crono-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
-.crono-h h4{font-size:18px;font-weight:600}
-.crono-h .c-n{font-family:var(--mono);font-size:12px;color:var(--muted)}
-.crono-list{list-style:none;display:flex;flex-direction:column;gap:6px}
-.crono-step{
-  display:grid;grid-template-columns:26px 96px 1fr;gap:11px;align-items:center;
-  padding:9px 12px;background:var(--carta-2);border-left:3px solid var(--ulivo);border-radius:0 var(--r) var(--r) 0;
-}
-.crono-step .s-n{font-family:var(--head);font-style:italic;color:var(--ottone);font-size:17px;font-weight:600}
-.crono-step .s-az{font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.crono-step .s-ing{font-size:13px}
-.no-order{
-  text-align:center;padding:52px 24px;font-family:var(--head);font-style:italic;
-  color:var(--light);font-size:16px;line-height:1.5;
-}
 
 /* --- Dispensa (destra) --- */
 .disp-note{font-size:12.5px;color:var(--muted);line-height:1.45;margin-bottom:12px}
@@ -658,15 +625,13 @@ body.modo-libera .reputa{display:none}
    RESPONSIVE — iPad / LIM. Mai scroll orizzontale (§3.3)
    ========================================================================= */
 @media (max-width:1100px){
-  .servizio{grid-template-columns:1fr}
-  .zona--sala{border-right:none;border-bottom:1px solid var(--brd)}
+  .prep{grid-template-columns:1fr}
+  .zona--piatto{border-right:none;border-bottom:1px solid var(--brd)}
   .zona--dispensa{border-left:none;border-top:1px solid var(--brd)}
 }
 @media (max-width:760px){
   .m-grid{grid-template-columns:1fr}
   .masthead h1{font-size:36px}
-  .statusbar{gap:10px}
-  .status-group{gap:12px}
   .modale{padding:22px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -687,7 +652,7 @@ body.modo-libera .reputa{display:none}
   <div class="topnav-in">
     <button class="tb on" data-va="apertura">Apertura</button>
     <button class="tb" data-va="volo">Il ricettario</button>
-    <button class="tb" data-va="servizio">Il servizio</button>
+    <button class="tb" data-va="prepara">La preparazione</button>
     <button class="tb" data-va="parole">Le parole</button>
     <button class="tb" data-va="quaderno">Il quaderno</button>
     <button class="tb tb--fine btn-docenti">Info docenti</button>
@@ -825,7 +790,6 @@ body.modo-libera .reputa{display:none}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.2M12 7.6h.01"/></svg>
         Info docenti
       </button>
-      <p class="mode-note" id="mode-note"></p>
     </div>
   </div>
 </section>
@@ -874,7 +838,7 @@ body.modo-libera .reputa{display:none}
 
   <div class="assaggio">
     <!-- SINISTRA: contesto -->
-    <aside class="zona zona--sala">
+    <aside class="zona zona--piatto">
       <div class="zona-h"><span>Che cosa hai preparato</span></div>
       <div id="assaggio-scheda"></div>
     </aside>
@@ -927,7 +891,7 @@ body.modo-libera .reputa{display:none}
     <hr class="masthead-rule">
   </header>
   <div class="apertura">
-    <p>Il riconoscimento UNESCO si racconta in due minuti. Mentre il servizio parla, qui sotto le parole
+    <p>Il riconoscimento UNESCO si racconta in due minuti. Mentre il filmato parla, qui sotto le parole
       si accendono una a una: <strong>ognuna si apre quando la voce ci arriva</strong>. Alla fine le avrai tutte.</p>
 
     <div class="player" data-yt="8qUIFXmBYg0" data-titolo="La cucina italiana diventa patrimonio Unesco" data-autore="trmh24"></div>
@@ -944,67 +908,33 @@ body.modo-libera .reputa{display:none}
       <button class="btn btn--ghost btn-docenti">Info docenti</button>
     </div>
   </div>
-  <footer class="foot"><p>Le definizioni sono riscritte per la lettura: la trascrizione automatica del servizio contiene errori e viene usata solo per i tempi.</p></footer>
+  <footer class="foot"><p>Le definizioni sono riscritte per la lettura: la trascrizione automatica del filmato contiene errori e viene usata solo per i tempi.</p></footer>
 </section>
 
-<!-- ===================== SCHERMATA 2 — IL SERVIZIO ===================== -->
-<section id="scr-servizio" class="hidden">
+<!-- ===================== LA PREPARAZIONE ===================== -->
+<section id="scr-prepara" class="hidden">
   <header class="masthead" style="padding-bottom:8px">
-    <h1 style="font-size:clamp(24px,3vw,38px)">Master <em>Chef</em></h1>
-    <p class="masthead-sub" style="font-size:14px;margin-top:2px">Servizio in corso</p>
+    <h1 style="font-size:clamp(24px,3vw,38px)" id="prep-titolo">La <em>preparazione</em></h1>
+    <p class="masthead-sub" style="font-size:14px;margin-top:2px" id="prep-sotto">Prima scegli un piatto dal ricettario</p>
   </header>
 
-  <div class="statusbar">
-    <div class="status-group">
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
-        <span class="stat-lab">Servizio</span>
-        <span class="stat-val mono" id="st-tempo">—</span>
-        <span class="clockbar"><span id="st-tempo-bar" style="width:100%"></span></span>
-      </div>
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 9.6 8.8 3.4 9.4l4.7 4.1-1.4 6.1L12 16.4l5.3 3.2-1.4-6.1 4.7-4.1-6.2-.6Z"/></svg>
-        <span class="stat-lab">Sala</span>
-        <span class="stat-val mono" id="st-punti">0</span>
-      </div>
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a1.6 1.6 0 0 1-1.6 1.4H7.8a1.6 1.6 0 0 1-1.6-1.4Z"/><path d="M8.6 8V5.6A2.6 2.6 0 0 1 11.2 3h1.6a2.6 2.6 0 0 1 2.6 2.6V8"/></svg>
-        <span class="stat-lab">Dispensa</span>
-        <span class="stat-val mono" id="st-disp">—</span>
-      </div>
-    </div>
-    <div class="status-group">
-      <span class="seed-chip" id="st-seed" title="Identificativo della partita: con lo stesso seed la partita è identica">—</span>
-      <button class="btn btn--ghost btn--sm btn-docenti">Info docenti</button>
-      <button class="btn btn--ghost btn--sm" id="btn-chiudi-servizio">Chiudi il servizio</button>
-    </div>
-  </div>
-
-  <div class="servizio">
-    <aside class="zona zona--sala">
-      <div class="zona-h"><span>La sala</span><span class="z-count" id="sala-count"></span></div>
-      <div class="reputa">
-        <div class="reputa-top">
-          <span class="reputa-lab">Punteggio di sala</span>
-          <span class="reputa-val mono" id="reputa-val">0</span>
-        </div>
-        <p class="reputa-note" id="reputa-note">Ogni piatto servito bene lo alza. Ogni tavolo che se ne va lo abbassa, molto.</p>
-      </div>
-      <div id="tavoli"></div>
+  <div class="prep">
+    <aside class="zona zona--piatto">
+      <div class="zona-h"><span>Il piatto</span></div>
+      <div id="prep-scheda"></div>
     </aside>
 
-    <section class="zona cucina" id="zona-cucina"></section>
+    <section class="zona" id="zona-cucina"></section>
 
     <aside class="zona zona--dispensa">
       <div class="zona-h"><span>La dispensa</span><span class="z-count" id="disp-count"></span></div>
-      <p class="disp-note">Le quantità sono quelle vere della ricetta. Un ingrediente si spende quando confermi lo step.</p>
+      <p class="disp-note">Le quantità sono quelle vere della ricetta. Un ingrediente si spende quando confermi il passaggio.</p>
       <div id="dispensa"></div>
-      <div class="ricettario" id="ricettario"></div>
     </aside>
   </div>
 
   <footer class="foot">
-    <p>Le ricette, le storie, le denominazioni DOP/IGP e i valori nutrizionali provengono dal ricettario dell'app originale.</p>
+    <p>Le ricette, le storie, le denominazioni DOP/IGP e i valori nutrizionali provengono dal ricettario; i piatti aggiunti hanno le calorie calcolate dagli ingredienti.</p>
   </footer>
 </section>
 
@@ -1021,21 +951,20 @@ body.modo-libera .reputa{display:none}
 
 <script>
 /* ==========================================================================
-   MASTER CHEF — IL SERVIZIO
+   MASTER CHEF — LA CUCINA ITALIANA
    --------------------------------------------------------------------------
-   ARCHITETTURA (RIGIOCABILITA.md §3):
-     S.risorse  -> tempo, dispensa            (scarsità: si consumano)
-     S.mondo    -> ordini, orologio           (evolve da solo)
-     S.traccia  -> serviti, rifiutati, andati (irreversibile)
-     update(azione) -> applica() ; evolvi() ; render()
-   Il DOM RIFLETTE lo stato, non lo contiene: mai leggere textContent per sapere
-   quanti punti hai.
+   Non è una gara: è un ricettario da imparare e una tradizione da tenere.
+   Percorso: apertura (video) -> volo sull'Italia -> preparazione del piatto,
+   passaggio per passaggio -> assaggio scritto -> quaderno.
+   Stato S = { risorse: dispensa con le quantità vere (più le tentazioni),
+   mondo: piatto/passaggi/tegame, ricettarioAperto }. Il DOM riflette S,
+   non lo contiene: mai leggere textContent per sapere a che punto sei.
 
    PERSISTENZA: nessuna. Niente localStorage/cookie/IndexedDB.
    Le app girano su iMac CONDIVISI di laboratorio (19 classi, ~460 studenti):
    lo stato resterebbe attaccato alla macchina, non allo studente
-   (contesto-uso-imac-laboratorio.md). La telemetria formativa vive in memoria
-   per la durata della sessione e muore alla chiusura della scheda.
+   (contesto-uso-imac-laboratorio.md). Quaderno e progressi vivono in memoria
+   e muoiono alla chiusura della scheda: vanno copiati durante l'ora.
    ========================================================================== */
 
 const DB = {"RECIPES":[{"id":"carbonara","nome":"Spaghetti alla Carbonara","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":20,"porzioni":2,"storia":"Piatto romano del dopoguerra. Il nome viene forse dai carbonai dell'Appennino, o dai soldati americani che portarono uova e bacon a Roma nel 1944.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"spaghetti","q":180,"u":"g"},{"id":"guanciale","q":100,"u":"g"},{"id":"tuorli","q":2,"u":"unità"},{"id":"pecorino","q":50,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"}],"step":[{"az":"bollire","ing":"spaghetti","testo":"Cuoci gli spaghetti in acqua salata"},{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale in padella senza olio"},{"az":"mescolare","ing":"tuorli","testo":"Sbatti i tuorli con pecorino e pepe"},{"az":"impiattare","ing":"pecorino","testo":"Manteca fuori dal fuoco, aggiungi pepe"}],"gusti":{"dolce":1,"salato":5,"amaro":1,"acido":1,"umami":5},"calorie":620,"curiosita":"La vera carbonara NON ha panna. Mai. Il cremoso viene solo dai tuorli e dal pecorino.","mai":[{"id":"panna","perche":"La carbonara non ha mai avuto la panna. La crema si fa fuori dal fuoco, montando i tuorli col pecorino: è quella l'abilità. La panna è una scorciatoia che copre tutto."},{"id":"cipolla","perche":"Nella carbonara non entra cipolla: il gusto viene dal grasso del guanciale che si scioglie, dal pecorino e dal pepe. Nient'altro."}]},{"id":"amatriciana","nome":"Bucatini all'Amatriciana","regione":"Lazio","regionId":"lazio","difficolta":2,"tempo":30,"porzioni":2,"storia":"Nasce ad Amatrice, paese montano sull'Appennino. Deriva dalla \"gricia\", arricchita con pomodoro dopo il 1700.","dop":["Guanciale Amatriciano IGP","Pecorino Romano DOP"],"ingredienti":[{"id":"bucatini","q":180,"u":"g"},{"id":"guanciale","q":80,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"pecorino","q":40,"u":"g"},{"id":"peperoncino","q":1,"u":"g"}],"step":[{"az":"soffriggere","ing":"guanciale","testo":"Rosola il guanciale, sfuma con vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro e peperoncino"},{"az":"bollire","ing":"bucatini","testo":"Cuoci i bucatini al dente"},{"az":"impiattare","ing":"pecorino","testo":"Manteca e spolvera di pecorino"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":3,"umami":4},"calorie":580,"curiosita":"Ad Amatrice si festeggia ogni anno la Sagra degli Spaghetti all'Amatriciana.","mai":[{"id":"cipolla","perche":"Ad Amatrice la ricetta non prevede cipolla. Il dolce che cerchi lo danno già il guanciale rosolato e il pomodoro."},{"id":"aglio","perche":"Niente aglio nell'amatriciana: coprirebbe il guanciale, che qui è il protagonista."}]},{"id":"pesto","nome":"Trofie al Pesto alla Genovese","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":25,"porzioni":2,"storia":"Il pesto nasce a Genova nell'800. Il nome viene da \"pestare\" nel mortaio di marmo con pestello di legno.","dop":["Basilico Genovese DOP","Olio Riviera Ligure DOP"],"ingredienti":[{"id":"trofie","q":180,"u":"g"},{"id":"basilico","q":50,"u":"g"},{"id":"pinoli","q":30,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"parmigiano","q":40,"u":"g"},{"id":"olio_evo","q":60,"u":"ml"}],"step":[{"az":"mescolare","ing":"basilico","testo":"Pesta basilico, aglio e pinoli nel mortaio"},{"az":"mescolare","ing":"parmigiano","testo":"Aggiungi parmigiano e olio a filo"},{"az":"bollire","ing":"trofie","testo":"Cuoci le trofie in acqua salata"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci a crudo con il pesto"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":680,"curiosita":"Il pesto autentico si fa SOLO nel mortaio. Il frullatore riscalda il basilico e lo fa ossidare.","mai":[{"id":"panna","perche":"Il pesto è già cremoso di suo: l'olio, i pinoli e il formaggio bastano. La panna lo appesantisce e ne spegne il profumo."}]},{"id":"ragu","nome":"Tagliatelle al Ragù alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":180,"porzioni":4,"storia":"La ricetta ufficiale è depositata dal 1982 alla Camera di Commercio di Bologna. La tagliatella deve essere larga 8 mm cotta.","dop":["Parmigiano Reggiano DOP","Aceto Balsamico di Modena IGP"],"ingredienti":[{"id":"tagliatelle","q":320,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"soffritto","q":150,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"vino_rosso","q":100,"u":"ml"},{"id":"parmigiano","q":60,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto di sedano, carota, cipolla"},{"az":"soffriggere","ing":"carne_macinata","testo":"Rosola la carne e sfuma col vino"},{"az":"cuocere","ing":"pomodoro","testo":"Aggiungi pomodoro, cuoci 2 ore a fuoco lento"},{"az":"bollire","ing":"tagliatelle","testo":"Cuoci le tagliatelle al dente"},{"az":"impiattare","ing":"parmigiano","testo":"Condisci e completa col parmigiano"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":720,"curiosita":"Gli spaghetti alla bolognese NON esistono in Italia: sono un'invenzione americana.","mai":[{"id":"aglio","perche":"Il ragù alla bolognese depositato dall'Accademia Italiana della Cucina non contiene aglio: il soffritto è sedano, carota e cipolla."}]},{"id":"lasagne","nome":"Lasagne alla Bolognese","regione":"Emilia-Romagna","regionId":"emilia","difficolta":3,"tempo":240,"porzioni":6,"storia":"Le lasagne verdi al forno sono il piatto della domenica bolognese. La sfoglia contiene spinaci per colorarla.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"sfoglia","q":400,"u":"g"},{"id":"carne_macinata","q":300,"u":"g"},{"id":"pomodoro","q":300,"u":"g"},{"id":"besciamella","q":500,"u":"ml"},{"id":"parmigiano","q":100,"u":"g"}],"step":[{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù di carne"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il ragù per almeno 2 ore"},{"az":"mescolare","ing":"besciamella","testo":"Prepara la besciamella"},{"az":"impiattare","ing":"sfoglia","testo":"Stratifica sfoglia, ragù, besciamella"},{"az":"cuocere","ing":"parmigiano","testo":"Inforna a 180°C per 30 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":1,"acido":2,"umami":5},"calorie":680,"curiosita":"Le lasagne erano già citate da Cicerone nel I secolo a.C. come \"laganum\"."},{"id":"risotto_milanese","nome":"Risotto alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":3,"tempo":25,"porzioni":2,"storia":"Nasce nel 1574 alle nozze della figlia di un mastro vetraio. Lo zafferano, usato per le vetrate del Duomo, fu aggiunto al riso per scherzo.","dop":["Grana Padano DOP","Zafferano dell'Aquila DOP"],"ingredienti":[{"id":"riso_carnaroli","q":180,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"burro","q":50,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":800,"u":"ml"},{"id":"parmigiano","q":50,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Tosta il riso con cipolla e burro"},{"az":"mescolare","ing":"riso_carnaroli","testo":"Sfuma col vino, aggiungi brodo"},{"az":"cuocere","ing":"zafferano","testo":"Aggiungi zafferano a metà cottura"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca con burro e parmigiano"}],"gusti":{"dolce":2,"salato":3,"amaro":2,"acido":1,"umami":4},"calorie":540,"curiosita":"Lo zafferano è la spezia più cara del mondo: servono 150.000 fiori per 1 kg.","mai":[{"id":"panna","perche":"La cremosità del risotto la fa la mantecatura: burro e parmigiano fuori dal fuoco, mescolando. Se serve la panna, vuol dire che la mantecatura non è riuscita."}]},{"id":"cotoletta","nome":"Cotoletta alla Milanese","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":20,"porzioni":1,"storia":"La \"costoletta\" milanese è citata già nel 1134 nei registri dell'Abbazia di Sant'Ambrogio. Rivale storica della Wiener Schnitzel austriaca.","dop":[],"ingredienti":[{"id":"costoletta_vitello","q":200,"u":"g"},{"id":"uova","q":1,"u":"unità"},{"id":"pangrattato","q":80,"u":"g"},{"id":"burro","q":40,"u":"g"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"uova","testo":"Sbatti l'uovo"},{"az":"mescolare","ing":"pangrattato","testo":"Impana la costoletta nel pangrattato"},{"az":"soffriggere","ing":"burro","testo":"Friggi nel burro chiarificato"},{"az":"impiattare","ing":"limone","testo":"Servi con spicchio di limone"}],"gusti":{"dolce":1,"salato":3,"amaro":1,"acido":2,"umami":4},"calorie":650,"curiosita":"La cotoletta \"orecchia di elefante\" è sottile e grande; quella \"alta\" è con l'osso."},{"id":"pizza","nome":"Pizza Margherita","regione":"Campania","regionId":"campania","difficolta":3,"tempo":1440,"porzioni":1,"storia":"Nel 1889 il pizzaiolo Raffaele Esposito la creò per la regina Margherita di Savoia: pomodoro, mozzarella e basilico per i colori della bandiera italiana.","dop":["Mozzarella di Bufala Campana DOP","Pomodoro San Marzano DOP"],"ingredienti":[{"id":"farina","q":250,"u":"g"},{"id":"lievito","q":2,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"mozzarella","q":100,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":10,"u":"ml"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, acqua, lievito, sale"},{"az":"cuocere","ing":"lievito","testo":"Lascia lievitare 24 ore"},{"az":"impiattare","ing":"pomodoro","testo":"Stendi la pizza, aggiungi pomodoro e mozzarella"},{"az":"cuocere","ing":"basilico","testo":"Cuoci a 450°C per 90 secondi, aggiungi basilico"}],"gusti":{"dolce":3,"salato":3,"amaro":1,"acido":3,"umami":4},"calorie":750,"curiosita":"La \"Pizza Napoletana\" è Patrimonio UNESCO dal 2017 come arte del pizzaiuolo.","mai":[{"id":"panna","perche":"Sulla margherita vanno pomodoro, mozzarella, basilico e olio. Bastano loro: sono i tre colori della bandiera, ed è tutta lì."}]},{"id":"parmigiana","nome":"Parmigiana di Melanzane","regione":"Campania","regionId":"campania","difficolta":3,"tempo":90,"porzioni":4,"storia":"Tre regioni se la contendono: Campania, Sicilia ed Emilia. \"Parmigiana\" viene forse dal siciliano \"parmiciana\" (persiana) per la sovrapposizione delle fette.","dop":["Mozzarella di Bufala Campana DOP"],"ingredienti":[{"id":"melanzane","q":600,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"mozzarella","q":200,"u":"g"},{"id":"parmigiano","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"melanzane","testo":"Friggi le melanzane a fette"},{"az":"cuocere","ing":"pomodoro","testo":"Prepara la salsa di pomodoro"},{"az":"impiattare","ing":"mozzarella","testo":"Stratifica melanzane, sugo, mozzarella"},{"az":"cuocere","ing":"parmigiano","testo":"Inforna a 180°C per 40 minuti"}],"gusti":{"dolce":3,"salato":4,"amaro":2,"acido":3,"umami":4},"calorie":480,"curiosita":"In Emilia si fa con le zucchine; in Sicilia con le melanzane fritte intere."},{"id":"arancini","nome":"Arancini di Riso","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":4,"storia":"Di origine araba (X secolo), prendono il nome dalla forma e dal colore arancione. A Catania sono \"arancini\" (maschile, conici); a Palermo \"arancine\" (femminile, tonde).","dop":[],"ingredienti":[{"id":"riso_carnaroli","q":300,"u":"g"},{"id":"zafferano","q":0.2,"u":"g"},{"id":"carne_macinata","q":150,"u":"g"},{"id":"piselli","q":80,"u":"g"},{"id":"pangrattato","q":100,"u":"g"},{"id":"uova","q":2,"u":"unità"}],"step":[{"az":"bollire","ing":"riso_carnaroli","testo":"Cuoci il riso con zafferano"},{"az":"soffriggere","ing":"carne_macinata","testo":"Prepara il ragù con piselli"},{"az":"impiattare","ing":"piselli","testo":"Forma le palline col ripieno"},{"az":"mescolare","ing":"uova","testo":"Passa nell'uovo e nel pangrattato"},{"az":"soffriggere","ing":"pangrattato","testo":"Friggi in olio bollente"}],"gusti":{"dolce":2,"salato":4,"amaro":1,"acido":1,"umami":4},"calorie":380,"curiosita":"Il 13 dicembre, Santa Lucia, a Palermo si mangiano SOLO arancine e non si mangia pane o pasta."},{"id":"pasta_norma","nome":"Pasta alla Norma","regione":"Sicilia","regionId":"sicilia","difficolta":2,"tempo":40,"porzioni":2,"storia":"Catanese, dedicata all'opera \"Norma\" di Vincenzo Bellini (1831). Si dice che Nino Martoglio esclamasse \"È una Norma!\" assaggiandola.","dop":[],"ingredienti":[{"id":"maccheroni","q":180,"u":"g"},{"id":"melanzane","q":300,"u":"g"},{"id":"pomodoro","q":400,"u":"g"},{"id":"ricotta_salata","q":80,"u":"g"},{"id":"basilico","q":10,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"melanzane","testo":"Friggi le melanzane a dadini"},{"az":"cuocere","ing":"pomodoro","testo":"Cuoci il sugo di pomodoro e basilico"},{"az":"bollire","ing":"maccheroni","testo":"Cuoci la pasta al dente"},{"az":"impiattare","ing":"ricotta_salata","testo":"Condisci e grattugia ricotta salata"}],"gusti":{"dolce":3,"salato":3,"amaro":2,"acido":3,"umami":3},"calorie":540,"curiosita":"La ricotta salata siciliana si stagiona per almeno 3 mesi.","mai":[{"id":"parmigiano","perche":"Sulla Norma va la ricotta salata, non il parmigiano: è una ricetta siciliana e il formaggio è quello dell'isola."}]},{"id":"orecchiette","nome":"Orecchiette alle Cime di Rapa","regione":"Puglia","regionId":"puglia","difficolta":2,"tempo":30,"porzioni":2,"storia":"Piatto simbolo della Puglia. Le orecchiette si fanno ancora a mano nei vicoli di Bari Vecchia dalle \"signore delle orecchiette\".","dop":[],"ingredienti":[{"id":"orecchiette","q":180,"u":"g"},{"id":"cime_rapa","q":400,"u":"g"},{"id":"aglio","q":2,"u":"spicchi"},{"id":"acciughe","q":4,"u":"unità"},{"id":"peperoncino","q":1,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"bollire","ing":"cime_rapa","testo":"Sbollenta le cime di rapa"},{"az":"soffriggere","ing":"aglio","testo":"Rosola aglio, acciughe e peperoncino"},{"az":"bollire","ing":"orecchiette","testo":"Cuoci le orecchiette nella stessa acqua"},{"az":"impiattare","ing":"olio_evo","testo":"Salta tutto in padella"}],"gusti":{"dolce":1,"salato":4,"amaro":4,"acido":1,"umami":3},"calorie":420,"curiosita":"Le \"signore delle orecchiette\" di via Arco Basso a Bari sono state riconosciute patrimonio culturale immateriale."},{"id":"ribollita","nome":"Ribollita Toscana","regione":"Toscana","regionId":"toscana","difficolta":2,"tempo":120,"porzioni":4,"storia":"Zuppa contadina toscana, \"ribollita\" perché si preparava il venerdì e si faceva ri-bollire nei giorni successivi, diventando sempre più buona.","dop":["Olio Toscano IGP","Fagiolo Zolfino"],"ingredienti":[{"id":"pane_raffermo","q":200,"u":"g"},{"id":"cavolo_nero","q":300,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":100,"u":"g"},{"id":"pomodoro","q":200,"u":"g"},{"id":"olio_evo","q":40,"u":"ml"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Prepara il soffritto"},{"az":"cuocere","ing":"cavolo_nero","testo":"Aggiungi verdure e fagioli"},{"az":"bollire","ing":"fagioli","testo":"Cuoci 1 ora, unisci il pomodoro"},{"az":"impiattare","ing":"pane_raffermo","testo":"Stratifica con pane raffermo, \"ribolli\""}],"gusti":{"dolce":2,"salato":3,"amaro":3,"acido":2,"umami":3},"calorie":320,"curiosita":"Il cavolo nero resiste al gelo: è più dolce dopo la prima gelata invernale."},{"id":"bistecca","nome":"Bistecca alla Fiorentina","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":15,"porzioni":2,"storia":"Si cuoceva per la festa di San Lorenzo (10 agosto) a Firenze. Il nome \"bistecca\" viene dall'inglese \"beef steak\".","dop":["Vitellone Bianco dell'Appennino Centrale IGP"],"ingredienti":[{"id":"bistecca_chianina","q":800,"u":"g"},{"id":"sale_grosso","q":10,"u":"g"},{"id":"pepe_nero","q":2,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":5,"u":"g"}],"step":[{"az":"mescolare","ing":"bistecca_chianina","testo":"Porta la carne a temperatura ambiente"},{"az":"soffriggere","ing":"sale_grosso","testo":"Cuoci 3 minuti per lato sulla brace"},{"az":"cuocere","ing":"rosmarino","testo":"Cuoci 5 minuti in piedi sull'osso"},{"az":"impiattare","ing":"olio_evo","testo":"Condisci con sale, pepe, olio a crudo"}],"gusti":{"dolce":1,"salato":3,"amaro":2,"acido":1,"umami":5},"calorie":820,"curiosita":"La vera Fiorentina è alta almeno 3 dita, tagliata nella lombata di Chianina, cotta al sangue."},{"id":"vitello_tonnato","nome":"Vitello Tonnato","regione":"Piemonte","regionId":"piemonte","difficolta":2,"tempo":90,"porzioni":4,"storia":"Piatto piemontese dell'800. La salsa tonnata uniisce due mondi: la terra (vitello) e il mare (tonno). Servito freddo come antipasto estivo.","dop":[],"ingredienti":[{"id":"girello_vitello","q":500,"u":"g"},{"id":"tonno","q":200,"u":"g"},{"id":"acciughe","q":4,"u":"unità"},{"id":"capperi","q":30,"u":"g"},{"id":"uova","q":2,"u":"unità"},{"id":"olio_evo","q":100,"u":"ml"}],"step":[{"az":"bollire","ing":"girello_vitello","testo":"Lessa il vitello nel brodo aromatico"},{"az":"mescolare","ing":"tonno","testo":"Frulla tonno, acciughe e capperi"},{"az":"mescolare","ing":"uova","testo":"Aggiungi tuorli sodi e olio per la salsa"},{"az":"impiattare","ing":"capperi","testo":"Affetta sottile e nappa con la salsa"}],"gusti":{"dolce":1,"salato":4,"amaro":1,"acido":3,"umami":5},"calorie":420,"curiosita":"Il vitello tonnato è citato da Pellegrino Artusi nel suo celebre libro del 1891."},{"id":"tiramisu","nome":"Tiramisù","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":240,"porzioni":6,"storia":"Nasce a Treviso negli anni '60 al ristorante \"Le Beccherie\". Il nome veneto \"tiramesù\" significa \"tirami su\", per l'effetto energetico di caffè e uova.","dop":[],"ingredienti":[{"id":"savoiardi","q":300,"u":"g"},{"id":"mascarpone","q":500,"u":"g"},{"id":"uova","q":4,"u":"unità"},{"id":"zucchero","q":100,"u":"g"},{"id":"caffe","q":300,"u":"ml"},{"id":"cacao","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"uova","testo":"Monta tuorli con zucchero"},{"az":"mescolare","ing":"mascarpone","testo":"Unisci mascarpone e albumi montati"},{"az":"impiattare","ing":"savoiardi","testo":"Bagna i savoiardi nel caffè"},{"az":"impiattare","ing":"caffe","testo":"Stratifica savoiardi e crema"},{"az":"impiattare","ing":"cacao","testo":"Spolvera di cacao, riposa in frigo 4 ore"}],"gusti":{"dolce":5,"salato":1,"amaro":3,"acido":1,"umami":2},"calorie":450,"curiosita":"Il tiramisù ha una festa nazionale (Tiramisù Day, 21 marzo) e un campionato mondiale a Treviso.","mai":[{"id":"panna","perche":"Nel tiramisù la crema è di mascarpone e uova. La panna montata la sostituisce spesso perché è più facile, ma cambia il dolce."}]},{"id":"cannoli","nome":"Cannoli Siciliani","regione":"Sicilia","regionId":"sicilia","difficolta":3,"tempo":120,"porzioni":6,"storia":"Dolce di origine araba, nato nell'harem degli emiri di Caltanissetta. Le cialde fritte simboleggiano l'abbondanza; si preparavano per il Carnevale.","dop":[],"ingredienti":[{"id":"farina","q":200,"u":"g"},{"id":"ricotta","q":500,"u":"g"},{"id":"zucchero","q":120,"u":"g"},{"id":"cioccolato","q":50,"u":"g"},{"id":"pistacchi","q":40,"u":"g"},{"id":"scorza_arancia","q":20,"u":"g"}],"step":[{"az":"mescolare","ing":"farina","testo":"Impasta farina, vino, zucchero"},{"az":"soffriggere","ing":"farina","testo":"Friggi le cialde arrotolate"},{"az":"mescolare","ing":"ricotta","testo":"Setaccia ricotta con zucchero"},{"az":"mescolare","ing":"cioccolato","testo":"Aggiungi cioccolato e scorza"},{"az":"impiattare","ing":"pistacchi","testo":"Farcisci e decora con pistacchi"}],"gusti":{"dolce":5,"salato":1,"amaro":1,"acido":1,"umami":1},"calorie":380,"curiosita":"La ricotta va riempita AL MOMENTO per non ammosciare la cialda. Un cannolo vero scrocchia."},{"id":"pasta_fagioli","nome":"Pasta e Fagioli","regione":"Veneto","regionId":"veneto","difficolta":2,"tempo":45,"porzioni":2,"storia":"Piatto della cucina povera, diffuso in tutta la penisola con un nome diverso in ogni regione: in Veneto è \"pasta e fasioi\". Nasce dove la carne era rara e i legumi erano la proteina di tutti i giorni.","dop":["Fagiolo di Lamon della Vallata Bellunese IGP"],"ingredienti":[{"id":"ditalini","q":140,"u":"g"},{"id":"fagioli","q":200,"u":"g"},{"id":"soffritto","q":80,"u":"g"},{"id":"pomodoro","q":100,"u":"g"},{"id":"olio_evo","q":20,"u":"ml"},{"id":"rosmarino","q":2,"u":"g"}],"step":[{"az":"soffriggere","ing":"soffritto","testo":"Fai appassire il soffritto con il rosmarino"},{"az":"cuocere","ing":"fagioli","testo":"Aggiungi fagioli e pomodoro, cuoci piano"},{"az":"bollire","ing":"ditalini","testo":"Cala la pasta direttamente nei fagioli"},{"az":"impiattare","ing":"olio_evo","testo":"Riposa qualche minuto e finisci a crudo con l'olio"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":2,"umami":3},"curiosita":"Legumi e cereali insieme si completano: presi da soli sono proteine incomplete, nello stesso piatto diventano complete. Per questo pasta e fagioli è un piatto unico, non un primo.","calorie":465,"mai":[{"id":"panna","perche":"La crema di pasta e fagioli viene dai fagioli stessi, schiacciati: è un piatto di cucina povera e non ha bisogno di aggiunte."}]},{"id":"minestrone","nome":"Minestrone di Verdure","regione":"Liguria","regionId":"liguria","difficolta":1,"tempo":50,"porzioni":2,"storia":"Il minestrone cambia con la stagione e con quello che l'orto dà: non esiste una ricetta unica. In Liguria si chiude con un cucchiaio di pesto, che si aggiunge sempre a fuoco spento.","dop":["Basilico Genovese DOP"],"ingredienti":[{"id":"patate","q":150,"u":"g"},{"id":"carote","q":80,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"fagiolini","q":80,"u":"g"},{"id":"sedano","q":50,"u":"g"},{"id":"fagioli","q":100,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"basilico","q":5,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"sedano","testo":"Fai insaporire sedano e carote nell'olio"},{"az":"bollire","ing":"patate","testo":"Copri d'acqua e cuoci patate e fagiolini"},{"az":"cuocere","ing":"fagioli","testo":"Unisci zucchine e fagioli, cuoci finché è cremoso"},{"az":"impiattare","ing":"basilico","testo":"Profuma col basilico a fuoco spento"}],"gusti":{"dolce":3,"salato":2,"amaro":1,"acido":1,"umami":2},"curiosita":"Il basilico va aggiunto a fuoco spento: il calore forte gli fa perdere gli oli profumati e lo fa diventare scuro e amaro.","calorie":220},{"id":"risotto_zucca","nome":"Risotto alla Zucca","regione":"Lombardia","regionId":"lombardia","difficolta":2,"tempo":35,"porzioni":2,"storia":"La zucca arriva in Europa dalle Americhe e attecchisce nella pianura fra Lombardia e Mantovano, dove entra nei risotti e nei tortelli. È un ortaggio d'autunno che si conserva tutto l'inverno.","dop":["Parmigiano Reggiano DOP"],"ingredienti":[{"id":"riso_carnaroli","q":160,"u":"g"},{"id":"zucca","q":300,"u":"g"},{"id":"cipolla","q":30,"u":"g"},{"id":"brodo","q":700,"u":"ml"},{"id":"parmigiano","q":30,"u":"g"},{"id":"burro","q":15,"u":"g"}],"step":[{"az":"soffriggere","ing":"cipolla","testo":"Fai appassire la cipolla, senza farla colorire"},{"az":"cuocere","ing":"zucca","testo":"Aggiungi la zucca a cubetti e falla sfaldare"},{"az":"mescolare","ing":"riso_carnaroli","testo":"Tosta il riso e cuoci aggiungendo il brodo poco per volta"},{"az":"impiattare","ing":"parmigiano","testo":"Manteca fuori dal fuoco con burro e parmigiano"}],"gusti":{"dolce":4,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"La zucca è arancione per il betacarotene, che il corpo trasforma in vitamina A. È uno dei pochi nutrienti che si assorbe meglio se nel piatto c'è anche un grasso: qui ci pensa il burro della mantecatura.","calorie":475},{"id":"merluzzo_forno","nome":"Merluzzo al Forno con Patate","regione":"Liguria","regionId":"liguria","difficolta":2,"tempo":40,"porzioni":2,"storia":"Il pesce al forno con le patate è di casa su tutte le coste italiane: una teglia sola, il pesce sopra le patate, e il forno fa il resto. In Liguria si aggiungono olive e pinoli.","dop":[],"ingredienti":[{"id":"merluzzo","q":250,"u":"g"},{"id":"patate","q":250,"u":"g"},{"id":"olio_evo","q":15,"u":"ml"},{"id":"prezzemolo","q":5,"u":"g"},{"id":"aglio","q":1,"u":"spicchio"},{"id":"limone","q":1,"u":"spicchio"}],"step":[{"az":"mescolare","ing":"prezzemolo","testo":"Prepara un trito di prezzemolo e aglio con l'olio"},{"az":"cuocere","ing":"patate","testo":"Stendi le patate a fette sul fondo della teglia"},{"az":"cuocere","ing":"merluzzo","testo":"Adagia il merluzzo sopra le patate e inforna"},{"az":"impiattare","ing":"limone","testo":"Servi con una spremuta di limone"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":3,"umami":3},"curiosita":"Le Linee Guida per una sana alimentazione consigliano il pesce due o tre volte a settimana. Al forno mantiene i suoi grassi buoni, gli omega-3, che una frittura ad alta temperatura invece rovina.","calorie":270},{"id":"farro_orto","nome":"Farro con le Verdure dell'Orto","regione":"Toscana","regionId":"toscana","difficolta":1,"tempo":35,"porzioni":2,"storia":"Il farro è il cereale più antico coltivato in Italia: lo mangiavano gli Etruschi e i legionari romani. In Garfagnana non ha mai smesso di essere coltivato, nemmeno quando il grano lo aveva sostituito ovunque.","dop":["Farro della Garfagnana IGP"],"ingredienti":[{"id":"farro","q":160,"u":"g"},{"id":"zucchine","q":120,"u":"g"},{"id":"pomodoro","q":120,"u":"g"},{"id":"basilico","q":5,"u":"foglie"},{"id":"olio_evo","q":15,"u":"ml"}],"step":[{"az":"bollire","ing":"farro","testo":"Lessa il farro in acqua salata e scolalo"},{"az":"soffriggere","ing":"zucchine","testo":"Salta le zucchine a dadini, che restino sode"},{"az":"cuocere","ing":"pomodoro","testo":"Unisci il pomodoro e fallo appena appassire"},{"az":"impiattare","ing":"basilico","testo":"Condisci il farro e profuma col basilico"}],"gusti":{"dolce":2,"salato":2,"amaro":1,"acido":3,"umami":2},"curiosita":"Il farro è un cereale integrale: conserva la crusca, quindi ha più fibra della pasta bianca. La fibra non nutre, ma tiene in ordine l'intestino e fa sentire sazi più a lungo.","calorie":350},{"id":"frittata_forno","nome":"Frittata al Forno con le Zucchine","regione":"Campania","regionId":"campania","difficolta":1,"tempo":25,"porzioni":2,"storia":"La frittata è il piatto del riciclo per eccellenza: nasce per non buttare via le verdure avanzate. Ogni regione ha la sua, e in Campania si fa anche con la pasta del giorno prima.","dop":[],"ingredienti":[{"id":"uova","q":4,"u":"unità"},{"id":"zucchine","q":200,"u":"g"},{"id":"parmigiano","q":30,"u":"g"},{"id":"olio_evo","q":10,"u":"ml"},{"id":"basilico","q":3,"u":"foglie"}],"step":[{"az":"soffriggere","ing":"zucchine","testo":"Rosola le zucchine a fettine e falle raffreddare"},{"az":"mescolare","ing":"uova","testo":"Sbatti le uova con il parmigiano e unisci le zucchine"},{"az":"cuocere","ing":"parmigiano","testo":"Versa in teglia e cuoci in forno finché è appena dorata"},{"az":"impiattare","ing":"basilico","testo":"Taglia a quadrotti e profuma col basilico"}],"gusti":{"dolce":2,"salato":3,"amaro":1,"acido":1,"umami":4},"curiosita":"Cotta al forno invece che fritta, la frittata non assorbe l'olio della padella: stessi ingredienti, molti grassi in meno. Il modo di cuocere cambia il piatto quanto la ricetta.","calorie":270}],"INGREDIENTS":{"spaghetti":{"nome":"Spaghetti","cat":"pasta","kcal100":355},"bucatini":{"nome":"Bucatini","cat":"pasta","kcal100":355},"trofie":{"nome":"Trofie","cat":"pasta","kcal100":355},"tagliatelle":{"nome":"Tagliatelle all'uovo","cat":"pasta","kcal100":368},"sfoglia":{"nome":"Sfoglia all'uovo","cat":"pasta","kcal100":368},"maccheroni":{"nome":"Maccheroni","cat":"pasta","kcal100":355},"orecchiette":{"nome":"Orecchiette","cat":"pasta","kcal100":355},"riso_carnaroli":{"nome":"Riso Carnaroli","cat":"cereali","kcal100":340},"farina":{"nome":"Farina 00","cat":"cereali","kcal100":340},"pane_raffermo":{"nome":"Pane raffermo","cat":"cereali","kcal100":270},"pangrattato":{"nome":"Pangrattato","cat":"cereali","kcal100":380},"savoiardi":{"nome":"Savoiardi","cat":"cereali","kcal100":400},"guanciale":{"nome":"Guanciale","cat":"carne","kcal100":655},"carne_macinata":{"nome":"Carne macinata","cat":"carne","kcal100":240},"costoletta_vitello":{"nome":"Costoletta di vitello","cat":"carne","kcal100":220},"bistecca_chianina":{"nome":"Bistecca di Chianina","cat":"carne","kcal100":250},"girello_vitello":{"nome":"Girello di vitello","cat":"carne","kcal100":130},"tonno":{"nome":"Tonno sott'olio","cat":"pesce","kcal100":195},"acciughe":{"nome":"Acciughe","cat":"pesce","kcal100":130},"uova":{"nome":"Uova intere","cat":"latticini","kcal100":130},"tuorli":{"nome":"Tuorli d'uovo","cat":"latticini","kcal100":320},"pecorino":{"nome":"Pecorino Romano","cat":"latticini","kcal100":390},"parmigiano":{"nome":"Parmigiano Reggiano","cat":"latticini","kcal100":395},"mozzarella":{"nome":"Mozzarella di Bufala","cat":"latticini","kcal100":280},"ricotta":{"nome":"Ricotta","cat":"latticini","kcal100":170},"ricotta_salata":{"nome":"Ricotta salata","cat":"latticini","kcal100":240},"mascarpone":{"nome":"Mascarpone","cat":"latticini","kcal100":450},"burro":{"nome":"Burro","cat":"latticini","kcal100":760},"besciamella":{"nome":"Besciamella","cat":"latticini","kcal100":150},"pomodoro":{"nome":"Pomodoro","cat":"verdure","kcal100":20},"basilico":{"nome":"Basilico","cat":"verdure","kcal100":25},"aglio":{"nome":"Aglio","cat":"verdure","kcal100":40},"cipolla":{"nome":"Cipolla","cat":"verdure","kcal100":40},"soffritto":{"nome":"Sedano, carota, cipolla","cat":"verdure","kcal100":35},"melanzane":{"nome":"Melanzane","cat":"verdure","kcal100":25},"cime_rapa":{"nome":"Cime di rapa","cat":"verdure","kcal100":30},"cavolo_nero":{"nome":"Cavolo nero","cat":"verdure","kcal100":40},"fagioli":{"nome":"Fagioli cannellini","cat":"verdure","kcal100":110},"piselli":{"nome":"Piselli","cat":"verdure","kcal100":80},"capperi":{"nome":"Capperi","cat":"verdure","kcal100":25},"olio_evo":{"nome":"Olio extra vergine","cat":"condimenti","kcal100":900},"pepe_nero":{"nome":"Pepe nero","cat":"spezie","kcal100":250},"peperoncino":{"nome":"Peperoncino","cat":"spezie","kcal100":280},"zafferano":{"nome":"Zafferano","cat":"spezie","kcal100":310},"sale_grosso":{"nome":"Sale grosso","cat":"spezie","kcal100":0},"rosmarino":{"nome":"Rosmarino","cat":"spezie","kcal100":130},"scorza_arancia":{"nome":"Scorza d'arancia","cat":"spezie","kcal100":95},"pinoli":{"nome":"Pinoli","cat":"frutta_secca","kcal100":670},"pistacchi":{"nome":"Pistacchi","cat":"frutta_secca","kcal100":560},"limone":{"nome":"Limone","cat":"verdure","kcal100":30},"brodo":{"nome":"Brodo di carne","cat":"liquidi","kcal100":15},"vino_rosso":{"nome":"Vino rosso","cat":"liquidi","kcal100":85},"caffe":{"nome":"Caffè espresso","cat":"liquidi","kcal100":5},"lievito":{"nome":"Lievito di birra","cat":"altri","kcal100":100},"zucchero":{"nome":"Zucchero","cat":"altri","kcal100":390},"cioccolato":{"nome":"Cioccolato fondente","cat":"altri","kcal100":540},"cacao":{"nome":"Cacao amaro","cat":"altri","kcal100":350},"ditalini":{"nome":"Ditalini","cat":"pasta","kcal100":355},"farro":{"nome":"Farro perlato","cat":"cereali","kcal100":335},"merluzzo":{"nome":"Merluzzo","cat":"pesce","kcal100":82},"zucca":{"nome":"Zucca","cat":"verdure","kcal100":18},"patate":{"nome":"Patate","cat":"verdure","kcal100":80},"carote":{"nome":"Carote","cat":"verdure","kcal100":35},"zucchine":{"nome":"Zucchine","cat":"verdure","kcal100":15},"sedano":{"nome":"Sedano","cat":"verdure","kcal100":20},"fagiolini":{"nome":"Fagiolini","cat":"verdure","kcal100":31},"prezzemolo":{"nome":"Prezzemolo","cat":"spezie","kcal100":35},"panna":{"nome":"Panna da cucina","cat":"latticini","kcal100":340}},"AZIONI":{"bollire":{"nome":"Bollire","icona":"bollire"},"soffriggere":{"nome":"Soffriggere","icona":"soffriggere"},"cuocere":{"nome":"Cuocere","icona":"cuocere"},"mescolare":{"nome":"Mescolare","icona":"mescolare"},"impiattare":{"nome":"Impiattare","icona":"impiattare"}},"REGIONI":{"piemonte":{"nome":"Piemonte","x":110,"y":165,"capoluogo":"Torino"},"lombardia":{"nome":"Lombardia","x":180,"y":155,"capoluogo":"Milano"},"veneto":{"nome":"Veneto","x":245,"y":160,"capoluogo":"Venezia"},"liguria":{"nome":"Liguria","x":135,"y":215,"capoluogo":"Genova"},"emilia":{"nome":"Emilia-Romagna","x":210,"y":215,"capoluogo":"Bologna"},"toscana":{"nome":"Toscana","x":210,"y":275,"capoluogo":"Firenze"},"lazio":{"nome":"Lazio","x":250,"y":345,"capoluogo":"Roma"},"campania":{"nome":"Campania","x":305,"y":395,"capoluogo":"Napoli"},"puglia":{"nome":"Puglia","x":375,"y":395,"capoluogo":"Bari"},"sicilia":{"nome":"Sicilia","x":290,"y":525,"capoluogo":"Palermo"}}};
@@ -1078,231 +1007,28 @@ function shuffle(arr, r){
   return a;
 }
 
-/* ---------- 2. Seed: modalità lezione vs autonoma ------------------------ */
-const PARAMS = new URLSearchParams(location.search);
-const SEED_LEZIONE = PARAMS.get('seed');
-// sid in memoria, NON in localStorage: la macchina è condivisa.
-const SID = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())).slice(0, 8);
-let RUN = 0;
-const seedBase = () => SEED_LEZIONE || SID;
-const seedCorrente = () => seedBase() + '-' + RUN;
-
-/* ---------- 3. Costanti di gioco ---------------------------------------- */
+/* ---------- 2. Costanti di gioco ---------------------------------------- */
 const COSTO = { bollire:8, soffriggere:5, cuocere:10, mescolare:3, impiattare:2 };
-const N_ORDINI = 5;        // tavoli che ordineranno nel servizio
-const N_SERVIBILI = 3;     // percorso valido garantito per costruzione
-const QUOTA_TEMPO = 0.66;     // budget al 66% (RIGIOCABILITA §4: 60-70%)
-const QUOTA_DISPENSA = 0.66;  // idem sugli ingredienti CONTESI
-const TICK_MS = 5200;      // il mondo si muove comunque: 1 minuto ogni ~5s
-const PUNTI = { 3:3, 2:2, 1:1, 0:0 };
-const P_RIFIUTO = -1;      // dire di no in tempo costa poco
-const P_ANDATO  = -3;      // promettere e non riuscire costa molto
 
-/* ---------- 4. Grammatica generativa (RIGIOCABILITA §5.3, Leva 1) -------
-   Le battute dei clienti non sono una lista scritta a mano: sono una
-   grammatica. Sei liste corte -> centinaia di richieste distinte.
-   La stringa vuota "" genera anche i casi "senza": i più subdoli.        */
-const GRAMMATICA = {
-  ordine: ['{apri} {piatto}{vincolo}.', '{apri} {piatto}{vincolo}, {fretta}', '{piatto}{vincolo}. {fretta}'],
-  apri:   ['Per me', 'Prendo', 'Vorrei', 'Facciamo'],
-  vincolo:['', '', '', ', ma senza fretta', ', se è ancora possibile', ', quello vero però'],
-  fretta: ['Abbiamo un treno.', 'Non abbiamo fretta.', 'Quanto ci vuole?', 'È per un\'occasione.', 'Me ne hanno parlato bene.']
-};
-function gen(sym, r){
-  const p = pick(GRAMMATICA[sym], r);
-  return p.replace(/\{(\w+)\}/g, (_, s) => (GRAMMATICA[s] ? gen(s, r) : '{' + s + '}'));
-}
-
-/* ---------- 5. Peso della difficoltà (RIGIOCABILITA §5.7)
-   "Il generatore non può generare il senso": la difficoltà si scrive
-   dentro le regole, come pesi. Questa funzione È la lezione.            */
-function difficolta(ric){
-  let d = 0;
-  d += ric.step.length * 2;                                   // più step = più sequenza da tenere
-  d += ric.ingredienti.length * 1.5;                          // più ingredienti = più dispensa da leggere
-  d += ric.step.reduce((s, x) => s + COSTO[x.az], 0) / 5;     // più minuti = più pazienza altrui bruciata
-  d += ric.difficolta * 3;                                    // difficoltà dichiarata dal ricettario
-  return Math.round(d);
-}
-
-/* ---------- 6. Generazione inversa del servizio (RIGIOCABILITA §5.4)
-   Non genero il problema e poi lo verifico: parto dalla SOLUZIONE.
-     1. traccio un percorso valido -> scelgo K ricette servibili
-     2. poso i pezzi giusti        -> la dispensa copre K per costruzione
-     3. aggiungo i distrattori     -> gli ordini in eccesso, e soprattutto
-                                      la CONTESA sugli ingredienti condivisi
-     4. mescolo                    -> arrivi scaglionati
-   La soluzione esiste per costruzione: nessuna partita è irrisolvibile.
-
-   Dove sta la scarsità (il punto del gioco):
-   un ingrediente che serve a UNA sola ricetta non produce nessuna decisione,
-   e infatti c'è tutto. La decisione nasce dagli ingredienti CONTESI: di quelli
-   ce n'è per ~2/3 di chi li vuole, quindi servire un tavolo è togliere a un
-   altro. Non è una regola imposta: è già nei dati del ricettario. */
-function generaServizio(seed){
-  const r = mulberry32(cyrb53(seed));
-  const scelte = shuffle(DB.RECIPES, r).slice(0, N_ORDINI);
-  const K = shuffle(scelte, r).slice(0, N_SERVIBILI);
-
-  // fabbisogno totale, unità di misura e numero di pretendenti per ingrediente
-  const need = {}, unita = {}, pretendenti = {};
-  scelte.forEach(ric => ric.ingredienti.forEach(i => {
-    need[i.id] = (need[i.id] || 0) + i.q;
-    unita[i.id] = i.u;
-    pretendenti[i.id] = (pretendenti[i.id] || 0) + 1;
-  }));
-  const arrotonda = (q, u) => (u === 'g' || u === 'ml')
-    ? Math.max(1, Math.round(q))
-    : Math.max(1, Math.round(q));
-
-  // 2-3. non conteso -> c'è tutto. Conteso -> ce n'è per due terzi.
-  const dispensa = {};
-  Object.keys(need).forEach(id => {
-    dispensa[id] = pretendenti[id] === 1
-      ? need[id]
-      : arrotonda(need[id] * QUOTA_DISPENSA, unita[id]);
-  });
-
-  // Garanzia: il percorso valido K deve restare servibile per costruzione.
-  const needK = {};
-  K.forEach(ric => ric.ingredienti.forEach(i => needK[i.id] = (needK[i.id] || 0) + i.q));
-  Object.keys(needK).forEach(id => { if(dispensa[id] < needK[id]) dispensa[id] = needK[id]; });
-
-  // Senza rinuncia non c'è decisione. Ogni tanto il caso produce una serata
-  // in cui le cinque ricette si sovrappongono così poco da starci tutte:
-  // in quel caso stringo l'ingrediente su cui K ha più margine, restando
-  // sempre sopra il fabbisogno di K (la garanzia non si tocca).
-  const tuttoPossibile = () => Object.keys(need).every(id => dispensa[id] >= need[id]);
-  if(tuttoPossibile()){
-    const cand = Object.keys(need)
-      .filter(id => (needK[id] || 0) < need[id])
-      .sort((a, b) => (need[b] - (needK[b] || 0)) - (need[a] - (needK[a] || 0)));
-    if(cand.length){
-      const id = cand[0];
-      dispensa[id] = Math.max(needK[id] || 0, arrotonda(need[id] * QUOTA_DISPENSA, unita[id]));
-      pretendenti[id] = Math.max(2, pretendenti[id] || 2);   // ora è conteso: dichiaralo
-    }
-  }
-
-  // tempo: 66% di quanto servirebbe per farle tutte
-  const tempoTot = scelte.reduce((s, ric) => s + ric.step.reduce((a, x) => a + COSTO[x.az], 0), 0);
-  const durata = Math.round(tempoTot * QUOTA_TEMPO / 5) * 5;
-
-  // 4. ordini scaglionati: informazione parziale. Non sai chi arriverà dopo.
-  const ordini = scelte.map((ric, i) => {
-    const arrivo = i < 2 ? 0 : Math.round((durata * (i - 1) / N_ORDINI) / 5) * 5;
-    const costo = ric.step.reduce((a, x) => a + COSTO[x.az], 0);
-    return {
-      uid: 'o' + i,
-      ricetta: ric.id,
-      tavolo: rint(1, 24, r),
-      battuta: gen('ordine', r).replace('{piatto}', ric.nome.toLowerCase()),
-      arrivo,
-      pazienza: costo + rint(20, 34, r),
-      stato: arrivo === 0 ? 'attesa' : 'atteso',
-      stelle: null
-    };
-  });
-
-  return {
-    seed,
-    risorse: { durata, dispensa, dispensaIniziale: Object.assign({}, dispensa), unita, pretendenti },
-    mondo:   { orologio: 0, ordini, attivo: null, azione: null, padella: [], crono: [] },
-    traccia: { serviti: [], rifiutati: [], andati: [], mosse: 0, note: [] },
-    punti: 0,
-    ricettarioAperto: true,
-    finito: false
-  };
-}
-
-/* ---------- 7. Stato + ciclo update ------------------------------------- */
+/* ---------- Stato + ciclo update ------------------------------------- */
 let S = null;
-let RUNS = [];              // telemetria formativa, IN MEMORIA (mai localStorage)
-let tick = null;
 const ric = id => DB.RECIPES.find(x => x.id === id);
-const ordAttivo = () => S.mondo.ordini.find(o => o.uid === S.mondo.attivo) || null;
+const piatto = () => (S ? ric(S.mondo.ricetta) : null);
 
 function update(fn){
-  if(S.finito) return;
+  if(!S) return;
   if(fn) fn();
-  evolvi(S, 0);
   render();
 }
 
-/* evolvi() gira anche se lo studente non fa nulla: se aspettare non costa
-   niente, non c'è tensione. */
-function evolvi(S, minuti){
-  if(S.finito) return;
-  S.mondo.orologio += minuti;
-
-  S.mondo.ordini.forEach(o => {
-    if(o.stato === 'atteso' && S.mondo.orologio >= o.arrivo){
-      o.stato = 'attesa';
-      if(minuti > 0) toast('Tavolo ' + o.tavolo + ': è arrivato un ordine.', '');
-    }
-    if((o.stato === 'attesa' || o.stato === 'lavoro') && S.mondo.orologio - o.arrivo > o.pazienza){
-      o.stato = 'andato';
-      S.punti += P_ANDATO;
-      S.traccia.andati.push(o.uid);
-      S.traccia.note.push({ t: 'Il tavolo ' + o.tavolo + ' ha aspettato ' + o.pazienza + ' minuti e ha lasciato il locale.', tono: 'amb' });
-      if(S.mondo.attivo === o.uid){ S.mondo.attivo = null; S.mondo.azione = null; S.mondo.padella = []; S.mondo.crono = []; }
-      toast('Il tavolo ' + o.tavolo + ' ha lasciato il locale.', 'amb');
-    }
-  });
-
-  if(S.mondo.orologio >= S.risorse.durata) fineServizio();
-}
-
-function spendiTempo(minuti){
-  const passi = Math.max(1, minuti);
-  for(let i = 0; i < passi && !S.finito; i++) evolvi(S, 1);
-}
-
-function avviaTick(){
-  fermaTick();
-  tick = setInterval(() => { if(!S || S.finito) return fermaTick(); evolvi(S, 1); render(); }, TICK_MS);
-}
-function fermaTick(){ if(tick){ clearInterval(tick); tick = null; } }
-
 /* ---------- 8. Azioni del giocatore ------------------------------------- */
-function prendiOrdine(uid){
-  update(() => {
-    const o = S.mondo.ordini.find(x => x.uid === uid);
-    if(!o || o.stato !== 'attesa') return;
-    const prec = ordAttivo();
-    if(prec && prec.stato === 'lavoro'){ prec.stato = 'attesa'; }
-    // cambiare piatto svuota la padella non confermata: quello che avevi in mano torna
-    S.mondo.padella = [];
-    S.mondo.azione = null;
-    S.mondo.crono = [];
-    o.stato = 'lavoro';
-    S.mondo.attivo = uid;
-    S.traccia.mosse++;
-  });
-}
-
-function rifiutaOrdine(uid){
-  update(() => {
-    const o = S.mondo.ordini.find(x => x.uid === uid);
-    if(!o || (o.stato !== 'attesa' && o.stato !== 'lavoro')) return;
-    o.stato = 'rifiutato';
-    S.punti += P_RIFIUTO;
-    S.traccia.rifiutati.push(o.uid);
-    S.traccia.note.push({ t: 'Hai spiegato al tavolo ' + o.tavolo + ' che stasera ' + ric(o.ricetta).nome + ' non era possibile.', tono: 'neu' });
-    if(S.mondo.attivo === uid){ S.mondo.attivo = null; S.mondo.azione = null; S.mondo.padella = []; S.mondo.crono = []; }
-    S.traccia.mosse++;
-    toast('Tavolo ' + o.tavolo + ': hai detto di no in tempo.', '');
-  });
-}
-
 function scegliAzione(az){
   update(() => { S.mondo.azione = (S.mondo.azione === az) ? null : az; });
 }
 
 function aggiungiIngrediente(id){
-  const o = ordAttivo();
-  if(!o) return;
-  const r = ric(o.ricetta);
+  const r = piatto();
+  if(!r) return;
   const voce = r.ingredienti.find(i => i.id === id);
   const serve = voce ? voce.q : 0;
   const ho = S.risorse.dispensa[id] || 0;
@@ -1330,32 +1056,27 @@ function aggiungiIngrediente(id){
 
 function togliIngrediente(id){ update(() => { S.mondo.padella = S.mondo.padella.filter(i => i !== id); }); }
 
-/* Confermare lo step è il punto di NON RITORNO: qui la dispensa si consuma. */
+/* Confermare il passaggio è il punto di NON RITORNO: la dispensa si consuma. */
 function confermaStep(){
-  const o = ordAttivo();
-  if(!o || !S.mondo.azione || S.mondo.padella.length === 0) return;
+  const r = piatto();
+  if(!r || !S.mondo.azione || S.mondo.padella.length === 0) return;
   update(() => {
-    const r = ric(o.ricetta);
     S.mondo.padella.forEach(id => {
       const voce = r.ingredienti.find(i => i.id === id);
       const q = voce ? voce.q : (S.risorse.dispensa[id] || 0);
       S.risorse.dispensa[id] = Math.max(0, Math.round(((S.risorse.dispensa[id] || 0) - q) * 10) / 10);
     });
     S.mondo.crono.push({ az: S.mondo.azione, ings: S.mondo.padella.slice() });
-    const min = COSTO[S.mondo.azione];
+    S.mondo.orologio += COSTO[S.mondo.azione];   // minuti di cucina vera: informativi, nessun conto alla rovescia
     S.mondo.padella = [];
     S.mondo.azione = null;
-    S.traccia.mosse++;
-    spendiTempo(min);
   });
 }
 
-function serviPiatto(){
-  const o = ordAttivo();
-  if(!o || S.mondo.crono.length === 0) return;
-  const r = ric(o.ricetta);
-  const v = valuta(S.mondo.crono, r);
-  mostraVerdetto(v, r, o);
+function portaInTavola(){
+  const r = piatto();
+  if(!r || S.mondo.crono.length === 0) return;
+  mostraVerdetto(valuta(S.mondo.crono, r), r);
 }
 
 /* ---------- 9. Valutazione (linguaggio mai colpevolizzante) ------------- */
@@ -1410,36 +1131,13 @@ function valuta(steps, r){
   if(note.length === 0) note.push({ t: 'Ingredienti giusti, sequenza giusta, niente sprecato.', ok: true });
 
   const battute = {
-    3: ['Il tavolo ha ripulito il piatto e ha chiesto chi c\'è in cucina.', 'Questo è esattamente il piatto che avevano in mente.', 'Servito come si deve.'],
-    2: ['Il piatto è tornato vuoto, ma qualcosa si poteva stringere.', 'Va bene così. Non è ancora quello del ricettario.', 'Buono. Ci sei quasi.'],
-    1: ['Il tavolo lo ha mangiato, senza commenti.', 'È uscito dalla cucina, ma non è ancora questa ricetta.', 'Il piatto regge, l\'idea si è persa per strada.'],
-    0: ['Il tavolo ha assaggiato e ha lasciato lì. Guarda cosa si è inceppato.', 'Questo non è il piatto che avevano ordinato. Vale la pena rileggere la sequenza.', 'Qualcosa si è inceppato presto: le note qui sotto dicono dove.']
+    3: ['È il piatto del ricettario, preciso: adesso puoi insegnarlo tu.', 'Sequenza giusta, ingredienti giusti, niente di troppo.', 'Così com\'è si tramanda da generazioni. E tu l\'hai rifatto.'],
+    2: ['Buono. Non è ancora quello del ricettario, ma ci sei quasi.', 'Il piatto regge: un dettaglio si è perso per strada.', 'Chi lo conosce se ne accorgerebbe: riguarda i passaggi.'],
+    1: ['Si mangia — ma la ricetta è un\'altra cosa. Riparti dalla sequenza.', 'L\'idea si è persa per strada: rileggi i passaggi e riprova.', 'Le intenzioni ci sono; la tradizione non ancora.'],
+    0: ['Questo è un altro piatto: rileggi la ricetta con calma e riprova.', 'Qualcosa si è inceppato presto: le note qui sotto dicono dove.', 'Ricomincia dal primo passaggio: la ricetta non scappa.']
   };
-  const r2 = mulberry32(cyrb53(S.seed + '-v' + S.traccia.serviti.length));
+  const r2 = mulberry32(cyrb53(S.mondo.ricetta + '-v' + S.mondo.crono.length));
   return { stelle, note, battuta: pick(battute[stelle], r2), sprechi: extra.length };
-}
-
-/* ---------- 10. Fine servizio ------------------------------------------- */
-function fineServizio(){
-  if(S.finito) return;
-  S.finito = true;
-  fermaTick();
-  S.mondo.ordini.forEach(o => {
-    if(o.stato === 'attesa' || o.stato === 'lavoro' || o.stato === 'atteso'){
-      o.stato = 'chiuso';
-      S.traccia.note.push({ t: 'Il tavolo ' + o.tavolo + ' non è stato servito prima della chiusura.', tono: 'neu' });
-    }
-  });
-  RUNS.push({
-    seed: S.seed, run: RUN, punti: S.punti,
-    serviti: S.traccia.serviti.length,
-    rifiutati: S.traccia.rifiutati.length,
-    andati: S.traccia.andati.length,
-    mosse: S.traccia.mosse,
-    residuo: Math.max(0, S.risorse.durata - S.mondo.orologio)
-  });
-  RUNS = RUNS.slice(-30);
-  setTimeout(renderChiusura, 260);
 }
 
 /* ==========================================================================
@@ -1504,35 +1202,17 @@ function toast(msg, tipo){
 
 /* ---------- render principale ------------------------------------------- */
 function render(){
-  if(!S) return;
-  const libera = S.modo === 'libera';
-  if(libera){
-    $('#st-tempo').textContent = 'libero';
-    $('#st-tempo').className = 'stat-val mono';
-    $('#st-tempo-bar').style.width = '100%';
-    $('#st-tempo-bar').className = '';
-    $('#st-seed').textContent = ric(S.mondo.ordini[0].ricetta).regione;
+  const r = piatto();
+  if(r){
+    $('#prep-titolo').textContent = r.nome;
+    $('#prep-sotto').textContent = r.regione + ' · ' + r.porzioni + ' porzioni · difficoltà ' + r.difficolta + ' su 3';
   } else {
-    const resta = Math.max(0, S.risorse.durata - S.mondo.orologio);
-    const perc = (resta / S.risorse.durata) * 100;
-    const warn = perc <= 30;
-    $('#st-tempo').textContent = resta + "'";
-    $('#st-tempo').className = 'stat-val mono' + (warn ? ' warn' : '');
-    const bar = $('#st-tempo-bar');
-    bar.style.width = perc + '%';
-    bar.className = warn ? 'warn' : '';
-    $('#st-seed').textContent = S.seed;
+    $('#prep-titolo').innerHTML = 'La <em>preparazione</em>';
+    $('#prep-sotto').textContent = 'Prima scegli un piatto dal ricettario';
   }
-  $('#st-punti').textContent = S.punti;
-  $('#st-punti').className = 'stat-val mono' + (S.punti > 0 ? ' good' : S.punti < 0 ? ' warn' : '');
-  const voci = Object.values(S.risorse.dispensa).filter(q => q > 0).length;
-  $('#st-disp').textContent = voci + '/' + Object.keys(S.risorse.dispensaIniziale).length;
-  $('#reputa-val').textContent = S.punti;
-
-  renderSala();
+  renderScheda();
   renderCucina();
   renderDispensa();
-  renderRicettario();
 }
 
 /* Gruppi alimentari del piatto, ricavati dalle categorie degli ingredienti e
@@ -1579,137 +1259,144 @@ function gruppiPiatto(r){
     .map(k => ({ k, lab: GRUPPO_LAB[k], perc: Math.round(tot[k] / somma * 100) }));
 }
 
-function renderSala(){
-  if(S.modo === 'libera'){
-    const r = ric(S.mondo.ordini[0].ricetta);
-    const g = gruppiPiatto(r);
-    $('#sala-count').textContent = r.regione;
-    $('#tavoli').innerHTML =
-      '<div class="tavolo attivo">' +
-        '<div class="tav-nome">' + esc(r.nome) + '</div>' +
-        '<div class="tav-reg">' + esc(r.regione) + ' · ' + r.porzioni + ' porzioni · ' + r.calorie + ' kcal a porzione</div>' +
-        '<div class="tav-quote">' + esc(r.storia) + '</div>' +
-        (r.dop && r.dop.length ? '<div style="margin-bottom:10px">' + r.dop.map(d => '<span class="dop">' + esc(d) + '</span>').join('') + '</div>' : '') +
-        '<h5 style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ottone);font-weight:700;margin:12px 0 7px">Che cosa c\'è nel piatto</h5>' +
-        '<div class="gruppi">' + g.map(x =>
-          '<div class="gr"><span class="gr-lab">' + x.lab + '</span>' +
-          '<span class="gr-bar"><span class="gr-' + x.k + '" style="width:' + x.perc + '%"></span></span>' +
-          '<span class="gr-val mono">' + x.perc + '%</span></div>').join('') +
-        '</div>' +
-        '<p style="font-size:12px;color:var(--muted);line-height:1.45;margin-top:9px">Percentuali sul peso degli ingredienti che restano nel piatto: brodo, vino e spezie non sono contati. Il piatto equilibrato delle Linee Guida vuole circa metà verdura, un quarto cereali, un quarto proteine — ma vale sul <em>pasto intero</em>, non su un piatto solo.</p>' +
-      '</div>' +
-      '<button class="btn btn--ghost btn--sm" id="btn-torna-volo" style="width:100%;margin-top:10px">Torna al volo</button>';
-    return;
-  }
-  const inSala = S.mondo.ordini.filter(o => o.stato === 'attesa' || o.stato === 'lavoro');
-  $('#sala-count').textContent = inSala.length + ' in attesa';
-  const html = S.mondo.ordini.map(o => {
-    const r = ric(o.ricetta);
-    if(o.stato === 'atteso') return '';
-    if(o.stato === 'servito' || o.stato === 'rifiutato' || o.stato === 'andato' || o.stato === 'chiuso'){
-      const mapEsito = {
-        servito:  ['ok',  ICO.check, 'Servito' + (o.stelle !== null ? ' · ' + o.stelle + '/3' : '')],
-        rifiutato:['neu', ICO.x,     'Hai detto di no'],
-        andato:   ['amb', ICO.x,     'Ha lasciato il locale'],
-        chiuso:   ['neu', ICO.x,     'Non servito']
-      };
-      const [cls, ico, lab] = mapEsito[o.stato];
-      return '<div class="tavolo chiuso">' +
-        '<div class="tav-top"><span class="tav-n">Tavolo ' + o.tavolo + '</span></div>' +
-        '<div class="tav-nome">' + esc(r.nome) + '</div>' +
-        '<div class="tav-esito ' + cls + '">' + svg(ico, 'e-ico') + '<span>' + lab + '</span></div>' +
-      '</div>';
-    }
-    const trascorso = S.mondo.orologio - o.arrivo;
-    const resta = Math.max(0, o.pazienza - trascorso);
-    const p = (resta / o.pazienza) * 100;
-    const w = p <= 35;
-    const attivo = S.mondo.attivo === o.uid;
-    return '<div class="tavolo' + (attivo ? ' attivo' : '') + '">' +
-      '<div class="tav-top"><span class="tav-n">Tavolo ' + o.tavolo + '</span>' +
-        '<span class="tav-n">' + difficolta(r) + ' pt difficoltà</span></div>' +
-      '<div class="tav-nome">' + esc(r.nome) + '</div>' +
-      '<div class="tav-reg">' + esc(r.regione) + ' · ' + r.step.reduce((a, x) => a + COSTO[x.az], 0) + "' di lavoro</div>" +
-      '<div class="tav-quote">' + esc(o.battuta) + '</div>' +
-      '<div class="pazienza">' +
-        '<span class="pazienza-bar"><span class="' + (w ? 'warn' : '') + '" style="width:' + p + '%"></span></span>' +
-        '<span class="pazienza-val">' + resta + "'</span>" +
-      '</div>' +
-      '<div class="tav-actions">' +
-        (attivo ? '<span class="tav-esito ok" style="font-size:12px">' + svg(ICO.check, 'e-ico') + '<span>In lavorazione</span></span>'
-                : '<button class="btn btn--sm" data-prendi="' + o.uid + '">In cucina</button>') +
-        '<button class="btn btn--ghost btn--sm" data-rifiuta="' + o.uid + '">Dico di no</button>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-  const vuoto = inSala.length === 0 && !S.mondo.ordini.some(o => o.stato === 'atteso');
-  $('#tavoli').innerHTML = html + (vuoto ? '<p class="sala-vuota">La sala è chiusa.</p>' : '');
+function renderScheda(){
+  const box = $('#prep-scheda');
+  const r = piatto();
+  if(!r){ box.innerHTML = '<p class="disp-note">Il piatto che sceglierai comparirà qui, con la sua storia.</p>'; return; }
+  const fatti = Math.min(S.mondo.crono.length, r.step.length);
+  const g = gruppiPiatto(r);
+  const riga = (l, v) => '<div class="sch-riga"><span class="sr-l">' + l + '</span><span class="sr-v">' + v + '</span></div>';
+  box.innerHTML =
+    '<div class="sch">' +
+      riga('Regione', esc(r.regione)) +
+      riga('Porzioni', r.porzioni) +
+      riga('Difficoltà', r.difficolta + ' su 3') +
+      riga('Energia', r.calorie + ' kcal/porz.') +
+      riga('In cucina finora', S.mondo.orologio + ' min') +
+      '<div class="sch-avanz"><div class="sa-lab"><span>Passaggi</span><span>' + fatti + ' di ' + r.step.length + '</span></div>' +
+      '<div class="sa-bar"><span style="width:' + (fatti / r.step.length * 100) + '%"></span></div></div>' +
+    '</div>' +
+    '<div class="fact"><div class="f-lab">Da dove viene</div><div class="f-txt">' + esc(r.storia) + '</div></div>' +
+    (r.dop && r.dop.length ? '<div class="fact" style="margin-top:8px"><div class="f-lab">Denominazioni</div><div class="f-txt">' +
+      r.dop.map(d => '<span class="dop">' + esc(d) + '</span>').join('') + '</div></div>' : '') +
+    '<div class="fact" style="margin-top:8px"><div class="f-lab">Che cosa c\'è nel piatto</div>' +
+      '<div class="gruppi" style="margin-top:6px">' + g.map(x =>
+        '<div class="gr"><span class="gr-lab">' + x.lab + '</span>' +
+        '<span class="gr-bar"><span class="gr-' + x.k + '" style="width:' + x.perc + '%"></span></span>' +
+        '<span class="gr-val mono">' + x.perc + '%</span></div>').join('') + '</div>' +
+      '<p style="font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:8px">Percentuali sul peso di ciò che resta nel piatto: brodo, vino e spezie non contano. Il piatto equilibrato delle Linee Guida — metà verdura, un quarto cereali, un quarto proteine — vale sul <em>pasto intero</em>.</p>' +
+    '</div>' +
+    '<div class="ric-toggle" style="margin-top:14px">' +
+      '<span class="eyebrow eyebrow--muted">Testi dei passaggi</span>' +
+      '<button class="switch' + (S.ricettarioAperto ? ' on' : '') + '" id="sw-ric" role="switch" aria-checked="' + S.ricettarioAperto + '" aria-label="Mostra i testi dei passaggi"></button>' +
+    '</div>' +
+    '<p class="disp-note" style="margin-top:4px">' + (S.ricettarioAperto ? 'Ricetta aperta: leggi e fai.' : 'A memoria: i testi sono coperti.') + '</p>' +
+    '<button class="btn btn--ghost btn--sm" id="btn-torna-volo" style="width:100%;margin-top:8px">Cambia piatto</button>';
 }
 
+/* Il banco di lavoro: la ricetta È la pagina. I passaggi sono una scala
+   verticale; quello corrente si apre e contiene le tre mosse, sempre le
+   stesse: 1 scegli il gesto, 2 metti gli ingredienti, 3 conferma. */
 function renderCucina(){
-  const o = ordAttivo();
-  if(!o){
-    $('#zona-cucina').innerHTML =
-      '<div class="zona-h"><span>La cucina</span></div>' +
-      '<p class="no-order">Nessun piatto in lavorazione.<br>Scegli un tavolo dalla sala — o spiega che stasera non è possibile.<br><br>' +
-      'Intanto l\'orologio va avanti.</p>';
+  const box = $('#zona-cucina');
+  const r = piatto();
+  if(!r){
+    box.innerHTML = '<div class="zona-h"><span>Il banco di lavoro</span></div>' +
+      '<p class="banco-vuoto">Nessun piatto sul banco.<br>Scegli una ricetta dal ricettario in volo.</p>';
     return;
   }
-  const r = ric(o.ricetta);
-  const azHtml = Object.entries(DB.AZIONI).map(([k, a]) =>
-    '<button class="az-btn' + (S.mondo.azione === k ? ' on' : '') + '" data-az="' + k + '">' +
-      svg(ICO[k]) + '<span>' + a.nome + '</span><span class="az-min">' + COSTO[k] + "'</span>" +
-    '</button>').join('');
+  const fatti = S.mondo.crono.length;
+  const tot = r.step.length;
+  const az = S.mondo.azione;
+  const pad = S.mondo.padella;
+  const aperto = S.ricettarioAperto;
+  const fase = !az ? 1 : (pad.length === 0 ? 2 : 3);
 
-  const padHtml = S.mondo.padella.length === 0
-    ? '<p class="padella-vuota">' + (S.mondo.azione
-        ? 'Trascina o tocca gli ingredienti da ' + DB.AZIONI[S.mondo.azione].nome.toLowerCase()
-        : 'Scegli prima che cosa fare') + '</p>'
-    : '<div class="in-padella">' + S.mondo.padella.map(id => {
+  const mosse = ['Scegli il gesto', 'Metti gli ingredienti', 'Conferma'].map((m, i) => {
+    const st = fase === i + 1 ? ' on' : (fase > i + 1 ? ' ok' : '');
+    return '<span class="mossa' + st + '"><span class="mo-n">' + (fase > i + 1 ? svg(ICO.check) : (i + 1)) + '</span><span>' + m + '</span></span>';
+  }).join('<span class="mo-sep"></span>');
+  const guida = fase === 1 ? 'Leggi il passaggio e scegli qui sotto il gesto giusto.'
+    : fase === 2 ? 'Ora gli ingredienti: toccali o trascinali qui dalla dispensa.'
+    : 'C\'è tutto quello che serve? Allora conferma: il passaggio diventa definitivo.';
+
+  const azHtml = '<div class="azioni">' + Object.entries(DB.AZIONI).map(([k, a]) =>
+    '<button class="az-btn' + (az === k ? ' on' : '') + '" data-az="' + k + '">' +
+      svg(ICO[k]) + '<span>' + a.nome + '</span><span class="az-min">' + COSTO[k] + "'</span></button>").join('') + '</div>';
+
+  const padHtml = '<div class="padella ' + (az || '') + '" id="padella">' + (pad.length === 0
+    ? '<p class="padella-vuota">' + (az ? 'Il tegame è vuoto: prendi gli ingredienti dalla dispensa' : 'Prima scegli il gesto qui sopra') + '</p>'
+    : '<div class="in-padella">' + pad.map(id => {
         const voce = r.ingredienti.find(i => i.id === id);
         return '<span class="pill-ing"><span>' + esc(DB.INGREDIENTS[id].nome) + '</span>' +
           (voce ? '<span class="q">' + fmt(voce.q) + ' ' + esc(voce.u) + '</span>' : '') +
           '<button class="pill-x" data-togli="' + id + '" aria-label="Togli ' + esc(DB.INGREDIENTS[id].nome) + '">' + svg(ICO.x) + '</button></span>';
-      }).join('') + '</div>';
+      }).join('') + '</div>') + '</div>';
 
-  const cronoHtml = S.mondo.crono.length === 0 ? '' :
-    '<div class="crono"><div class="crono-h"><h4>Cronologia della preparazione</h4>' +
-    '<span class="c-n">' + S.mondo.crono.length + ' step</span></div><ul class="crono-list">' +
-    S.mondo.crono.map((st, i) =>
-      '<li class="crono-step"><span class="s-n">' + (i + 1) + '</span>' +
-      '<span class="s-az">' + DB.AZIONI[st.az].nome + '</span>' +
-      '<span class="s-ing">' + st.ings.map(id => esc(DB.INGREDIENTS[id].nome)).join(' · ') + '</span></li>').join('') +
-    '</ul></div>';
+  const banco =
+    '<div class="p-banco">' +
+      '<div class="adesso">' + mosse + '</div>' +
+      '<p class="adesso-guida">' + guida + '</p>' +
+      azHtml + padHtml +
+      '<div class="p-conferma"><button class="btn" id="btn-conferma"' + (!az || pad.length === 0 ? ' disabled' : '') + '>' +
+        svg(ICO.check) + 'Conferma il passaggio' + (az ? ' (' + COSTO[az] + "' di cucina)" : '') + '</button></div>' +
+    '</div>';
 
-  $('#zona-cucina').innerHTML =
-    '<div class="zona-h"><span>La cucina</span><span class="z-count">Tavolo ' + o.tavolo + '</span></div>' +
-    '<div class="cucina-h">' +
-      '<span class="eyebrow">Step ' + (S.mondo.crono.length + 1) + '</span>' +
-      '<h3>' + esc(r.nome) + '</h3>' +
-      '<p>' + (S.mondo.azione ? 'Aggiungi gli ingredienti, poi conferma lo step.' : 'Che cosa fai adesso?') + '</p>' +
-    '</div>' +
-    '<div class="azioni">' + azHtml + '</div>' +
-    '<div class="padella ' + (S.mondo.azione || '') + '" id="padella">' + padHtml + '</div>' +
-    '<div class="cucina-actions">' +
-      '<button class="btn" id="btn-conferma"' + (!S.mondo.azione || S.mondo.padella.length === 0 ? ' disabled' : '') + '>' +
-        svg(ICO.check) + 'Conferma step' + (S.mondo.azione ? ' (' + COSTO[S.mondo.azione] + "')" : '') + '</button>' +
-      '<button class="btn btn--go" id="btn-servi"' + (S.mondo.crono.length === 0 ? ' disabled' : '') + '>Servi il piatto</button>' +
-    '</div>' + cronoHtml;
+  const righe = [];
+  for(let i = 0; i < tot; i++){
+    const st = r.step[i];
+    const testo = aperto ? esc(st.testo) : 'Passaggio ' + (i + 1) + ' — <em>a memoria</em>';
+    if(i < fatti){
+      const c = S.mondo.crono[i];
+      righe.push('<li class="passo fatto"><span class="p-n">' + svg(ICO.check) + '</span><div>' +
+        '<div class="p-testo">' + testo + '</div>' +
+        '<div class="p-fatto-riga"><strong>' + DB.AZIONI[c.az].nome + '</strong> — ' +
+          c.ings.map(id => esc(DB.INGREDIENTS[id].nome)).join(' · ') + '</div>' +
+      '</div></li>');
+    } else if(i === fatti){
+      righe.push('<li class="passo corrente" aria-current="step"><span class="p-n">' + (i + 1) + '</span><div>' +
+        '<div class="p-testo"><span class="p-qui">Sei qui</span>' + testo + '</div>' +
+      '</div>' + banco + '</li>');
+    } else {
+      righe.push('<li class="passo dopo"><span class="p-n">' + (i + 1) + '</span><div>' +
+        '<div class="p-testo">' + testo + '</div>' +
+      '</div></li>');
+    }
+  }
+  if(fatti >= tot){
+    righe.push('<li class="passo corrente"><span class="p-n">+</span><div>' +
+      '<div class="p-testo"><span class="p-qui">Sei qui</span>I passaggi della ricetta sono finiti. ' +
+      'Se hai dimenticato qualcosa puoi ancora rimediare; altrimenti il piatto è pronto.</div>' +
+    '</div>' + banco + '</li>');
+  }
 
-  const pad = $('#padella');
-  pad.addEventListener('dragover', e => { e.preventDefault(); pad.classList.add('on-drop'); });
-  pad.addEventListener('dragleave', () => pad.classList.remove('on-drop'));
-  pad.addEventListener('drop', e => {
-    e.preventDefault(); pad.classList.remove('on-drop');
+  box.innerHTML =
+    '<div class="zona-h"><span>Il banco di lavoro</span><span class="z-count">' + Math.min(fatti, tot) + '/' + tot + ' passaggi</span></div>' +
+    '<div class="banco">' +
+      '<ul class="passi">' + righe.join('') + '</ul>' +
+      '<div class="tavola">' +
+        '<button class="btn btn--go" id="btn-tavola"' + (fatti === 0 ? ' disabled' : '') + '>' + svg(ICO.piatto) + 'Porta in tavola</button>' +
+        '<p class="tavola-nota">' + (fatti >= tot
+          ? 'Hai fatto tutti i passaggi: si va a tavola.'
+          : (fatti === 0 ? 'Si esce dalla cucina dopo aver confermato almeno un passaggio.'
+                         : 'Puoi uscire anche adesso: il piatto sarà giudicato per come è.')) + '</p>' +
+      '</div>' +
+    '</div>';
+
+  const padEl = $('#padella');
+  padEl.addEventListener('dragover', e => { e.preventDefault(); padEl.classList.add('on-drop'); });
+  padEl.addEventListener('dragleave', () => padEl.classList.remove('on-drop'));
+  padEl.addEventListener('drop', e => {
+    e.preventDefault(); padEl.classList.remove('on-drop');
     const id = e.dataTransfer.getData('text/plain');
     if(id) aggiungiIngrediente(id);
   });
 }
 
 function renderDispensa(){
-  const o = ordAttivo();
-  const r = o ? ric(o.ricetta) : null;
-  const serveIds = r ? r.ingredienti.map(i => i.id) : [];
+  if(!S){ $('#disp-count').textContent = ''; $('#dispensa').innerHTML = ''; return; }
+  const r = piatto();
+  const serveIds = r.ingredienti.map(i => i.id);
   const byCat = {};
   Object.keys(S.risorse.dispensaIniziale).forEach(id => {
     const ing = DB.INGREDIENTS[id];
@@ -1722,56 +1409,20 @@ function renderDispensa(){
     byCat[cat].map(id => {
       const q = S.risorse.dispensa[id] || 0;
       const ing = DB.INGREDIENTS[id];
-      const voce = r ? r.ingredienti.find(i => i.id === id) : null;
+      const voce = r.ingredienti.find(i => i.id === id);
       const serve = voce ? voce.q : 0;
       const unita = S.risorse.unita[id] || 'g';
-      const conteso = (S.risorse.pretendenti[id] || 1) > 1;
       const esaurito = q <= 0;
       const insuff = !esaurito && voce && q < serve;
       const cls = ['ing', serveIds.includes(id) ? 'serve' : '', esaurito ? 'esaurito' : '', insuff ? 'insuff' : ''].filter(Boolean).join(' ');
-      const drag = (!esaurito && !insuff && o) ? ' draggable="true"' : '';
-      const quanti = S.risorse.pretendenti[id] || 1;
-      const tit = esc(ing.nome) +
-        (voce ? ' — questa ricetta ne chiede ' + fmt(serve) + ' ' + esc(unita) : '') +
-        (conteso ? '. Se lo contendono ' + quanti + ' tavoli: quello che usi qui non ci sarà per gli altri.' : '');
+      const drag = !esaurito ? ' draggable="true"' : '';
+      const tit = esc(ing.nome) + (voce ? ' — questa ricetta ne chiede ' + fmt(serve) + ' ' + esc(unita) : '');
       return '<div class="' + cls + '"' + drag + ' data-ing="' + id + '" tabindex="0" role="button" title="' + tit + '">' +
         svg(CAT[ing.cat] || CAT.altri, 'i-glyph') +
         '<span class="i-nome">' + esc(ing.nome) + '</span>' +
         '<span class="i-q">' + (esaurito ? 'finito' : fmt(q) + ' ' + esc(unita)) + '</span>' +
-        (conteso ? '<span class="i-cont">' + quanti + ' tavoli</span>' : '') +
       '</div>';
     }).join('') + '</div></div>').join('');
-}
-
-function renderRicettario(){
-  const o = ordAttivo();
-  const box = $('#ricettario');
-  if(!o){
-    box.innerHTML = '<div class="ric-toggle"><span class="eyebrow eyebrow--muted">Il ricettario</span></div>' +
-      '<p class="disp-note">Prendi un ordine e qui comparirà la sequenza attesa.</p>';
-    return;
-  }
-  const r = ric(o.ricetta);
-  const fatti = S.mondo.crono.length;
-  const seq = S.ricettarioAperto
-    ? '<ul class="seq">' + r.step.map((st, i) =>
-        '<li class="' + (i < fatti ? 'fatto' : '') + '"><span class="q-n">' + (i + 1) + '.</span>' +
-        '<span class="q-txt">' + esc(st.testo) + '</span></li>').join('') + '</ul>'
-    : '<ul class="seq">' + r.step.map((st, i) =>
-        '<li class="' + (i < fatti ? 'fatto' : '') + '"><span class="q-n">' + (i + 1) + '.</span>' +
-        '<span class="q-txt">' + esc(DB.AZIONI[st.az].nome) + ' — <em>a memoria</em></span></li>').join('') + '</ul>';
-
-  box.innerHTML =
-    '<div class="ric-toggle">' +
-      '<span class="eyebrow eyebrow--muted">Il ricettario</span>' +
-      '<button class="switch' + (S.ricettarioAperto ? ' on' : '') + '" id="sw-ric" role="switch" ' +
-        'aria-checked="' + S.ricettarioAperto + '" aria-label="Tieni aperto il ricettario"></button>' +
-    '</div>' + seq +
-    '<div class="ric-fatti">' +
-      '<div class="fact"><div class="f-lab">Da dove viene</div><div class="f-txt">' + esc(r.storia) + '</div></div>' +
-      (r.dop && r.dop.length ? '<div class="fact"><div class="f-lab">Denominazioni</div><div class="f-txt">' +
-        r.dop.map(d => '<span class="dop">' + esc(d) + '</span>').join('') + '</div></div>' : '') +
-    '</div>';
 }
 
 /* ---------- Verdetto del piatto ----------------------------------------- */
@@ -1795,8 +1446,7 @@ function radar(gusti){
   return '<svg class="radar" viewBox="-14 -14 ' + (size + 28) + ' ' + (size + 28) + '" role="img" aria-label="Profilo dei gusti">' + g + '</svg>';
 }
 
-function mostraVerdetto(v, r, o){
-  fermaTick();
+function mostraVerdetto(v, r){
   const stelle = [0, 1, 2].map(i => svgFill(ICO.stella, i < v.stelle ? '' : 'off')).join('');
   const kcalTot = r.ingredienti.reduce((s, i) => {
     const ing = DB.INGREDIENTS[i.id];
@@ -1810,7 +1460,7 @@ function mostraVerdetto(v, r, o){
   }).join('');
 
   apriModale(
-    '<span class="eyebrow m-eyebrow">Tavolo ' + o.tavolo + ' · ' + esc(r.regione) + '</span>' +
+    '<span class="eyebrow m-eyebrow">' + esc(r.regione) + '</span>' +
     '<h2>' + esc(r.nome) + '</h2>' +
     '<div class="stelle" role="img" aria-label="' + v.stelle + ' stelle su 3">' + stelle + '</div>' +
     '<p class="verdict-quote">' + esc(v.battuta) + '</p>' +
@@ -1824,44 +1474,23 @@ function mostraVerdetto(v, r, o){
       '</div>' +
     '</div>' +
     '<div class="m-actions">' +
-      (S.modo === 'libera'
-        ? '<button class="btn btn--ghost" id="v-ancora">Riprova questo piatto</button>' +
-          '<button class="btn btn--go" id="v-ok">' + svg(ICO.penna) + 'Scrivi il tuo assaggio</button>'
-        : '<button class="btn btn--go" id="v-ok">Torna in cucina</button>') +
+      '<button class="btn btn--ghost" id="v-ancora">Riprova questo piatto</button>' +
+      '<button class="btn btn--go" id="v-ok">' + svg(ICO.penna) + 'Scrivi il tuo assaggio</button>' +
     '</div>',
     { wide: true }
   );
-  if(S.modo === 'libera'){
-    $('#v-ancora').onclick = () => { chiudiModale(); apriRicetta(r.id); };
-    $('#v-ok').onclick = () => {
-      chiudiModale();
-      const prec = PREPARATE.get(r.id);
-      if(prec == null || v.stelle > prec) PREPARATE.set(r.id, v.stelle);   // resta il tentativo migliore
-      document.body.classList.remove('modo-libera');
-      ridisegnaTitoli(); renderElenco();
-      apriAssaggio(r.id, v.stelle);
-    };
-    return;
-  }
+  $('#v-ancora').onclick = () => { chiudiModale(); apriRicetta(r.id); };
   $('#v-ok').onclick = () => {
     chiudiModale();
-    o.stato = 'servito';
-    o.stelle = v.stelle;
-    S.punti += PUNTI[v.stelle];
-    S.traccia.serviti.push({ uid: o.uid, ricetta: r.id, stelle: v.stelle, sprechi: v.sprechi });
-    S.mondo.attivo = null; S.mondo.azione = null; S.mondo.padella = []; S.mondo.crono = [];
-    S.traccia.mosse++;
-    if(!S.finito) avviaTick();
-    update();
+    const prec = PREPARATE.get(r.id);
+    if(prec == null || v.stelle > prec) PREPARATE.set(r.id, v.stelle);   // resta il tentativo migliore
+    ridisegnaTitoli(); renderElenco();
+    apriAssaggio(r.id, v.stelle);
   };
 }
 
-/* ---------- Chiusura: bilancio, curva, azione, metacognizione ----------- */
+/* ---------- Chiusura: il quaderno, la consegna, la metacognizione -------- */
 function renderChiusura(){
-  const servizioGiocato = RUNS.length > 0;
-  const t = (S && S.traccia) || { serviti: [], rifiutati: [], andati: [], note: [] };
-  const stelleTot = t.serviti.reduce((s, x) => s + x.stelle, 0);
-
   /* Il quaderno: quello che lo studente ha scritto è il vero prodotto dell'app */
   const voci = [...ASSAGGI.entries()].filter(([, txt]) => txt.trim().length);
   const quaderno =
@@ -1890,16 +1519,6 @@ function renderChiusura(){
       'e ha visto che il piatto peggiorava. Tenerla non vuol dire obbedire: vuol dire sapere perché.</p>' +
     '</div>';
 
-  const bilancio = servizioGiocato
-    ? '<h2 style="margin-top:34px;font-size:24px">La sfida, se l\'hai provata</h2>' +
-      '<div class="bilancio">' +
-        '<div class="bil acc"><div class="b-num">' + (S ? S.punti : 0) + '</div><div class="b-lab">Punteggio di sala</div></div>' +
-        '<div class="bil"><div class="b-num">' + t.serviti.length + '</div><div class="b-lab">Piatti serviti</div></div>' +
-        '<div class="bil"><div class="b-num">' + stelleTot + '</div><div class="b-lab">Stelle raccolte</div></div>' +
-        '<div class="bil"><div class="b-num">' + t.rifiutati.length + '</div><div class="b-lab">No detti in tempo</div></div>' +
-        '<div class="bil"><div class="b-num">' + t.andati.length + '</div><div class="b-lab">Tavoli persi</div></div>' +
-      '</div>' + renderCurva()
-    : '';
 
   $('#scr-chiusura').innerHTML =
     '<header class="masthead"><h1>Il tuo <em>quaderno</em></h1>' +
@@ -1908,7 +1527,6 @@ function renderChiusura(){
       '<hr class="masthead-rule"></header>' +
     '<div class="chiusura">' +
       quaderno +
-      bilancio +
 
       /* L'idea diventa azione — consegna pratica (design-system §5.3) */
       '<div class="azione-box">' +
@@ -1926,7 +1544,7 @@ function renderChiusura(){
 
       /* Chiusura metacognitiva (design-system §4.5) */
       '<div class="meta-box">' +
-        '<span class="eyebrow">Prima di rigiocare</span>' +
+        '<span class="eyebrow">Prima di chiudere</span>' +
         '<h3>Tre domande</h3>' +
         '<div class="meta-q"><span class="mq-n">1</span><span class="mq-t"><strong>Che cosa ho capito?</strong>' +
           '<span class="mq-hint">Non "quali ricette so". Che cosa ho capito sul perché una ricetta si tramanda com\'è.</span></span></div>' +
@@ -1950,14 +1568,12 @@ function renderChiusura(){
       '<div class="start-row">' +
         '<button class="btn btn--go" id="btn-torna-volo-2">' + svg(ICO.piatto) + 'Torna al ricettario</button>' +
         '<button class="btn" id="btn-parole">' + svg(ICO.info) + 'Le parole della cucina</button>' +
-        '<button class="btn btn--ghost" id="btn-rigioca">' + svg(ICO.stella) + 'Prova la sfida del servizio</button>' +
         '<button class="btn btn--ghost btn-docenti">Info docenti</button>' +
       '</div>' +
     '</div>' +
     '<footer class="foot"><p>Ricette, storie, denominazioni e valori nutrizionali dal ricettario dell\'app originale; i piatti aggiunti hanno le calorie calcolate dagli ingredienti.</p></footer>';
 
   mostra('#scr-chiusura');
-  $('#btn-rigioca').onclick = nuovoServizio;
   $('#btn-parole').onclick = vaiAlleParole;
   $('#btn-torna-volo-2').onclick = vaiAlVolo;
   const bc = $('#btn-copia-tutto');
@@ -1975,48 +1591,15 @@ function renderChiusura(){
 /* Il quaderno si apre dal volo: non serve aver giocato la sfida per arrivarci,
    perché la sfida non è lo scopo. */
 function vaiAlQuaderno(){
-  fermaTick();
-  document.body.classList.remove('modo-libera');
   renderChiusura();
 }
 
 function vaiAlleParole(){
-  fermaTick();
-  document.body.classList.remove('modo-libera');
   mostra('#scr-parole');
   if(!$('#gloss').children.length) renderGlossario();
   creaPlayer($('#scr-parole .player'), { onTick: syncGloss });
 }
 
-/* La curva tra i tentativi È la valutazione formativa (RIGIOCABILITA §6) */
-function renderCurva(){
-  if(RUNS.length < 2){
-    return '<div class="curva-wrap"><h3>La curva dei tentativi</h3>' +
-      '<p class="c-sub">Comparirà dal secondo servizio in poi. Non misura quanto sai: misura quanto stai cambiando strategia.</p></div>';
-  }
-  const W = 640, H = 190, ml = 38, mr = 16, mt = 22, mb = 30;
-  const vals = RUNS.map(r => r.punti);
-  const min = Math.min(...vals, 0), max = Math.max(...vals, 3);
-  const span = (max - min) || 1;
-  const x = i => ml + (W - ml - mr) * (RUNS.length === 1 ? 0.5 : i / (RUNS.length - 1));
-  const y = v => mt + (H - mt - mb) * (1 - (v - min) / span);
-  const pts = RUNS.map((r, i) => [x(i), y(r.punti)]);
-  const linea = pts.map(p => p.map(n => n.toFixed(1)).join(',')).join(' ');
-  const dots = pts.map((p, i) =>
-    '<circle class="cv-dot' + (i === pts.length - 1 ? ' last' : '') + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4.5"/>' +
-    '<text class="cv-val" x="' + p[0].toFixed(1) + '" y="' + (p[1] - 11).toFixed(1) + '" text-anchor="middle">' + RUNS[i].punti + '</text>').join('');
-  const labs = RUNS.map((r, i) => '<text class="cv-lab" x="' + x(i).toFixed(1) + '" y="' + (H - 9) + '" text-anchor="middle">n. ' + r.run + '</text>').join('');
-  const delta = RUNS[RUNS.length - 1].punti - RUNS[0].punti;
-  return '<div class="curva-wrap"><h3>La curva dei tentativi</h3>' +
-    '<p class="c-sub">' + RUNS.length + ' servizi in questa sessione. ' +
-      (delta > 0 ? 'Dal primo a oggi sei salito di ' + delta + ' punti.' : delta === 0 ? 'Sei fermo sullo stesso punteggio del primo servizio.' : 'Sei sceso di ' + Math.abs(delta) + ' punti rispetto al primo: che cosa è cambiato?') +
-      ' Questa curva non esce da questo computer e sparisce quando chiudi la scheda.</p>' +
-    '<svg class="curva" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Punteggio per tentativo">' +
-      '<line class="cv-axis" x1="' + ml + '" y1="' + (H - mb) + '" x2="' + (W - mr) + '" y2="' + (H - mb) + '"/>' +
-      '<line class="cv-axis" x1="' + ml + '" y1="' + mt + '" x2="' + ml + '" y2="' + (H - mb) + '"/>' +
-      '<polyline class="cv-line" points="' + linea + '"/>' + dots + labs +
-    '</svg></div>';
-}
 
 /* ---------- Modali ------------------------------------------------------ */
 let ultimoFocus = null;
@@ -2035,7 +1618,7 @@ function escChiudi(e){ if(e.key === 'Escape') chiudiModale(); }
 
 function apriDocenti(){
   apriModale(
-    '<div class="modale-h"><h2>Master Chef — Il servizio</h2>' +
+    '<div class="modale-h"><h2>Master Chef — La cucina italiana</h2>' +
       '<button class="icon-btn" id="d-x" aria-label="Chiudi">' + svg(ICO.chiudi) + '</button></div>' +
     '<div class="tabs" role="tablist">' +
       '<button class="tab on" data-tab="m">Metodologia</button>' +
@@ -2048,9 +1631,9 @@ function apriDocenti(){
       'come patrimonio UNESCO (iscritta il 10 dicembre 2025 col nome «La cucina italiana, tra sostenibilità e diversità bioculturale»). ' +
       'La motivazione ufficiale parla di «pratica quotidiana che comprende conoscenze, rituali e gesti»: il patrimonio non è il piatto, ' +
       'è chi lo prepara, come, e con chi lo mangia.</p>' +
-      '<p>Non è un quiz sulle ricette regionali: il ricettario resta aperto per tutto il gioco, quindi il punteggio non può dipendere dalla memoria. ' +
-      'L\'oggetto dell\'apprendimento è <strong>decidere sotto vincolo</strong>: allocare una risorsa scarsa e condivisa fra richieste concorrenti, ' +
-      'in condizioni di informazione parziale, accettando di rinunciare.</p>' +
+      '<p>Non è una gara e non è un quiz: il ricettario resta aperto per tutto il tempo, quindi niente dipende dalla memoria. ' +
+      'L\'oggetto dell\'apprendimento è la <strong>ricetta come sapere che si tramanda</strong>: la sequenza dei passaggi, il gesto giusto ' +
+      'per ogni ingrediente, le quantità vere — e soprattutto che cosa in un piatto <em>non</em> entra, e perché.</p>' +
       '<h4>Il piatto, non solo la ricetta</h4>' +
       '<p>Accanto ai grandi classici il ricettario contiene i piatti di tutti i giorni — legumi con cereali, verdure di stagione, pesce al forno, ' +
       'cotture non fritte — e non li segnala in alcun modo: stanno semplicemente lì, alla pari. Quando si apre una ricetta, la scheda mostra ' +
@@ -2061,65 +1644,59 @@ function apriDocenti(){
       '"giusta" o "sbagliata": si mostrano i numeri veri e si lascia guardare.</p>' +
       '<h4>Cornice pedagogica</h4>' +
       '<ul>' +
-        '<li><strong>Dewey — learning by doing.</strong> Lo studente non legge "bisogna pianificare": si trova con il guanciale in mano e due tavoli che lo vogliono.</li>' +
-        '<li><strong>Bruner — apprendimento per scoperta.</strong> La regola dei due terzi non è scritta da nessuna parte: emerge dalla dispensa.</li>' +
+        '<li><strong>Dewey — learning by doing.</strong> Lo studente non legge la carbonara: la prepara, passaggio per passaggio, con le quantità vere in dispensa.</li>' +
+        '<li><strong>Bruner — apprendimento per scoperta.</strong> Nel volo le ricette stanno sospese sopra le loro regioni: la geografia si impara passandoci sopra, non studiandola a parte.</li>' +
         '<li><strong>Vygotskij — scaffolding calibrato e ritirabile.</strong> Il ricettario è la ZSP: aperto di default, si chiude con l\'interruttore quando il supporto non serve più.</li>' +
-        '<li><strong>Piaget — conflitto cognitivo.</strong> L\'aspettativa "eseguo la ricetta e prendo tre stelle" si rompe al primo tavolo perso mentre cucinavi bene.</li>' +
-        '<li><strong>Metacognizione.</strong> La chiusura chiede perché il secondo servizio è andato meglio. Con il ricettario aperto, "mi ricordavo le risposte" non è una risposta disponibile.</li>' +
+        '<li><strong>Piaget — conflitto cognitivo.</strong> La panna sta in dispensa senza nessun avviso, e metterla è possibile: la ragione culturale arriva solo all\'assaggio, legata al proprio gesto.</li>' +
+        '<li><strong>Metacognizione.</strong> Il quaderno chiede di rileggere ciò che si è scritto e capire da dove è venuto: un gusto, un ricordo, una persona.</li>' +
       '</ul>' +
       '<h4>Che cosa si impara, in concreto</h4>' +
       '<ul>' +
         '<li>Geografia e cultura gastronomica italiana: ' + N_RICETTE + ' ricette, ' + N_REGIONI + ' regioni, denominazioni DOP/IGP, storia dei piatti.</li>' +
         '<li>Pensiero procedurale: una ricetta è una sequenza con dipendenze. Alcuni scambi di step sono innocui, altri rompono il piatto.</li>' +
-        '<li>Gestione di risorse e trade-off: ' + N_CONTESI + ' ingredienti su ' + N_INGR + ' sono contesi da più ricette.</li>' +
-        '<li>Che rinunciare in tempo è una competenza, non una sconfitta.</li>' +
+        '<li>Che cosa in un piatto non va messo, e perché: la tradizione come memoria collettiva, non come divieto.</li>' +
+        '<li>Scrittura vera alla tastiera: ogni piatto preparato si racconta, con scaffolding e senza «mi piace» da solo.</li>' +
       '</ul>' +
-      '<div class="tags"><span class="tag">Pensiero computazionale</span><span class="tag">Problem solving</span>' +
+      '<div class="tags"><span class="tag">Pensiero computazionale</span><span class="tag">Videoscrittura</span>' +
         '<span class="tag">Geografia</span><span class="tag">Educazione alimentare</span>' +
         '<span class="tag">Metacognizione</span><span class="tag">Cittadinanza</span></div>' +
     '</div>' +
     '<div class="tabpane" data-pane="s">' +
-      '<h4>Perché è rigiocabile</h4>' +
-      '<p>La versione precedente era un\'app a contenuto fisso: imparata la ricetta, la partita era risolta. ' +
-      'Questa raggiunge il livello <strong>L3</strong> — stato che evolve e reagisce alle scelte:</p>' +
-      '<ul>' +
-        '<li><strong>Decisione:</strong> quali tavoli servire e a quali rinunciare, spendendo una dispensa condivisa.</li>' +
-        '<li><strong>Stato:</strong> aprire il pomodoro al minuto 3 cambia le opzioni disponibili al minuto 40.</li>' +
-        '<li><strong>Scarsità:</strong> dispensa e tempo tarati al ' + Math.round(QUOTA_TEMPO * 100) + '% del fabbisogno totale. Si possono servire bene circa ' + N_SERVIBILI + ' tavoli su ' + N_ORDINI + '.</li>' +
-        '<li><strong>Irreversibilità:</strong> confermato uno step, l\'ingrediente è speso. Il tempo non torna.</li>' +
-        '<li><strong>Informazione parziale:</strong> gli ordini arrivano scaglionati. Quando spendi non sai ancora chi ordinerà dopo.</li>' +
-        '<li><strong>Il mondo si muove:</strong> l\'orologio avanza anche se lo studente non fa nulla.</li>' +
-      '</ul>' +
-      '<h4>Generazione della partita</h4>' +
-      '<p>Il servizio è generato da un <strong>seed deterministico</strong> (cyrb53 + mulberry32) per <em>generazione inversa</em>: ' +
-      'prima si traccia un percorso valido (' + N_SERVIBILI + ' ricette servibili), poi si verifica che la dispensa lo copra sempre. ' +
-      '<strong>La soluzione esiste per costruzione</strong>: nessuna partita è irrisolvibile.</p>' +
-      '<p>La scarsità non è imposta a tavolino, è presa dai dati: un ingrediente richiesto da <em>una sola</em> ricetta della serata c\'è per intero ' +
-      '(non produrrebbe nessuna decisione); un ingrediente <strong>conteso</strong> da più tavoli c\'è al ' + Math.round(QUOTA_DISPENSA * 100) + '% di quanto ne vorrebbero. ' +
-      'Nel ricettario ' + N_CONTESI + ' ingredienti su ' + N_INGR + ' sono condivisi fra ricette: è da lì che nasce il trade-off. ' +
-      'Ogni piastrella della dispensa dichiara quanti tavoli si contendono quell\'ingrediente.</p>' +
-      '<p>Le battute dei clienti non sono una lista scritta a mano ma una <strong>grammatica generativa</strong>: quattro liste corte, centinaia di richieste distinte.</p>' +
+      '<h4>La preparazione, passaggio per passaggio</h4>' +
+      '<p>La pagina della preparazione mostra la ricetta come una <strong>scala di passaggi</strong>: quelli fatti si chiudono con la spunta ' +
+      'e il resoconto di ciò che si è fatto davvero, quello corrente è aperto ed evidenziato. Dentro al passaggio aperto ci sono le tre mosse, ' +
+      'sempre le stesse — <strong>1 scegli il gesto, 2 metti gli ingredienti, 3 conferma</strong> — con una guida che dice a che punto si è. ' +
+      'Confermare consuma la dispensa: le quantità sono quelle vere, e il passaggio confermato non si annulla.</p>' +
+      '<p>Lo studente resta libero di sbagliare: gesto sbagliato, ingrediente saltato, ingrediente di troppo. Nessun avviso lo ferma. ' +
+      'La valutazione arriva solo quando porta in tavola, e confronta ciò che ha fatto con la ricetta: sequenza, gesti, ingredienti.</p>' +
+      '<h4>Le tentazioni</h4>' +
+      '<p>In dispensa, accanto agli ingredienti veri, ci sono anche quelli che la tradizione esclude — la panna per la carbonara, ' +
+      'la cipolla per l\'amatriciana — <strong>senza nessun segnale</strong>. Metterli è possibile e nessuno interviene: la ragione ' +
+      'culturale arriva all\'assaggio, legata al proprio gesto. Chi li lascia lì riceve un riconoscimento esplicito: è la competenza vera.</p>' +
+      '<h4>L\'assaggio scritto</h4>' +
+      '<p>Dopo ogni piatto si scrive: che gusto senti, quale ingrediente ami, che cosa ti ricorda. Il foglio ha frasi-innesco che scrivono ' +
+      'l\'attacco (mai la risposta), domande-guida, un contatore di parole e una validazione leggera contro il testo insensato. ' +
+      'Tutto confluisce nel <strong>quaderno</strong>, da copiare nel proprio documento prima di chiudere.</p>' +
       '<h4>Dati e privacy</h4>' +
       '<p><strong>Nessun dato lascia il computer e nulla viene salvato.</strong> Niente localStorage, niente cookie, niente invii di rete. ' +
       'Le app girano su iMac condivisi di laboratorio: qualunque memoria resterebbe attaccata alla macchina e si trascinerebbe addosso allo studente successivo. ' +
-      'La curva dei tentativi vive in memoria e sparisce alla chiusura della scheda — quindi va <strong>letta e discussa durante l\'ora</strong>, non recuperata dopo.</p>' +
+      'Il quaderno degli assaggi vive in memoria e sparisce alla chiusura della scheda: va <strong>copiato nel documento personale durante l\'ora</strong>.</p>' +
       '<h4>I due video</h4>' +
       '<p>Nessuno dei due è un embed di YouTube: sono player costruiti sulla IFrame API, con l\'<strong>iframe reso inerte</strong> ' +
       '(nessun click lo raggiunge), poster nostro, copertura della schermata finale e comandi propri. Niente schermo intero, niente menu, ' +
       'niente video consigliati, nessuna uscita verso YouTube. La <strong>barra di avanzamento non è trascinabile</strong>: si aggiorna ' +
       'in sola lettura, quindi il video non si salta. Mettere in pausa invece si può — non è saltare.</p>' +
-      '<p>In apertura ci sono <strong>due video</strong>, circa quattro minuti in tutto: l\'annuncio del Ministero della Cultura e il servizio ' +
-      'giornalistico del giorno dopo. Fanno da <strong>gate</strong>: il ricettario si apre solo quando sono finiti tutti e due, e l\'avviso dice ' +
-      'a che punto si è. Il secondo torna in «Le parole della cucina», dove serve a un\'altra cosa: far accendere il glossario.</p>' +
+      '<p>In apertura ci sono <strong>due video</strong>, circa quattro minuti in tutto: l\'annuncio del Ministero della Cultura e il notiziario ' +
+      'del giorno dopo. Un avviso accompagna la visione e diventa verde quando sono finiti tutti e due; la navigazione resta comunque libera dalla barra in alto. Il secondo torna in «Le parole della cucina», dove serve a un\'altra cosa: far accendere il glossario.</p>' +
       '<p>Il glossario delle parole si accende ' +
-      'invece una card alla volta, quando la voce arriva a quel punto: i tempi sono presi dalla trascrizione reale del servizio, ' +
+      'invece una card alla volta, quando la voce arriva a quel punto: i tempi sono presi dalla trascrizione reale del filmato, ' +
       'mentre i testi sono riscritti (le trascrizioni automatiche sono piene di refusi e non sono citabili).</p>' +
       '<h4>Il volo</h4>' +
       '<p>Three.js r128. Si vola su una <strong>carta fisica in rilievo alla scala 1:6.000.000</strong> (TESTPLAY, © Raisa Gladushyna e Alexandr Gladushyn): ' +
       'geografia vera, con le Alpi, gli Appennini, i fiumi e le città stampate. I titoli sono posati sulla città della regione che ha inventato il piatto ' +
       'e legati a terra da un filo: il volo guidato va da nord a sud e insegna anche la geografia. Le posizioni sono lette sulla carta, ' +
       'quindi sono un riferimento didattico, non coordinate esatte. Se la carta non si carica, il volo parte lo stesso su una mappa disegnata.</p>' +
-      '<p>Toccando un titolo si apre la ricetta in <strong>modalità libera</strong>: nessun orologio, nessuna gara, dispensa esatta — lì si impara. ' +
+      '<p>Toccando un titolo si apre <strong>la preparazione</strong>: nessun orologio e nessuna gara, la dispensa con le quantità esatte — più le tentazioni. ' +
       'Sotto al volo c\'è <strong>lo stesso ricettario in elenco</strong>, usabile a tastiera: il contenuto 3D non è mai l\'unica via.</p>' +
       '<h4>Tecnica</h4>' +
       '<ul><li>Single-file HTML, vanilla JS/CSS. Nessun framework, nessun build.</li>' +
@@ -2131,28 +1708,20 @@ function apriDocenti(){
       '<li>Ogni ingrediente si aggiunge sia trascinandolo sia toccandolo (iPad e LIM), e da tastiera con Invio o Spazio.</li></ul>' +
     '</div>' +
     '<div class="tabpane" data-pane="c">' +
-      '<h4>Modalità lezione: tutta la classe sulla stessa partita</h4>' +
-      '<p>Aggiungendo <code>?seed=</code> all\'indirizzo, tutti gli studenti giocano <strong>lo stesso identico servizio</strong>, ' +
-      'confrontabile e discutibile insieme. Il numero del tentativo avanza per tutti allo stesso modo, quindi anche il secondo servizio è condiviso.</p>' +
-      '<p><code>master-chef.html?seed=2B-servizio-01</code> per la 2B, <code>?seed=2C-servizio-01</code> per la 2C: ' +
-      'classi diverse, partite diverse. Al cambio dell\'ora non si passano le soluzioni.</p>' +
-      '<p>Senza <code>?seed=</code> ogni postazione genera una partita nuova a ogni servizio. Il seed della partita in corso è <strong>sempre visibile</strong> ' +
-      'in alto a destra, in monospaziato: annotandolo si può rigiocare esattamente quella.</p>' +
-      '<h4>Come condurla</h4>' +
+      '<h4>Il percorso consigliato</h4>' +
       '<ul>' +
-        '<li><strong>Il video di apertura si guarda insieme</strong>, ed è la prima cosa: non anticipatelo a parole. Il ricettario si apre da solo quando finisce.</li>' +
-        '<li><strong>Il volo prima del servizio.</strong> Fate preparare due o tre piatti in modalità libera, senza orologio: serve a capire la meccanica e a leggere la composizione del piatto. Poi si gareggia.</li>' +
-        '<li><strong>«Le parole della cucina» dopo, non prima.</strong> Il glossario chiude l\'esperienza: le parole si accendono con la voce e alla fine si contano.</li>' +
-        '<li><strong>Fate giocare almeno due servizi.</strong> Il primo serve a perdere un tavolo; il secondo è quello che insegna. La curva compare dal secondo in poi.</li>' +
-        '<li><strong>Non anticipate la regola dei due terzi.</strong> Deve rompersi da sola: è il conflitto cognitivo che regge tutta l\'attività.</li>' +
-        '<li><strong>Fermatevi sul "no detto in tempo".</strong> È il nodo: rifiutare costa 1, farsi lasciare costa 3. Molti studenti impiegano due partite ad accettarlo.</li>' +
-        '<li><strong>Chiudete il ricettario</strong> (interruttore in basso a destra) solo quando la strategia è solida: allora l\'attività diventa anche memoria della sequenza.</li>' +
-        '<li><strong>Confronto in plenaria:</strong> con lo stesso seed, chiedete a due studenti con punteggi diversi quale tavolo hanno preso per primo. È lì che si vede la strategia.</li>' +
+        '<li><strong>I video di apertura si guardano insieme</strong>, e sono la prima cosa: non anticipateli a parole.</li>' +
+        '<li><strong>Poi il volo:</strong> ognuno sceglie un piatto — meglio ancora se legato alla storia della propria famiglia — e lo prepara con calma. Due o tre piatti in un\'ora ci stanno.</li>' +
+        '<li><strong>Non anticipate le tentazioni.</strong> Se dite in anticipo che in dispensa c\'è la panna, la scoperta è spenta: lasciate che qualcuno la metta.</li>' +
+        '<li><strong>L\'assaggio scritto non si salta:</strong> è il prodotto dell\'attività. «Mi piace» non basta, e il foglio lo dice da solo.</li>' +
+        '<li><strong>Coprite i testi dei passaggi</strong> (interruttore nella scheda del piatto) solo alla seconda preparazione dello stesso piatto: allora diventa anche memoria della sequenza.</li>' +
+        '<li><strong>«Le parole della cucina» chiude:</strong> il glossario si accende con la voce e alla fine si conta.</li>' +
       '</ul>' +
       '<h4>Valutazione</h4>' +
-      '<p>Di <strong>processo</strong>, non di prodotto: non conta il punteggio assoluto ma la <em>curva</em> fra i tentativi e la qualità della risposta alla domanda ' +
-      '"che cosa hai fatto di diverso?". Uno studente che passa da -2 a 6 cambiando strategia ha imparato più di uno che parte da 5 e resta a 5.</p>' +
-      '<p>La consegna "L\'idea diventa azione" produce l\'artefatto valutabile: una delle tre tracce, portata alla lezione successiva.</p>' +
+      '<p>Il prodotto valutabile è il <strong>quaderno</strong>: i racconti scritti dei piatti. Si valuta il processo — la precisione dei sensi, ' +
+      'il perché dietro ai gusti, il legame con la propria storia — non le stelle del verdetto. Fate copiare il quaderno nel documento personale ' +
+      'prima della fine dell\'ora: alla chiusura della scheda sparisce.</p>' +
+      '<p>La consegna «L\'idea diventa azione» produce il secondo artefatto: una delle tracce, portata alla lezione successiva.</p>' +
       '<h4>Nota sull\'età</h4>' +
       '<p>Nessuna consegna richiede l\'uso diretto di IA generativa da parte degli studenti: le tracce puntano su osservazione, ' +
       'riscrittura procedurale e riflessione personale.</p>' +
@@ -2280,7 +1849,7 @@ const pausaTuttiIVideo = () => VPLAYERS.forEach(p => p.pausa());   // mai audio 
    GLOSSARIO — le parole si accendono quando la voce ci arriva
    Tempi PRESI DALL'SRT (reali). Testi RISCRITTI: la trascrizione automatica è
    piena di refusi ("New Dily", "è un esco") e non è citabile.
-   Fonti dei fatti: pagina UNESCO Italia + servizio video.
+   Fonti dei fatti: pagina UNESCO Italia + filmato.
    ========================================================================== */
 const GLOSSARIO = [
   { t: 0,   termine: 'Patrimonio culturale immateriale',
@@ -2669,40 +2238,32 @@ function renderElenco(){
    Riusa per intero il motore della cucina: cambia solo lo stato iniziale.
    Nessuna scarsità, nessun orologio: qui si impara, non si gareggia.
    ========================================================================== */
-function generaLibera(ricettaId){
+function generaPreparazione(ricettaId){
   const r = ric(ricettaId);
-  const dispensa = {}, unita = {}, pretendenti = {};
-  r.ingredienti.forEach(i => { dispensa[i.id] = i.q; unita[i.id] = i.u; pretendenti[i.id] = 1; });
+  const dispensa = {}, unita = {};
+  r.ingredienti.forEach(i => { dispensa[i.id] = i.q; unita[i.id] = i.u; });
   // Le tentazioni stanno in dispensa accanto agli ingredienti veri, senza
   // nessun segnale: la panna è lì, a portata di mano, come nella vita.
   // Riconoscerla è la competenza; il divieto scritto sopra non insegnerebbe niente.
   (r.mai || []).forEach(m => {
     if(dispensa[m.id] != null) return;
-    dispensa[m.id] = 100; unita[m.id] = DB.INGREDIENTS[m.id].cat === 'liquidi' ? 'ml' : 'g'; pretendenti[m.id] = 1;
+    dispensa[m.id] = 100; unita[m.id] = DB.INGREDIENTS[m.id].cat === 'liquidi' ? 'ml' : 'g';
   });
   return {
-    seed: 'libera-' + ricettaId,
-    modo: 'libera',
-    risorse: { durata: Infinity, dispensa, dispensaIniziale: Object.assign({}, dispensa), unita, pretendenti },
-    mondo: {
-      orologio: 0, attivo: 'l0', azione: null, padella: [], crono: [],
-      ordini: [{ uid: 'l0', ricetta: ricettaId, tavolo: 0, battuta: '', arrivo: 0, pazienza: Infinity, stato: 'lavoro', stelle: null }]
-    },
-    traccia: { serviti: [], rifiutati: [], andati: [], mosse: 0, note: [] },
-    punti: 0, ricettarioAperto: true, finito: false
+    risorse: { dispensa, dispensaIniziale: Object.assign({}, dispensa), unita },
+    mondo: { ricetta: ricettaId, azione: null, padella: [], crono: [], orologio: 0 },
+    ricettarioAperto: true
   };
 }
 function apriRicetta(id){
-  fermaTick();
-  S = generaLibera(id);
-  document.body.classList.add('modo-libera');
-  mostra('#scr-servizio');
+  S = generaPreparazione(id);
+  mostra('#scr-prepara');
   render();
 }
 
 /* ==========================================================================
    L'ASSAGGIO — scrittura con scaffolding (design-system §5.1)
-   Lo scopo dell'app non è vincere un servizio: è imparare le ricette e tenere
+   Lo scopo dell'app non è vincere una gara: è imparare le ricette e tenere
    la tradizione. Questo foglio è il punto in cui lo studente smette di eseguire
    e comincia a pensare — e intanto scrive davvero, alla tastiera.
    Niente persistenza: il testo vive nella sessione (iMac condivisi).
@@ -2839,8 +2400,8 @@ $('#btn-assaggio-fine').onclick = () => { aggFoglio(); vaiAlVolo(); };
 /* ---------- Navigazione fra schermate ----------------------------------- */
 /* A quale voce della topbar corrisponde ogni schermata */
 const NAV = {
-  '#scr-apertura': 'apertura', '#scr-volo': 'volo', '#scr-servizio': 'servizio',
-  '#scr-assaggio': 'servizio', '#scr-parole': 'parole', '#scr-chiusura': 'quaderno'
+  '#scr-apertura': 'apertura', '#scr-volo': 'volo', '#scr-prepara': 'prepara',
+  '#scr-assaggio': 'prepara', '#scr-parole': 'parole', '#scr-chiusura': 'quaderno'
 };
 function mostra(sel){
   pausaTuttiIVideo();   // mai audio fantasma da un pannello nascosto (design-system §5.6)
@@ -2849,22 +2410,16 @@ function mostra(sel){
   window.scrollTo(0, 0);
 }
 
-/* Dalla topbar: se un servizio è già in corso lo riapre, non lo ricomincia
+/* Dalla topbar: se una preparazione è già in corso la riapre, non la ricomincia
    (ricominciare butterebbe via la partita, e il tempo speso è irreversibile) */
-function vaiAlServizio(){
-  if(S && S.modo !== 'libera' && !S.finito){
-    document.body.classList.remove('modo-libera');
-    mostra('#scr-servizio');
-    render();
-    avviaTick();
-    return;
-  }
-  nuovoServizio();
-}
 const VAI = {
-  apertura: () => { fermaTick(); document.body.classList.remove('modo-libera'); mostra('#scr-apertura'); },
+  apertura: () => mostra('#scr-apertura'),
   volo: () => vaiAlVolo(),
-  servizio: () => vaiAlServizio(),
+  prepara: () => {
+    if(S){ mostra('#scr-prepara'); render(); return; }
+    vaiAlVolo();
+    toast('Prima scegli un piatto dal ricettario.', '');
+  },
   parole: () => vaiAlleParole(),
   quaderno: () => vaiAlQuaderno()
 };
@@ -2874,36 +2429,23 @@ document.addEventListener('click', e => {
 });
 
 function vaiAlVolo(){
-  document.body.classList.remove('modo-libera');
-  fermaTick();
   mostra('#scr-volo');
   renderElenco();
   initVolo();
 }
 
-function nuovoServizio(){
-  chiudiModale();
-  document.body.classList.remove('modo-libera');
-  RUN++;
-  S = generaServizio(seedCorrente());
-  mostra('#scr-servizio');
-  render();
-  avviaTick();
-}
 
 /* ---------- Delega eventi (il DOM si ricostruisce a ogni render) --------- */
 document.addEventListener('click', e => {
   const r = e.target.closest('[data-ricetta]');
   if(r) return apriRicetta(r.dataset.ricetta);
-  if(e.target.closest('#btn-torna-volo')){ document.body.classList.remove('modo-libera'); return mostra('#scr-volo'); }
-  const t = e.target.closest('[data-prendi],[data-rifiuta],[data-az],[data-togli],[data-ing],#btn-conferma,#btn-servi,#sw-ric');
+  if(e.target.closest('#btn-torna-volo')) return vaiAlVolo();
+  const t = e.target.closest('[data-az],[data-togli],[data-ing],#btn-conferma,#btn-tavola,#sw-ric');
   if(!t) return;
-  if(t.dataset.prendi) return prendiOrdine(t.dataset.prendi);
-  if(t.dataset.rifiuta) return rifiutaOrdine(t.dataset.rifiuta);
   if(t.dataset.az) return scegliAzione(t.dataset.az);
   if(t.dataset.togli) return togliIngrediente(t.dataset.togli);
   if(t.id === 'btn-conferma') return confermaStep();
-  if(t.id === 'btn-servi') return serviPiatto();
+  if(t.id === 'btn-tavola') return portaInTavola();
   if(t.id === 'sw-ric') return update(() => { S.ricettarioAperto = !S.ricettarioAperto; });
   if(t.dataset.ing) return aggiungiIngrediente(t.dataset.ing);
 });
@@ -2967,22 +2509,10 @@ $('#btn-volo-pausa').onclick = e => {
     : 'Volo fermo. Tocca un titolo per aprire la ricetta.';
 };
 $('#btn-parole-fine').onclick = vaiAlVolo;
-$('#btn-chiudi-servizio').onclick = () => { if(S && !S.finito) fineServizio(); };
 document.querySelectorAll('.btn-docenti').forEach(b => b.onclick = apriDocenti);
 /* L'aggancio in apertura cita numeri VERI, ricavati dal ricettario: se le
    ricette cambiano, la frase resta esatta da sola. */
-(function hookContesi(){
-  const el = $('#hook-contesi');
-  if(!el) return;                      // la frase vive solo dove serve
-  const c = {};
-  DB.RECIPES.forEach(r => r.ingredienti.forEach(i => c[i.id] = (c[i.id] || 0) + 1));
-  const top = Object.entries(c).sort((a, b) => b[1] - a[1]).slice(0, 3);
-  el.textContent = top.map(([id, n]) => DB.INGREDIENTS[id].nome.toLowerCase() + ' a ' + n).join(', ');
-})();
 
-$('#mode-note').innerHTML = SEED_LEZIONE
-  ? 'Modalità lezione attiva: tutta la classe gioca la partita <code>' + esc(SEED_LEZIONE) + '</code>.'
-  : 'Ogni servizio è una partita nuova. Per farla giocare uguale a tutta la classe, aggiungi <code>?seed=2B-servizio-01</code> all\'indirizzo.';
 </script>
 </body>
 </html>
