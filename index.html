@@ -54,6 +54,28 @@ button:focus-visible,[tabindex]:focus-visible,a:focus-visible{outline:3px solid 
 .hidden{display:none !important}
 svg{display:block}
 
+/* ---------- Topbar: la navigazione fra le sezioni (design-system §3.1)
+   Sempre presente. Va a capo su più righe, mai una barra di scorrimento
+   laterale (§3.3). Lo stato attivo deve restare leggibile (§3.5). ---------- */
+.topnav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(245,241,230,.93);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--brd);
+}
+.topnav-in{
+  max-width:var(--maxw);margin:0 auto;padding:8px 24px;
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center;
+}
+.tb{
+  min-height:44px;padding:9px 15px;border-radius:99px;
+  font-weight:700;font-size:13.5px;color:var(--muted);
+  border:1px solid transparent;transition:background .14s,color .14s;
+}
+.tb:hover{background:var(--ulivo-L);color:var(--ulivo-scuro)}
+.tb.on{background:var(--ulivo-scuro);color:var(--carta);border-color:var(--ulivo-scuro)}
+.tb--fine{margin-left:auto;border-color:var(--brd-2)}
+@media (max-width:760px){ .tb--fine{margin-left:0} }
+
 /* ---------- Brand (wordmark soltanto: GESTIONE-LOGO.md, emblema rimosso) ---------- */
 .brandbar{max-width:var(--maxw);margin:0 auto;padding:14px 24px 0;display:flex;justify-content:center}
 .brand{display:inline-flex;flex-direction:column;text-align:center;line-height:1.25}
@@ -661,6 +683,17 @@ body.modo-libera .reputa{display:none}
   </div>
 </div>
 
+<nav class="topnav" aria-label="Sezioni dell'esperienza">
+  <div class="topnav-in">
+    <button class="tb on" data-va="apertura">Apertura</button>
+    <button class="tb" data-va="volo">Il ricettario</button>
+    <button class="tb" data-va="servizio">Il servizio</button>
+    <button class="tb" data-va="parole">Le parole</button>
+    <button class="tb" data-va="quaderno">Il quaderno</button>
+    <button class="tb tb--fine btn-docenti">Info docenti</button>
+  </div>
+</nav>
+
 <!-- ===================== SCHERMATA 1 — APERTURA ===================== -->
 <section id="scr-apertura">
   <figure class="hero">
@@ -687,7 +720,7 @@ body.modo-libera .reputa{display:none}
 
     <div class="gate" id="gate-volo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8.4 10.5V7.8a3.6 3.6 0 0 1 7.2 0v2.7"/></svg>
-      <span id="gate-testo">Guarda tutti e due i video fino in fondo: poi il ricettario si apre.</span>
+      <span id="gate-testo">I due video aprono il senso di tutto il resto: guardali fino in fondo prima di entrare.</span>
     </div>
 
     <!-- Loop Zeigarnik 1: domanda-cornice, aperta nella prima frase -->
@@ -784,7 +817,7 @@ body.modo-libera .reputa{display:none}
       Sarà quello che ti ricorda qualcosa. Vedremo se ho indovinato.</p>
 
     <div class="start-row">
-      <button class="btn btn--go" id="btn-entra" disabled>
+      <button class="btn btn--go" id="btn-entra">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 17.6 12 3.8l8.6 13.8"/><path d="M3.4 17.6 12 14l8.6 3.6"/><path d="M12 3.8V20.2"/></svg>
         Entra nel ricettario
       </button>
@@ -2804,12 +2837,41 @@ $('#btn-copia').onclick = async () => {
 $('#btn-assaggio-fine').onclick = () => { aggFoglio(); vaiAlVolo(); };
 
 /* ---------- Navigazione fra schermate ----------------------------------- */
+/* A quale voce della topbar corrisponde ogni schermata */
+const NAV = {
+  '#scr-apertura': 'apertura', '#scr-volo': 'volo', '#scr-servizio': 'servizio',
+  '#scr-assaggio': 'servizio', '#scr-parole': 'parole', '#scr-chiusura': 'quaderno'
+};
 function mostra(sel){
   pausaTuttiIVideo();   // mai audio fantasma da un pannello nascosto (design-system §5.6)
-  ['#scr-apertura', '#scr-volo', '#scr-servizio', '#scr-assaggio', '#scr-parole', '#scr-chiusura']
-    .forEach(s => $(s).classList.toggle('hidden', s !== sel));
+  Object.keys(NAV).forEach(s => $(s).classList.toggle('hidden', s !== sel));
+  document.querySelectorAll('.tb[data-va]').forEach(b => b.classList.toggle('on', b.dataset.va === NAV[sel]));
   window.scrollTo(0, 0);
 }
+
+/* Dalla topbar: se un servizio è già in corso lo riapre, non lo ricomincia
+   (ricominciare butterebbe via la partita, e il tempo speso è irreversibile) */
+function vaiAlServizio(){
+  if(S && S.modo !== 'libera' && !S.finito){
+    document.body.classList.remove('modo-libera');
+    mostra('#scr-servizio');
+    render();
+    avviaTick();
+    return;
+  }
+  nuovoServizio();
+}
+const VAI = {
+  apertura: () => { fermaTick(); document.body.classList.remove('modo-libera'); mostra('#scr-apertura'); },
+  volo: () => vaiAlVolo(),
+  servizio: () => vaiAlServizio(),
+  parole: () => vaiAlleParole(),
+  quaderno: () => vaiAlQuaderno()
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('.tb[data-va]');
+  if(t && VAI[t.dataset.va]) VAI[t.dataset.va]();
+});
 
 function vaiAlVolo(){
   document.body.classList.remove('modo-libera');
@@ -2872,23 +2934,24 @@ document.addEventListener('dragend', e => {
 /* Il video stimolo apre l'esperienza. Il ricettario si sblocca solo quando il
    video è finito (stato ENDED oppure fallback del polling): è la disciplina
    in-sessione che sostituisce la persistenza (BLUEPRINT §9). */
+/* I video aprono l'esperienza, ma non la sequestrano: la navigazione resta
+   sempre libera (la topbar c'è dal primo istante). L'avviso accompagna, non
+   sbarra — bloccare l'unica uscita dietro quattro minuti di video rendeva la
+   pagina un vicolo cieco, e il docente in aula deve poter saltare avanti. */
 const VISTI = new Set();
 const nVideoApertura = () => document.querySelectorAll('#scr-apertura .player').length;
 
 function sbloccaVolo(){
-  const b = $('#btn-entra'), g = $('#gate-volo');
-  if(!b.disabled) return;
-  b.disabled = false;
+  const g = $('#gate-volo');
   g.classList.add('ok');
   g.querySelector('svg').innerHTML = ICO.check;
-  $('#gate-testo').textContent = 'Li hai guardati tutti e due: il ricettario è aperto.';
+  $('#gate-testo').textContent = 'Li hai guardati tutti e due: ora sai perché stai per cucinare.';
 }
 function videoFinito(id){
   VISTI.add(id);
   const tot = nVideoApertura();
   if(VISTI.size >= tot) return sbloccaVolo();
-  $('#gate-testo').textContent = 'Ne hai guardato ' + VISTI.size + ' di ' + tot +
-    '. Manca l\'altro, poi il ricettario si apre.';
+  $('#gate-testo').textContent = 'Ne hai guardato ' + VISTI.size + ' di ' + tot + '. Manca l\'altro.';
 }
 document.querySelectorAll('#scr-apertura .player').forEach(box =>
   creaPlayer(box, { onFine: () => videoFinito(box.dataset.yt) }));
